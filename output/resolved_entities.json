@@ -1,0 +1,558 @@
+[
+  {
+    "canonical_id": "7cc1e61b-d655-5c75-a8e5-077f6e8726f9",
+    "canonical_name": "Apex Analytics",
+    "entity_type": "Company",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-005",
+      "fixture-chunk-006",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.9633,
+    "description": "A machine learning infrastructure company founded in San Francisco in 2018.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "99f84345-d07a-5ebf-9af3-69b1b8b90419",
+    "canonical_name": "Stellar Systems",
+    "entity_type": "Company",
+    "aliases": [
+      "Stellar Systems Inc."
+    ],
+    "chunk_ids": [
+      "fixture-chunk-003",
+      "fixture-chunk-004",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/stellar_systems_acquisition.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.9667,
+    "description": "A privately held data infrastructure company founded in Seattle, Washington in 2015.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "canonical_name": "TechNova Corporation",
+    "entity_type": "Company",
+    "aliases": [
+      "TechNova Corp",
+      "TechNova"
+    ],
+    "chunk_ids": [
+      "fixture-chunk-001",
+      "fixture-chunk-002",
+      "fixture-chunk-003",
+      "fixture-chunk-004",
+      "fixture-chunk-007",
+      "fixture-chunk-009",
+      "fixture-chunk-010",
+      "fixture-chunk-005",
+      "fixture-chunk-006"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/companies/stellar_systems_acquisition.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/projects/project_nexus.md",
+      "corpus/people/engineering_org.md",
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 9,
+    "avg_confidence": 0.9878,
+    "description": "An enterprise software company founded in 2010, headquartered in Austin, Texas.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "32adfa76-b669-5f98-87e7-b7b2ae1db54e",
+    "canonical_name": "Data Science Department",
+    "entity_type": "Department",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.96,
+    "description": "Department led by James Okafor at TechNova.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "4323d06a-d621-51e0-a74f-0f8a342a028c",
+    "canonical_name": "Engineering Department",
+    "entity_type": "Department",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.99,
+    "description": "TechNova's largest division, comprising over 900 engineers.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "ba0d5fdf-2193-511b-bd7a-8e31845083ac",
+    "canonical_name": "Aisha Patel",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-004",
+      "fixture-chunk-007",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/companies/stellar_systems_acquisition.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 4,
+    "avg_confidence": 0.9875,
+    "description": "Head of the Platform Team at TechNova.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "4077c83f-0285-5193-90de-4b1c56d93718",
+    "canonical_name": "David Reyes",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-006"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "description": "Senior ML Engineer at TechNova, formerly Director of Engineering at Apex Analytics.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "67c7f53d-77fd-57c8-80fd-ac54aac167fc",
+    "canonical_name": "Dr. Elena Vasquez",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-001",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.99,
+    "description": "CTO of TechNova Corporation.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "afc673da-5a20-5c5c-a607-e6ba008eef52",
+    "canonical_name": "James Okafor",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-006"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "description": "Director of Data Science at TechNova.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "31568a1e-0349-5b14-8323-2ce33cef39f8",
+    "canonical_name": "Kevin Park",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.985,
+    "description": "DevOps Lead at TechNova.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "fdb28337-0197-57bf-b291-cce5e6b431ed",
+    "canonical_name": "Lisa Chen",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-008"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "description": "Senior Engineer at TechNova and technical lead for Project Phoenix.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "85120dc2-bc66-5efc-8995-df09d602c1e5",
+    "canonical_name": "Marcus Thompson",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-001",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.985,
+    "description": "VP of Engineering at TechNova.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "89b429ac-2811-57a7-ab92-d79a51bf4525",
+    "canonical_name": "Priya Sharma",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-004",
+      "fixture-chunk-008",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/stellar_systems_acquisition.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.9867,
+    "description": "Lead Architect at TechNova, formerly Principal Architect at Stellar Systems.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "e16dc185-c52a-548f-9a33-32bd0d3e4df0",
+    "canonical_name": "Robert Klein",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-001",
+      "fixture-chunk-005"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.98,
+    "description": "CEO of TechNova Corporation.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "608fb418-aae4-5bcf-9f0b-bde47d9de687",
+    "canonical_name": "Sandra Müller",
+    "entity_type": "Person",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-009",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/projects/project_nexus.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.9867,
+    "description": "Lead of the Data Engineering Team.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "80520e75-fd50-5a68-bff6-d08a92547a6e",
+    "canonical_name": "DataBridge",
+    "entity_type": "Product",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.95,
+    "description": "TechNova's ETL platform maintained by the Data Engineering Team.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "b3be2b3a-b6ed-5a01-873e-ba7d7af7633e",
+    "canonical_name": "NovaSuite",
+    "entity_type": "Product",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-001",
+      "fixture-chunk-007"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.985,
+    "description": "TechNova's flagship enterprise resource planning and analytics platform.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "e820a98d-62de-5be0-b354-7d6fde131d08",
+    "canonical_name": "Project Nexus",
+    "entity_type": "Project",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "description": "TechNova's unified data platform combining StellarDB and ApexML.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "ddf71a9c-56d7-5137-8f6e-2850d4127956",
+    "canonical_name": "Project Phoenix",
+    "entity_type": "Project",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-007",
+      "fixture-chunk-008"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.99,
+    "description": "TechNova's initiative to migrate NovaSuite's data layer to StellarDB.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "3ed75fbe-5bfa-542d-a46b-42e5ff791331",
+    "canonical_name": "Data Engineering Team",
+    "entity_type": "Team",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-009",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/projects/project_nexus.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.99,
+    "description": "Responsible for data pipelines, ETL infrastructure, and the DataBridge platform.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "54f810ba-6744-5829-bb59-281d614b1b58",
+    "canonical_name": "DevOps Team",
+    "entity_type": "Team",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.98,
+    "description": "Responsible for deployment automation and container orchestration.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "2feca8ec-8c41-5191-9467-f156ef6db37f",
+    "canonical_name": "ML Team",
+    "entity_type": "Team",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-006",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.975,
+    "description": "The team at TechNova responsible for machine learning workloads.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "071291e1-090e-595d-9275-805deb95da46",
+    "canonical_name": "Platform Team",
+    "entity_type": "Team",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-004",
+      "fixture-chunk-007",
+      "fixture-chunk-009",
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/companies/stellar_systems_acquisition.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/projects/project_nexus.md",
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 5,
+    "avg_confidence": 0.984,
+    "description": "Responsible for core infrastructure, database systems, and developer tooling.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "a19a88ce-f6f3-5a9c-b671-da075ab1cd32",
+    "canonical_name": "Apache Kafka",
+    "entity_type": "Technology",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-003",
+      "fixture-chunk-005",
+      "fixture-chunk-008",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/stellar_systems_acquisition.md",
+      "corpus/companies/apex_analytics_acquisition.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 4,
+    "avg_confidence": 0.965,
+    "description": "Event streaming platform used by StellarDB for replication.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "a5204c5b-5f03-5c01-86f3-80da42d65291",
+    "canonical_name": "ApexML",
+    "entity_type": "Technology",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-005",
+      "fixture-chunk-006",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.99,
+    "description": "A production-grade machine learning platform.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "52f5f82c-3934-53c4-badf-cdcc10ebb594",
+    "canonical_name": "DataBridge ETL",
+    "entity_type": "Technology",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.98,
+    "description": "TechNova's internal ETL platform connecting StellarDB to ApexML.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "aa056ee4-dc6b-59ce-8e9a-782735a8a409",
+    "canonical_name": "GraphQL Gateway",
+    "entity_type": "Technology",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-008",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.9633,
+    "description": "Internal query routing layer used by all product teams.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "eafd1abc-7cd5-57c2-93c0-1d183e5c9534",
+    "canonical_name": "Kubernetes",
+    "entity_type": "Technology",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-008",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 3,
+    "avg_confidence": 0.9633,
+    "description": "Container orchestration platform used for NovaSuite deployments.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  },
+  {
+    "canonical_id": "c36cf405-4564-5000-8e12-1a384d13c459",
+    "canonical_name": "StellarDB",
+    "entity_type": "Technology",
+    "aliases": [],
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-003",
+      "fixture-chunk-004",
+      "fixture-chunk-007",
+      "fixture-chunk-008",
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/companies/stellar_systems_acquisition.md",
+      "corpus/projects/project_phoenix.md",
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 6,
+    "avg_confidence": 0.9867,
+    "description": "TechNova's primary distributed database system.",
+    "resolved_at": "2026-08-25T08:00:52.033627+00:00"
+  }
+]

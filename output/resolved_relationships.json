@@ -1,0 +1,779 @@
+[
+  {
+    "rel_id": "da3c3347-f311-55ce-86bf-6d2135271469",
+    "source_id": "7cc1e61b-d655-5c75-a8e5-077f6e8726f9",
+    "source_name": "Apex Analytics",
+    "source_type": "Company",
+    "relationship_type": "DEVELOPED",
+    "target_id": "a5204c5b-5f03-5c01-86f3-80da42d65291",
+    "target_name": "ApexML",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-005"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Apex Analytics' primary product was ApexML"
+    ]
+  },
+  {
+    "rel_id": "d0092af6-b6d5-5f43-a0da-13b7de95f51b",
+    "source_id": "a5204c5b-5f03-5c01-86f3-80da42d65291",
+    "source_name": "ApexML",
+    "source_type": "Technology",
+    "relationship_type": "DEPENDS_ON",
+    "target_id": "a19a88ce-f6f3-5a9c-b671-da075ab1cd32",
+    "target_name": "Apache Kafka",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-005"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.95,
+    "supporting_texts": [
+      "ApexML was built with a Kafka-first architecture"
+    ]
+  },
+  {
+    "rel_id": "f5119ddc-818a-583e-8b24-1271b329492b",
+    "source_id": "3ed75fbe-5bfa-542d-a46b-42e5ff791331",
+    "source_name": "Data Engineering Team",
+    "source_type": "Team",
+    "relationship_type": "LED_BY",
+    "target_id": "608fb418-aae4-5bcf-9f0b-bde47d9de687",
+    "target_name": "Sandra Müller",
+    "target_type": "Person",
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "40f6348e-5867-523b-b41e-84d09188242e",
+    "source_id": "3ed75fbe-5bfa-542d-a46b-42e5ff791331",
+    "source_name": "Data Engineering Team",
+    "source_type": "Team",
+    "relationship_type": "MAINTAINS",
+    "target_id": "52f5f82c-3934-53c4-badf-cdcc10ebb594",
+    "target_name": "DataBridge ETL",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.98,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "9701f6fd-8287-528d-9b3b-e1c2bb62e0bb",
+    "source_id": "3ed75fbe-5bfa-542d-a46b-42e5ff791331",
+    "source_name": "Data Engineering Team",
+    "source_type": "Team",
+    "relationship_type": "PART_OF",
+    "target_id": "4323d06a-d621-51e0-a74f-0f8a342a028c",
+    "target_name": "Engineering Department",
+    "target_type": "Department",
+    "chunk_ids": [
+      "fixture-chunk-002"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "844addf3-9351-5be2-b415-a727e3c58bc8",
+    "source_id": "4077c83f-0285-5193-90de-4b1c56d93718",
+    "source_name": "David Reyes",
+    "source_type": "Person",
+    "relationship_type": "MANAGES",
+    "target_id": "2feca8ec-8c41-5191-9467-f156ef6db37f",
+    "target_name": "ML Team",
+    "target_type": "Team",
+    "chunk_ids": [
+      "fixture-chunk-006"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.95,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "de07f7f9-2381-594d-90e2-1588f0240ad2",
+    "source_id": "4077c83f-0285-5193-90de-4b1c56d93718",
+    "source_name": "David Reyes",
+    "source_type": "Person",
+    "relationship_type": "WORKS_FOR",
+    "target_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "target_name": "TechNova Corporation",
+    "target_type": "Company",
+    "chunk_ids": [
+      "fixture-chunk-006"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "David Reyes joined TechNova as a Senior ML Engineer"
+    ]
+  },
+  {
+    "rel_id": "b4ab1ef5-23f5-5fb9-8dcd-477c12ba18b8",
+    "source_id": "54f810ba-6744-5829-bb59-281d614b1b58",
+    "source_name": "DevOps Team",
+    "source_type": "Team",
+    "relationship_type": "LED_BY",
+    "target_id": "31568a1e-0349-5b14-8323-2ce33cef39f8",
+    "target_name": "Kevin Park",
+    "target_type": "Person",
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "6fa5dd39-0539-5e1f-83e4-7b9674839333",
+    "source_id": "54f810ba-6744-5829-bb59-281d614b1b58",
+    "source_name": "DevOps Team",
+    "source_type": "Team",
+    "relationship_type": "PART_OF",
+    "target_id": "4323d06a-d621-51e0-a74f-0f8a342a028c",
+    "target_name": "Engineering Department",
+    "target_type": "Department",
+    "chunk_ids": [
+      "fixture-chunk-002"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.98,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "70729d7b-b241-5083-a35c-798c025dbb52",
+    "source_id": "67c7f53d-77fd-57c8-80fd-ac54aac167fc",
+    "source_name": "Dr. Elena Vasquez",
+    "source_type": "Person",
+    "relationship_type": "WORKS_FOR",
+    "target_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "target_name": "TechNova Corporation",
+    "target_type": "Company",
+    "chunk_ids": [
+      "fixture-chunk-001"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Dr. Elena Vasquez serves as Chief Technology Officer."
+    ]
+  },
+  {
+    "rel_id": "4d521636-210b-56e9-b567-4b28fe37ae18",
+    "source_id": "4323d06a-d621-51e0-a74f-0f8a342a028c",
+    "source_name": "Engineering Department",
+    "source_type": "Department",
+    "relationship_type": "LED_BY",
+    "target_id": "85120dc2-bc66-5efc-8995-df09d602c1e5",
+    "target_name": "Marcus Thompson",
+    "target_type": "Person",
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "3d54307b-1165-5417-b53e-c3f0778e8b92",
+    "source_id": "4323d06a-d621-51e0-a74f-0f8a342a028c",
+    "source_name": "Engineering Department",
+    "source_type": "Department",
+    "relationship_type": "PART_OF",
+    "target_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "target_name": "TechNova Corporation",
+    "target_type": "Company",
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "The Engineering Department is TechNova's largest department"
+    ]
+  },
+  {
+    "rel_id": "1bd7bee6-be43-50be-917f-ccc12b284696",
+    "source_id": "fdb28337-0197-57bf-b291-cce5e6b431ed",
+    "source_name": "Lisa Chen",
+    "source_type": "Person",
+    "relationship_type": "MANAGES",
+    "target_id": "ddf71a9c-56d7-5137-8f6e-2850d4127956",
+    "target_name": "Project Phoenix",
+    "target_type": "Project",
+    "chunk_ids": [
+      "fixture-chunk-008"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Lisa Chen is the technical lead for Project Phoenix"
+    ]
+  },
+  {
+    "rel_id": "4c3e47ec-c696-5cdf-b6b0-580215a2ba46",
+    "source_id": "2feca8ec-8c41-5191-9467-f156ef6db37f",
+    "source_name": "ML Team",
+    "source_type": "Team",
+    "relationship_type": "MAINTAINS",
+    "target_id": "a5204c5b-5f03-5c01-86f3-80da42d65291",
+    "target_name": "ApexML",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-006"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.97,
+    "supporting_texts": [
+      "the ML Team, which assumed ownership of ApexML post-acquisition"
+    ]
+  },
+  {
+    "rel_id": "b58b0e64-32bb-570b-bc51-1ede554b0c7d",
+    "source_id": "85120dc2-bc66-5efc-8995-df09d602c1e5",
+    "source_name": "Marcus Thompson",
+    "source_type": "Person",
+    "relationship_type": "MANAGES",
+    "target_id": "3ed75fbe-5bfa-542d-a46b-42e5ff791331",
+    "target_name": "Data Engineering Team",
+    "target_type": "Team",
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.98,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "3dc80162-d588-5c22-a5bd-a33970cae2d8",
+    "source_id": "85120dc2-bc66-5efc-8995-df09d602c1e5",
+    "source_name": "Marcus Thompson",
+    "source_type": "Person",
+    "relationship_type": "MANAGES",
+    "target_id": "54f810ba-6744-5829-bb59-281d614b1b58",
+    "target_name": "DevOps Team",
+    "target_type": "Team",
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.97,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "7cc9b3a2-243e-5a32-8700-8fad11558273",
+    "source_id": "85120dc2-bc66-5efc-8995-df09d602c1e5",
+    "source_name": "Marcus Thompson",
+    "source_type": "Person",
+    "relationship_type": "MANAGES",
+    "target_id": "071291e1-090e-595d-9275-805deb95da46",
+    "target_name": "Platform Team",
+    "target_type": "Team",
+    "chunk_ids": [
+      "fixture-chunk-010"
+    ],
+    "source_files": [
+      "corpus/people/engineering_org.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.98,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "4171ba1a-33fd-5ca1-bf3a-d00106522cc8",
+    "source_id": "071291e1-090e-595d-9275-805deb95da46",
+    "source_name": "Platform Team",
+    "source_type": "Team",
+    "relationship_type": "LED_BY",
+    "target_id": "ba0d5fdf-2193-511b-bd7a-8e31845083ac",
+    "target_name": "Aisha Patel",
+    "target_type": "Person",
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-007"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "The team is led by Aisha Patel."
+    ]
+  },
+  {
+    "rel_id": "8cc8bbfd-3865-5086-a40e-0b80d28ea255",
+    "source_id": "071291e1-090e-595d-9275-805deb95da46",
+    "source_name": "Platform Team",
+    "source_type": "Team",
+    "relationship_type": "MAINTAINS",
+    "target_id": "aa056ee4-dc6b-59ce-8e9a-782735a8a409",
+    "target_name": "GraphQL Gateway",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-002"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.96,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "82fb597e-455c-5305-8e1d-6cab9a65032e",
+    "source_id": "071291e1-090e-595d-9275-805deb95da46",
+    "source_name": "Platform Team",
+    "source_type": "Team",
+    "relationship_type": "MAINTAINS",
+    "target_id": "c36cf405-4564-5000-8e12-1a384d13c459",
+    "target_name": "StellarDB",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-002",
+      "fixture-chunk-004"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md",
+      "corpus/companies/stellar_systems_acquisition.md"
+    ],
+    "mention_count": 2,
+    "avg_confidence": 0.97,
+    "supporting_texts": [
+      "The Platform Team maintains StellarDB",
+      "the Platform Team, which assumed ownership of StellarDB operations"
+    ]
+  },
+  {
+    "rel_id": "eed812a5-abbc-5db9-9073-47297182ea6c",
+    "source_id": "071291e1-090e-595d-9275-805deb95da46",
+    "source_name": "Platform Team",
+    "source_type": "Team",
+    "relationship_type": "MANAGES",
+    "target_id": "ddf71a9c-56d7-5137-8f6e-2850d4127956",
+    "target_name": "Project Phoenix",
+    "target_type": "Project",
+    "chunk_ids": [
+      "fixture-chunk-007"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "managed by the Platform Team under the leadership of Aisha Patel"
+    ]
+  },
+  {
+    "rel_id": "8670226e-91fe-56d8-9721-fa586ae912a9",
+    "source_id": "071291e1-090e-595d-9275-805deb95da46",
+    "source_name": "Platform Team",
+    "source_type": "Team",
+    "relationship_type": "PART_OF",
+    "target_id": "4323d06a-d621-51e0-a74f-0f8a342a028c",
+    "target_name": "Engineering Department",
+    "target_type": "Department",
+    "chunk_ids": [
+      "fixture-chunk-002"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "three primary teams: Platform Team, Data Engineering Team, DevOps Team"
+    ]
+  },
+  {
+    "rel_id": "a5242108-c6fa-57fd-8489-7d1d544fa727",
+    "source_id": "89b429ac-2811-57a7-ab92-d79a51bf4525",
+    "source_name": "Priya Sharma",
+    "source_type": "Person",
+    "relationship_type": "WORKS_FOR",
+    "target_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "target_name": "TechNova Corporation",
+    "target_type": "Company",
+    "chunk_ids": [
+      "fixture-chunk-004"
+    ],
+    "source_files": [
+      "corpus/companies/stellar_systems_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Priya Sharma, previously Stellar Systems' Principal Architect, joined TechNova as Lead Architect"
+    ]
+  },
+  {
+    "rel_id": "441050b3-f09b-5cbf-95b1-f0965fb5c071",
+    "source_id": "e820a98d-62de-5be0-b354-7d6fde131d08",
+    "source_name": "Project Nexus",
+    "source_type": "Project",
+    "relationship_type": "USES",
+    "target_id": "a5204c5b-5f03-5c01-86f3-80da42d65291",
+    "target_name": "ApexML",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "ApexML consumes features from its feature store"
+    ]
+  },
+  {
+    "rel_id": "1a20e81c-ace5-5f63-96d7-7dcd54d9d43c",
+    "source_id": "e820a98d-62de-5be0-b354-7d6fde131d08",
+    "source_name": "Project Nexus",
+    "source_type": "Project",
+    "relationship_type": "USES",
+    "target_id": "52f5f82c-3934-53c4-badf-cdcc10ebb594",
+    "target_name": "DataBridge ETL",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.98,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "9c6a2122-9f0b-52d5-a335-ccdcf925414a",
+    "source_id": "e820a98d-62de-5be0-b354-7d6fde131d08",
+    "source_name": "Project Nexus",
+    "source_type": "Project",
+    "relationship_type": "USES",
+    "target_id": "c36cf405-4564-5000-8e12-1a384d13c459",
+    "target_name": "StellarDB",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "StellarDB serves as the ground-truth data store"
+    ]
+  },
+  {
+    "rel_id": "d1a2b732-72a5-5c25-83ff-663cb311c1f0",
+    "source_id": "ddf71a9c-56d7-5137-8f6e-2850d4127956",
+    "source_name": "Project Phoenix",
+    "source_type": "Project",
+    "relationship_type": "USES",
+    "target_id": "aa056ee4-dc6b-59ce-8e9a-782735a8a409",
+    "target_name": "GraphQL Gateway",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-008"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.95,
+    "supporting_texts": [
+      "database access is routed through TechNova's internal GraphQL Gateway"
+    ]
+  },
+  {
+    "rel_id": "245789eb-37bb-59de-bea3-1b9c7253bcf7",
+    "source_id": "ddf71a9c-56d7-5137-8f6e-2850d4127956",
+    "source_name": "Project Phoenix",
+    "source_type": "Project",
+    "relationship_type": "USES",
+    "target_id": "eafd1abc-7cd5-57c2-93c0-1d183e5c9534",
+    "target_name": "Kubernetes",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-008"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.95,
+    "supporting_texts": [
+      "NovaSuite's application services are deployed on Kubernetes"
+    ]
+  },
+  {
+    "rel_id": "20707efb-6186-533c-844a-7093eef6eb1c",
+    "source_id": "ddf71a9c-56d7-5137-8f6e-2850d4127956",
+    "source_name": "Project Phoenix",
+    "source_type": "Project",
+    "relationship_type": "USES",
+    "target_id": "c36cf405-4564-5000-8e12-1a384d13c459",
+    "target_name": "StellarDB",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-007"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "migrate the NovaSuite platform's primary data storage layer to StellarDB"
+    ]
+  },
+  {
+    "rel_id": "a61bb60b-7bb4-5372-ada4-77d89ab3a4cd",
+    "source_id": "e16dc185-c52a-548f-9a33-32bd0d3e4df0",
+    "source_name": "Robert Klein",
+    "source_type": "Person",
+    "relationship_type": "WORKS_FOR",
+    "target_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "target_name": "TechNova Corporation",
+    "target_type": "Company",
+    "chunk_ids": [
+      "fixture-chunk-001"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Robert Klein serves as Chief Executive Officer of TechNova Corporation."
+    ]
+  },
+  {
+    "rel_id": "94935519-bcd4-5fa1-9ac6-48425557a641",
+    "source_id": "608fb418-aae4-5bcf-9f0b-bde47d9de687",
+    "source_name": "Sandra Müller",
+    "source_type": "Person",
+    "relationship_type": "MANAGES",
+    "target_id": "e820a98d-62de-5be0-b354-7d6fde131d08",
+    "target_name": "Project Nexus",
+    "target_type": "Project",
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Sandra Müller is the project manager for Project Nexus"
+    ]
+  },
+  {
+    "rel_id": "7d59aae7-a981-5258-b4ea-374b68ca6ee7",
+    "source_id": "99f84345-d07a-5ebf-9af3-69b1b8b90419",
+    "source_name": "Stellar Systems",
+    "source_type": "Company",
+    "relationship_type": "DEVELOPED",
+    "target_id": "c36cf405-4564-5000-8e12-1a384d13c459",
+    "target_name": "StellarDB",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-003"
+    ],
+    "source_files": [
+      "corpus/companies/stellar_systems_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Stellar Systems' primary product was StellarDB"
+    ]
+  },
+  {
+    "rel_id": "69f458a1-34fe-55ff-89bc-f8f404ecc2f5",
+    "source_id": "c36cf405-4564-5000-8e12-1a384d13c459",
+    "source_name": "StellarDB",
+    "source_type": "Technology",
+    "relationship_type": "DEPENDS_ON",
+    "target_id": "a19a88ce-f6f3-5a9c-b671-da075ab1cd32",
+    "target_name": "Apache Kafka",
+    "target_type": "Technology",
+    "chunk_ids": [
+      "fixture-chunk-003"
+    ],
+    "source_files": [
+      "corpus/companies/stellar_systems_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.97,
+    "supporting_texts": [
+      "StellarDB supported multi-region replication using Apache Kafka"
+    ]
+  },
+  {
+    "rel_id": "13c8c17a-d188-59bb-b460-f39fc73d8394",
+    "source_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "source_name": "TechNova Corporation",
+    "source_type": "Company",
+    "relationship_type": "ACQUIRED",
+    "target_id": "7cc1e61b-d655-5c75-a8e5-077f6e8726f9",
+    "target_name": "Apex Analytics",
+    "target_type": "Company",
+    "chunk_ids": [
+      "fixture-chunk-005"
+    ],
+    "source_files": [
+      "corpus/companies/apex_analytics_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "TechNova Corp completed the acquisition of Apex Analytics on August 7, 2023."
+    ]
+  },
+  {
+    "rel_id": "88d3b507-ac14-5d50-b2f9-39ef8d49274d",
+    "source_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "source_name": "TechNova Corporation",
+    "source_type": "Company",
+    "relationship_type": "ACQUIRED",
+    "target_id": "99f84345-d07a-5ebf-9af3-69b1b8b90419",
+    "target_name": "Stellar Systems",
+    "target_type": "Company",
+    "chunk_ids": [
+      "fixture-chunk-003"
+    ],
+    "source_files": [
+      "corpus/companies/stellar_systems_acquisition.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "TechNova Corporation completed the acquisition of Stellar Systems Inc. on February 14, 2022."
+    ]
+  },
+  {
+    "rel_id": "fb330155-6a15-596d-9234-f6a63b495c94",
+    "source_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "source_name": "TechNova Corporation",
+    "source_type": "Company",
+    "relationship_type": "OWNS",
+    "target_id": "b3be2b3a-b6ed-5a01-873e-ba7d7af7633e",
+    "target_name": "NovaSuite",
+    "target_type": "Product",
+    "chunk_ids": [
+      "fixture-chunk-001"
+    ],
+    "source_files": [
+      "corpus/companies/technova_overview.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.97,
+    "supporting_texts": [
+      "NovaSuite is TechNova's flagship product."
+    ]
+  },
+  {
+    "rel_id": "cbb70950-3f92-5d04-9b35-9bbaab5dae24",
+    "source_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "source_name": "TechNova Corporation",
+    "source_type": "Company",
+    "relationship_type": "OWNS",
+    "target_id": "e820a98d-62de-5be0-b354-7d6fde131d08",
+    "target_name": "Project Nexus",
+    "target_type": "Project",
+    "chunk_ids": [
+      "fixture-chunk-009"
+    ],
+    "source_files": [
+      "corpus/projects/project_nexus.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.97,
+    "supporting_texts": []
+  },
+  {
+    "rel_id": "3aa3bae6-c384-5d70-813e-5deae977521f",
+    "source_id": "9bdc0879-7188-5ff0-93f7-ee46067eecbf",
+    "source_name": "TechNova Corporation",
+    "source_type": "Company",
+    "relationship_type": "OWNS",
+    "target_id": "ddf71a9c-56d7-5137-8f6e-2850d4127956",
+    "target_name": "Project Phoenix",
+    "target_type": "Project",
+    "chunk_ids": [
+      "fixture-chunk-007"
+    ],
+    "source_files": [
+      "corpus/projects/project_phoenix.md"
+    ],
+    "mention_count": 1,
+    "avg_confidence": 0.99,
+    "supporting_texts": [
+      "Project Phoenix is owned by TechNova Corporation"
+    ]
+  }
+]
