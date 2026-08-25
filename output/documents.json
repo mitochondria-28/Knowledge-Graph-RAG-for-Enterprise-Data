@@ -1,0 +1,132 @@
+[
+  {
+    "document_id": "f51df1a7-cc94-55e8-807b-349ad27e285e",
+    "title": "TechNova Acquires Apex Analytics — Acquisition Overview",
+    "source_file": "corpus/companies/apex_analytics_acquisition.md",
+    "doc_type": "company",
+    "doc_hash": "d949eab7ebdd50ca3894d237d8beb9cbba92c6c92fe25db4ef09d01ee34d0ef8",
+    "char_count": 4136,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.609172+00:00"
+  },
+  {
+    "document_id": "4cb66611-f711-551e-962a-ef86c64a3cb3",
+    "title": "TechNova and CloudBridge Ltd — Technology Partnership",
+    "source_file": "corpus/companies/cloudbridge_partnership.md",
+    "doc_type": "company",
+    "doc_hash": "15ee59c66cc352d4f8d54a54016b641a9d8340268a3b42d81c4b28ad22915c74",
+    "char_count": 2419,
+    "chunk_count": 1,
+    "ingested_at": "2026-08-25T07:15:26.610348+00:00"
+  },
+  {
+    "document_id": "b9f03205-c80f-549e-b366-2f7f3db0e08b",
+    "title": "TechNova Acquires Stellar Systems — Acquisition Overview",
+    "source_file": "corpus/companies/stellar_systems_acquisition.md",
+    "doc_type": "company",
+    "doc_hash": "46c8ceebb6a6742fe2f9f34289fc31269c87aedbde229fc370ea4f7b47e1bb56",
+    "char_count": 3996,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.611345+00:00"
+  },
+  {
+    "document_id": "e0e32df1-7bc3-584d-803d-3ffe32a86cdc",
+    "title": "TechNova Corporation — Company Overview",
+    "source_file": "corpus/companies/technova_overview.md",
+    "doc_type": "company",
+    "doc_hash": "17380abfb8c889d11e53eda5b12ef9a100f9d70f91594242a43ab1692d5ded0c",
+    "char_count": 4059,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.612432+00:00"
+  },
+  {
+    "document_id": "741a1322-a1ae-549f-b17f-c3ff7e899ee4",
+    "title": "TechNova Data Science Department — Team Overview",
+    "source_file": "corpus/people/data_science_team.md",
+    "doc_type": "people",
+    "doc_hash": "466e2a6d36da4dabfbf0dc7249ef86e7fb936b7460038b42d75d2579e11f733b",
+    "char_count": 3383,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.613658+00:00"
+  },
+  {
+    "document_id": "a5f8c9a7-7ac6-5c52-9fb9-e371d1e1bbc3",
+    "title": "TechNova Engineering Department — Organizational Structure",
+    "source_file": "corpus/people/engineering_org.md",
+    "doc_type": "people",
+    "doc_hash": "bb88994421cd02907e310d8785b05e458fd956b63848d497accdad73131c9e83",
+    "char_count": 4991,
+    "chunk_count": 3,
+    "ingested_at": "2026-08-25T07:15:26.614955+00:00"
+  },
+  {
+    "document_id": "dea88dc8-4f2f-577d-b944-a894ab96e15f",
+    "title": "Project Atlas — ML Platform Integration",
+    "source_file": "corpus/projects/project_atlas.md",
+    "doc_type": "project",
+    "doc_hash": "810cffaaf56783320175873a389d10127acff2bae11f62dd6cafc892526061dc",
+    "char_count": 3499,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.615831+00:00"
+  },
+  {
+    "document_id": "46c7c33c-5772-5b17-b9af-dc22895461c5",
+    "title": "Project Horizon — Customer-Facing Analytics Dashboard",
+    "source_file": "corpus/projects/project_horizon.md",
+    "doc_type": "project",
+    "doc_hash": "7d58c315f09a52e78db266ba07adeb5cf7d52182399d1e61c95c2ed333e4b01d",
+    "char_count": 2551,
+    "chunk_count": 1,
+    "ingested_at": "2026-08-25T07:15:26.616619+00:00"
+  },
+  {
+    "document_id": "16bfd1c0-3bd2-599c-a6c2-eb4b662c15b4",
+    "title": "Project Nexus — Unified Data Platform",
+    "source_file": "corpus/projects/project_nexus.md",
+    "doc_type": "project",
+    "doc_hash": "2b707f0b955f45a7a821c14a15f21db400701a976696b305dd3c745d15ae7190",
+    "char_count": 4847,
+    "chunk_count": 3,
+    "ingested_at": "2026-08-25T07:15:26.618056+00:00"
+  },
+  {
+    "document_id": "893d2d32-4947-53ba-919c-acbb5bfe7f0f",
+    "title": "Project Phoenix — NovaSuite Data Layer Migration",
+    "source_file": "corpus/projects/project_phoenix.md",
+    "doc_type": "project",
+    "doc_hash": "a82f37f9ae42cd73eb5aaf1b10ddff1e966084ebfa9b24dcc5717ba9868f4037",
+    "char_count": 4521,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.619094+00:00"
+  },
+  {
+    "document_id": "5c88ed7e-3140-5afe-a894-c964e1f79045",
+    "title": "ApexML Platform — Technical Reference",
+    "source_file": "corpus/technologies/apex_ml_platform.md",
+    "doc_type": "technology",
+    "doc_hash": "1abd6bba80f6ff0c96cf1b59b3cc4d43f8144b05b58c3a94131d6996246b236f",
+    "char_count": 4417,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.620126+00:00"
+  },
+  {
+    "document_id": "641986f5-38aa-575d-a38b-d55594b553f2",
+    "title": "DataBridge ETL — Internal ETL Platform",
+    "source_file": "corpus/technologies/data_bridge_etl.md",
+    "doc_type": "technology",
+    "doc_hash": "421424b31151d00f220c77ad6b55d5cb128d3230c9ab1845dc0568f85dd609f9",
+    "char_count": 3204,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-25T07:15:26.621165+00:00"
+  },
+  {
+    "document_id": "5631f002-c8f5-51fc-91e1-638e6392a88c",
+    "title": "StellarDB — Technical Architecture Reference",
+    "source_file": "corpus/technologies/stellar_db_architecture.md",
+    "doc_type": "technology",
+    "doc_hash": "bef5dfa039969f540c43c58bdfc2a14335cf1fc624b3e6b99b58f40319694b00",
+    "char_count": 4826,
+    "chunk_count": 3,
+    "ingested_at": "2026-08-25T07:15:26.622452+00:00"
+  }
+]

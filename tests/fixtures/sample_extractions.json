@@ -1,0 +1,299 @@
+[
+  {
+    "chunk_id": "fixture-chunk-001",
+    "document_id": "fixture-doc-001",
+    "source_file": "corpus/companies/technova_overview.md",
+    "doc_hash": "abc001",
+    "section": "About TechNova",
+    "extraction": {
+      "entities": [
+        {"name": "TechNova Corporation", "entity_type": "Company", "confidence": 0.99, "description": "An enterprise software company founded in 2010, headquartered in Austin, Texas."},
+        {"name": "NovaSuite", "entity_type": "Product", "confidence": 0.99, "description": "TechNova's flagship enterprise resource planning and analytics platform."},
+        {"name": "Robert Klein", "entity_type": "Person", "confidence": 0.99, "description": "CEO of TechNova Corporation."},
+        {"name": "Dr. Elena Vasquez", "entity_type": "Person", "confidence": 0.99, "description": "CTO of TechNova Corporation."},
+        {"name": "Marcus Thompson", "entity_type": "Person", "confidence": 0.98, "description": "VP of Engineering at TechNova."}
+      ],
+      "relationships": [
+        {"source_entity": "Robert Klein", "source_type": "Person", "relationship_type": "WORKS_FOR", "target_entity": "TechNova Corporation", "target_type": "Company", "confidence": 0.99, "supporting_text": "Robert Klein serves as Chief Executive Officer of TechNova Corporation."},
+        {"source_entity": "Dr. Elena Vasquez", "source_type": "Person", "relationship_type": "WORKS_FOR", "target_entity": "TechNova Corporation", "target_type": "Company", "confidence": 0.99, "supporting_text": "Dr. Elena Vasquez serves as Chief Technology Officer."},
+        {"source_entity": "TechNova Corporation", "source_type": "Company", "relationship_type": "OWNS", "target_entity": "NovaSuite", "target_type": "Product", "confidence": 0.97, "supporting_text": "NovaSuite is TechNova's flagship product."}
+      ]
+    },
+    "input_tokens": 980,
+    "output_tokens": 310,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:00+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-002",
+    "document_id": "fixture-doc-001",
+    "source_file": "corpus/companies/technova_overview.md",
+    "doc_hash": "abc001",
+    "section": "Engineering Department",
+    "extraction": {
+      "entities": [
+        {"name": "TechNova Corporation", "entity_type": "Company", "confidence": 0.99},
+        {"name": "Platform Team", "entity_type": "Team", "confidence": 0.99, "description": "Responsible for core infrastructure, database systems, and developer tooling."},
+        {"name": "Data Engineering Team", "entity_type": "Team", "confidence": 0.99, "description": "Responsible for data pipelines, ETL infrastructure, and the DataBridge platform."},
+        {"name": "DevOps Team", "entity_type": "Team", "confidence": 0.98, "description": "Responsible for deployment automation and container orchestration."},
+        {"name": "Engineering Department", "entity_type": "Department", "confidence": 0.99, "description": "TechNova's largest division, comprising over 900 engineers."},
+        {"name": "Aisha Patel", "entity_type": "Person", "confidence": 0.99, "description": "Head of the Platform Team at TechNova."},
+        {"name": "Sandra Müller", "entity_type": "Person", "confidence": 0.98, "description": "Lead of the Data Engineering Team."},
+        {"name": "Kevin Park", "entity_type": "Person", "confidence": 0.98, "description": "DevOps Lead at TechNova."},
+        {"name": "StellarDB", "entity_type": "Technology", "confidence": 0.97, "description": "TechNova's primary distributed database system."},
+        {"name": "GraphQL Gateway", "entity_type": "Technology", "confidence": 0.96, "description": "Internal query routing layer used by all product teams."},
+        {"name": "DataBridge", "entity_type": "Product", "confidence": 0.95, "description": "TechNova's ETL platform maintained by the Data Engineering Team."},
+        {"name": "Kubernetes", "entity_type": "Technology", "confidence": 0.97, "description": "Container orchestration platform used for NovaSuite deployments."}
+      ],
+      "relationships": [
+        {"source_entity": "Platform Team", "source_type": "Team", "relationship_type": "PART_OF", "target_entity": "Engineering Department", "target_type": "Department", "confidence": 0.99, "supporting_text": "three primary teams: Platform Team, Data Engineering Team, DevOps Team"},
+        {"source_entity": "Data Engineering Team", "source_type": "Team", "relationship_type": "PART_OF", "target_entity": "Engineering Department", "target_type": "Department", "confidence": 0.99},
+        {"source_entity": "DevOps Team", "source_type": "Team", "relationship_type": "PART_OF", "target_entity": "Engineering Department", "target_type": "Department", "confidence": 0.98},
+        {"source_entity": "Platform Team", "source_type": "Team", "relationship_type": "LED_BY", "target_entity": "Aisha Patel", "target_type": "Person", "confidence": 0.99, "supporting_text": "The team is led by Aisha Patel."},
+        {"source_entity": "Platform Team", "source_type": "Team", "relationship_type": "MAINTAINS", "target_entity": "StellarDB", "target_type": "Technology", "confidence": 0.97, "supporting_text": "The Platform Team maintains StellarDB"},
+        {"source_entity": "Platform Team", "source_type": "Team", "relationship_type": "MAINTAINS", "target_entity": "GraphQL Gateway", "target_type": "Technology", "confidence": 0.96}
+      ]
+    },
+    "input_tokens": 1050,
+    "output_tokens": 420,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:05+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-003",
+    "document_id": "fixture-doc-002",
+    "source_file": "corpus/companies/stellar_systems_acquisition.md",
+    "doc_hash": "abc002",
+    "section": "Transaction Summary",
+    "extraction": {
+      "entities": [
+        {"name": "TechNova Corporation", "entity_type": "Company", "confidence": 0.99},
+        {"name": "Stellar Systems Inc.", "entity_type": "Company", "confidence": 0.99, "description": "A privately held data infrastructure company founded in Seattle, Washington in 2015."},
+        {"name": "StellarDB", "entity_type": "Technology", "confidence": 0.99, "description": "Distributed, column-oriented database designed for high-throughput analytical queries."},
+        {"name": "Apache Kafka", "entity_type": "Technology", "confidence": 0.97, "description": "Event streaming platform used by StellarDB for replication."}
+      ],
+      "relationships": [
+        {"source_entity": "TechNova Corporation", "source_type": "Company", "relationship_type": "ACQUIRED", "target_entity": "Stellar Systems Inc.", "target_type": "Company", "confidence": 0.99, "supporting_text": "TechNova Corporation completed the acquisition of Stellar Systems Inc. on February 14, 2022."},
+        {"source_entity": "Stellar Systems Inc.", "source_type": "Company", "relationship_type": "DEVELOPED", "target_entity": "StellarDB", "target_type": "Technology", "confidence": 0.99, "supporting_text": "Stellar Systems' primary product was StellarDB"},
+        {"source_entity": "StellarDB", "source_type": "Technology", "relationship_type": "DEPENDS_ON", "target_entity": "Apache Kafka", "target_type": "Technology", "confidence": 0.97, "supporting_text": "StellarDB supported multi-region replication using Apache Kafka"}
+      ]
+    },
+    "input_tokens": 890,
+    "output_tokens": 280,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:10+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-004",
+    "document_id": "fixture-doc-002",
+    "source_file": "corpus/companies/stellar_systems_acquisition.md",
+    "doc_hash": "abc002",
+    "section": "Key Personnel Transitions",
+    "extraction": {
+      "entities": [
+        {"name": "TechNova Corporation", "entity_type": "Company", "confidence": 0.99},
+        {"name": "Stellar Systems", "entity_type": "Company", "confidence": 0.99},
+        {"name": "Priya Sharma", "entity_type": "Person", "confidence": 0.99, "description": "Lead Architect at TechNova, formerly Principal Architect at Stellar Systems."},
+        {"name": "StellarDB", "entity_type": "Technology", "confidence": 0.99},
+        {"name": "Platform Team", "entity_type": "Team", "confidence": 0.98},
+        {"name": "Aisha Patel", "entity_type": "Person", "confidence": 0.98}
+      ],
+      "relationships": [
+        {"source_entity": "Priya Sharma", "source_type": "Person", "relationship_type": "WORKS_FOR", "target_entity": "TechNova Corporation", "target_type": "Company", "confidence": 0.99, "supporting_text": "Priya Sharma, previously Stellar Systems' Principal Architect, joined TechNova as Lead Architect"},
+        {"source_entity": "Platform Team", "source_type": "Team", "relationship_type": "MAINTAINS", "target_entity": "StellarDB", "target_type": "Technology", "confidence": 0.97, "supporting_text": "the Platform Team, which assumed ownership of StellarDB operations"}
+      ]
+    },
+    "input_tokens": 820,
+    "output_tokens": 240,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:15+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-005",
+    "document_id": "fixture-doc-003",
+    "source_file": "corpus/companies/apex_analytics_acquisition.md",
+    "doc_hash": "abc003",
+    "section": "Transaction Summary",
+    "extraction": {
+      "entities": [
+        {"name": "TechNova Corp", "entity_type": "Company", "confidence": 0.99},
+        {"name": "Apex Analytics", "entity_type": "Company", "confidence": 0.99, "description": "A machine learning infrastructure company founded in San Francisco in 2018."},
+        {"name": "ApexML", "entity_type": "Technology", "confidence": 0.99, "description": "A production-grade machine learning platform."},
+        {"name": "Apache Kafka", "entity_type": "Technology", "confidence": 0.96},
+        {"name": "Robert Klein", "entity_type": "Person", "confidence": 0.97}
+      ],
+      "relationships": [
+        {"source_entity": "TechNova Corp", "source_type": "Company", "relationship_type": "ACQUIRED", "target_entity": "Apex Analytics", "target_type": "Company", "confidence": 0.99, "supporting_text": "TechNova Corp completed the acquisition of Apex Analytics on August 7, 2023."},
+        {"source_entity": "Apex Analytics", "source_type": "Company", "relationship_type": "DEVELOPED", "target_entity": "ApexML", "target_type": "Technology", "confidence": 0.99, "supporting_text": "Apex Analytics' primary product was ApexML"},
+        {"source_entity": "ApexML", "source_type": "Technology", "relationship_type": "DEPENDS_ON", "target_entity": "Apache Kafka", "target_type": "Technology", "confidence": 0.95, "supporting_text": "ApexML was built with a Kafka-first architecture"}
+      ]
+    },
+    "input_tokens": 870,
+    "output_tokens": 260,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:20+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-006",
+    "document_id": "fixture-doc-003",
+    "source_file": "corpus/companies/apex_analytics_acquisition.md",
+    "doc_hash": "abc003",
+    "section": "Key Personnel Transitions",
+    "extraction": {
+      "entities": [
+        {"name": "TechNova", "entity_type": "Company", "confidence": 0.97},
+        {"name": "Apex Analytics", "entity_type": "Company", "confidence": 0.99},
+        {"name": "David Reyes", "entity_type": "Person", "confidence": 0.99, "description": "Senior ML Engineer at TechNova, formerly Director of Engineering at Apex Analytics."},
+        {"name": "ApexML", "entity_type": "Technology", "confidence": 0.99},
+        {"name": "ML Team", "entity_type": "Team", "confidence": 0.98, "description": "The team at TechNova responsible for machine learning workloads."},
+        {"name": "James Okafor", "entity_type": "Person", "confidence": 0.99, "description": "Director of Data Science at TechNova."}
+      ],
+      "relationships": [
+        {"source_entity": "David Reyes", "source_type": "Person", "relationship_type": "WORKS_FOR", "target_entity": "TechNova", "target_type": "Company", "confidence": 0.99, "supporting_text": "David Reyes joined TechNova as a Senior ML Engineer"},
+        {"source_entity": "ML Team", "source_type": "Team", "relationship_type": "MAINTAINS", "target_entity": "ApexML", "target_type": "Technology", "confidence": 0.97, "supporting_text": "the ML Team, which assumed ownership of ApexML post-acquisition"},
+        {"source_entity": "David Reyes", "source_type": "Person", "relationship_type": "MANAGES", "target_entity": "ML Team", "target_type": "Team", "confidence": 0.95}
+      ]
+    },
+    "input_tokens": 795,
+    "output_tokens": 235,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:25+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-007",
+    "document_id": "fixture-doc-004",
+    "source_file": "corpus/projects/project_phoenix.md",
+    "doc_hash": "abc004",
+    "section": "Project Overview",
+    "extraction": {
+      "entities": [
+        {"name": "Project Phoenix", "entity_type": "Project", "confidence": 0.99, "description": "TechNova's initiative to migrate NovaSuite's data layer to StellarDB."},
+        {"name": "TechNova Corporation", "entity_type": "Company", "confidence": 0.99},
+        {"name": "NovaSuite", "entity_type": "Product", "confidence": 0.98},
+        {"name": "StellarDB", "entity_type": "Technology", "confidence": 0.99},
+        {"name": "Platform Team", "entity_type": "Team", "confidence": 0.99},
+        {"name": "Aisha Patel", "entity_type": "Person", "confidence": 0.99}
+      ],
+      "relationships": [
+        {"source_entity": "TechNova Corporation", "source_type": "Company", "relationship_type": "OWNS", "target_entity": "Project Phoenix", "target_type": "Project", "confidence": 0.99, "supporting_text": "Project Phoenix is owned by TechNova Corporation"},
+        {"source_entity": "Project Phoenix", "source_type": "Project", "relationship_type": "USES", "target_entity": "StellarDB", "target_type": "Technology", "confidence": 0.99, "supporting_text": "migrate the NovaSuite platform's primary data storage layer to StellarDB"},
+        {"source_entity": "Platform Team", "source_type": "Team", "relationship_type": "MANAGES", "target_entity": "Project Phoenix", "target_type": "Project", "confidence": 0.99, "supporting_text": "managed by the Platform Team under the leadership of Aisha Patel"},
+        {"source_entity": "Platform Team", "source_type": "Team", "relationship_type": "LED_BY", "target_entity": "Aisha Patel", "target_type": "Person", "confidence": 0.99}
+      ]
+    },
+    "input_tokens": 920,
+    "output_tokens": 290,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:30+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-008",
+    "document_id": "fixture-doc-004",
+    "source_file": "corpus/projects/project_phoenix.md",
+    "doc_hash": "abc004",
+    "section": "Technical Architecture",
+    "extraction": {
+      "entities": [
+        {"name": "Project Phoenix", "entity_type": "Project", "confidence": 0.99},
+        {"name": "StellarDB", "entity_type": "Technology", "confidence": 0.99},
+        {"name": "GraphQL Gateway", "entity_type": "Technology", "confidence": 0.97},
+        {"name": "Kubernetes", "entity_type": "Technology", "confidence": 0.97},
+        {"name": "Apache Kafka", "entity_type": "Technology", "confidence": 0.96},
+        {"name": "Lisa Chen", "entity_type": "Person", "confidence": 0.99, "description": "Senior Engineer at TechNova and technical lead for Project Phoenix."},
+        {"name": "Priya Sharma", "entity_type": "Person", "confidence": 0.98}
+      ],
+      "relationships": [
+        {"source_entity": "Project Phoenix", "source_type": "Project", "relationship_type": "USES", "target_entity": "GraphQL Gateway", "target_type": "Technology", "confidence": 0.95, "supporting_text": "database access is routed through TechNova's internal GraphQL Gateway"},
+        {"source_entity": "Project Phoenix", "source_type": "Project", "relationship_type": "USES", "target_entity": "Kubernetes", "target_type": "Technology", "confidence": 0.95, "supporting_text": "NovaSuite's application services are deployed on Kubernetes"},
+        {"source_entity": "Lisa Chen", "source_type": "Person", "relationship_type": "MANAGES", "target_entity": "Project Phoenix", "target_type": "Project", "confidence": 0.99, "supporting_text": "Lisa Chen is the technical lead for Project Phoenix"}
+      ]
+    },
+    "input_tokens": 960,
+    "output_tokens": 270,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:35+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-009",
+    "document_id": "fixture-doc-005",
+    "source_file": "corpus/projects/project_nexus.md",
+    "doc_hash": "abc005",
+    "section": "Technical Architecture",
+    "extraction": {
+      "entities": [
+        {"name": "Project Nexus", "entity_type": "Project", "confidence": 0.99, "description": "TechNova's unified data platform combining StellarDB and ApexML."},
+        {"name": "TechNova Corporation", "entity_type": "Company", "confidence": 0.99},
+        {"name": "StellarDB", "entity_type": "Technology", "confidence": 0.99},
+        {"name": "ApexML", "entity_type": "Technology", "confidence": 0.99},
+        {"name": "DataBridge ETL", "entity_type": "Technology", "confidence": 0.98, "description": "TechNova's internal ETL platform connecting StellarDB to ApexML."},
+        {"name": "Apache Kafka", "entity_type": "Technology", "confidence": 0.97},
+        {"name": "GraphQL Gateway", "entity_type": "Technology", "confidence": 0.96},
+        {"name": "Kubernetes", "entity_type": "Technology", "confidence": 0.95},
+        {"name": "Sandra Müller", "entity_type": "Person", "confidence": 0.99},
+        {"name": "Data Engineering Team", "entity_type": "Team", "confidence": 0.99},
+        {"name": "Platform Team", "entity_type": "Team", "confidence": 0.97},
+        {"name": "ML Team", "entity_type": "Team", "confidence": 0.97},
+        {"name": "Stellar Systems", "entity_type": "Company", "confidence": 0.92},
+        {"name": "Apex Analytics", "entity_type": "Company", "confidence": 0.91}
+      ],
+      "relationships": [
+        {"source_entity": "Project Nexus", "source_type": "Project", "relationship_type": "USES", "target_entity": "StellarDB", "target_type": "Technology", "confidence": 0.99, "supporting_text": "StellarDB serves as the ground-truth data store"},
+        {"source_entity": "Project Nexus", "source_type": "Project", "relationship_type": "USES", "target_entity": "ApexML", "target_type": "Technology", "confidence": 0.99, "supporting_text": "ApexML consumes features from its feature store"},
+        {"source_entity": "Project Nexus", "source_type": "Project", "relationship_type": "USES", "target_entity": "DataBridge ETL", "target_type": "Technology", "confidence": 0.98},
+        {"source_entity": "TechNova Corporation", "source_type": "Company", "relationship_type": "OWNS", "target_entity": "Project Nexus", "target_type": "Project", "confidence": 0.97},
+        {"source_entity": "Sandra Müller", "source_type": "Person", "relationship_type": "MANAGES", "target_entity": "Project Nexus", "target_type": "Project", "confidence": 0.99, "supporting_text": "Sandra Müller is the project manager for Project Nexus"},
+        {"source_entity": "Data Engineering Team", "source_type": "Team", "relationship_type": "MAINTAINS", "target_entity": "DataBridge ETL", "target_type": "Technology", "confidence": 0.98}
+      ]
+    },
+    "input_tokens": 1100,
+    "output_tokens": 380,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:40+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  },
+  {
+    "chunk_id": "fixture-chunk-010",
+    "document_id": "fixture-doc-006",
+    "source_file": "corpus/people/engineering_org.md",
+    "doc_hash": "abc006",
+    "section": "Department Leadership",
+    "extraction": {
+      "entities": [
+        {"name": "TechNova Corporation", "entity_type": "Company", "confidence": 0.99},
+        {"name": "Engineering Department", "entity_type": "Department", "confidence": 0.99},
+        {"name": "Marcus Thompson", "entity_type": "Person", "confidence": 0.99, "description": "Vice President of Engineering at TechNova."},
+        {"name": "Dr. Elena Vasquez", "entity_type": "Person", "confidence": 0.99},
+        {"name": "Priya Sharma", "entity_type": "Person", "confidence": 0.99},
+        {"name": "Platform Team", "entity_type": "Team", "confidence": 0.99},
+        {"name": "Data Engineering Team", "entity_type": "Team", "confidence": 0.99},
+        {"name": "DevOps Team", "entity_type": "Team", "confidence": 0.98},
+        {"name": "Aisha Patel", "entity_type": "Person", "confidence": 0.99},
+        {"name": "Sandra Müller", "entity_type": "Person", "confidence": 0.99},
+        {"name": "Kevin Park", "entity_type": "Person", "confidence": 0.99},
+        {"name": "Data Science Department", "entity_type": "Department", "confidence": 0.96, "description": "Department led by James Okafor at TechNova."}
+      ],
+      "relationships": [
+        {"source_entity": "Engineering Department", "source_type": "Department", "relationship_type": "PART_OF", "target_entity": "TechNova Corporation", "target_type": "Company", "confidence": 0.99, "supporting_text": "The Engineering Department is TechNova's largest department"},
+        {"source_entity": "Engineering Department", "source_type": "Department", "relationship_type": "LED_BY", "target_entity": "Marcus Thompson", "target_type": "Person", "confidence": 0.99},
+        {"source_entity": "Marcus Thompson", "source_type": "Person", "relationship_type": "MANAGES", "target_entity": "Platform Team", "target_type": "Team", "confidence": 0.98},
+        {"source_entity": "Marcus Thompson", "source_type": "Person", "relationship_type": "MANAGES", "target_entity": "Data Engineering Team", "target_type": "Team", "confidence": 0.98},
+        {"source_entity": "Marcus Thompson", "source_type": "Person", "relationship_type": "MANAGES", "target_entity": "DevOps Team", "target_type": "Team", "confidence": 0.97},
+        {"source_entity": "Data Engineering Team", "source_type": "Team", "relationship_type": "LED_BY", "target_entity": "Sandra Müller", "target_type": "Person", "confidence": 0.99},
+        {"source_entity": "DevOps Team", "source_type": "Team", "relationship_type": "LED_BY", "target_entity": "Kevin Park", "target_type": "Person", "confidence": 0.99}
+      ]
+    },
+    "input_tokens": 1040,
+    "output_tokens": 350,
+    "attempts": 1,
+    "extracted_at": "2024-01-15T10:00:45+00:00",
+    "model": "claude-haiku-4-5-20251001"
+  }
+]
