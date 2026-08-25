@@ -1,0 +1,461 @@
+[
+  {
+    "chunk_id": "96e0c30b-f3a1-5082-a17e-8148051cea3d",
+    "document_id": "f51df1a7-cc94-55e8-807b-349ad27e285e",
+    "chunk_index": 0,
+    "content": "# TechNova Acquires Apex Analytics — Acquisition Overview\n\n## Transaction Summary\n\nTechNova Corp completed the acquisition of Apex Analytics on August 7, 2023. The transaction was valued at approximately $220 million, paid entirely in cash. Apex Analytics had raised $85 million in venture capital funding across three rounds prior to the acquisition.\n\n## About Apex Analytics\n\nApex Analytics was a machine learning infrastructure company founded in San Francisco, California in 2018. The company was built by a founding team with backgrounds in ML engineering at Uber, Lyft, and Databricks. Its core mission was to make production machine learning accessible to data science teams without requiring deep MLOps expertise.\n\nApex Analytics' primary product was **ApexML**, a machine learning platform that provided:\n\n- A feature store for managing and versioning ML features across training and serving environments\n- An automated model training pipeline that ingested data from Apache Kafka topics\n- A model registry for versioning, auditing, and deploying trained models\n- A real-time model serving layer with sub-10ms p99 inference latency\n\nApexML was built with a Kafka-first architecture, meaning that both training data ingestion and real-time serving events were consumed and produced as Kafka messages. This design made ApexML highly composable with streaming data systems.\n\nAt the time of acquisition, ApexML had approximately 95 enterprise customers and was processing more than 2 billion inference requests per month.\n\n## Strategic Rationale\n\nTechNova CEO Robert Klein described the acquisition in a public statement:\n\n> \"The enterprise software market is rapidly shifting toward AI-native applications. Our customers are asking us for intelligent automation, predictive analytics, and real-time recommendations embedded directly into NovaSuite workflows. The Apex Analytics team has built a world-class ML platform that is both technically excellent and operationally mature. By bringing ApexML into TechNova, we can deliver AI capabilities to our customers without asking them to integrate disparate point solutions.\"\n\nDr. Elena Vasquez, TechNova's CTO, noted that ApexML's Kafka-based architecture made it highly compatible with TechNova's existing infrastructure, which already relied heavily on Apache Kafka for StellarDB replication.\n\n## Key Personnel Transitions",
+    "section": "TechNova Acquires Apex Analytics — Acquisition Overview",
+    "source_file": "corpus/companies/apex_analytics_acquisition.md",
+    "doc_type": "company",
+    "doc_hash": "d949eab7ebdd50ca3894d237d8beb9cbba92c6c92fe25db4ef09d01ee34d0ef8",
+    "token_count": 439,
+    "char_count": 2378,
+    "ingestion_timestamp": "2026-08-25T07:15:26.294986+00:00",
+    "metadata": {
+      "title": "TechNova Acquires Apex Analytics — Acquisition Overview",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "5f38c602-b400-564c-a350-becb712da0d9",
+    "document_id": "f51df1a7-cc94-55e8-807b-349ad27e285e",
+    "chunk_index": 1,
+    "content": "Dr. Elena Vasquez, TechNova's CTO, noted that ApexML's Kafka-based architecture made it highly compatible with TechNova's existing infrastructure, which already relied heavily on Apache Kafka for StellarDB replication.\n\n## Key Personnel Transitions\n\n**David Reyes**, Apex Analytics' Director of Engineering, joined TechNova as a Senior ML Engineer following the acquisition. Reyes was the engineering lead for ApexML's model serving infrastructure and was responsible for the feature store design. At TechNova, Reyes leads Project Atlas, the initiative to integrate ApexML into NovaSuite's analytics workflows.\n\nReyes reports to James Okafor, Director of Data Science at TechNova, and works closely with the ML Team, which assumed ownership of ApexML post-acquisition.\n\nThree additional ML engineers from Apex Analytics joined TechNova's ML Team.\n\n## Post-Acquisition Integration\n\nThe ML Team at TechNova, under the direction of James Okafor, is managing ApexML's integration into TechNova's product suite. The integration is proceeding in two tracks:\n\n**Track 1 — Internal tooling:** ApexML is being adopted by TechNova's own data science teams for building and deploying ML models that power NovaSuite Analytics features, such as anomaly detection and demand forecasting.\n\n**Track 2 — Customer-facing AI:** Project Atlas is building ApexML-powered AI features directly into NovaSuite, enabling TechNova's enterprise customers to train and deploy their own ML models within the NovaSuite environment without requiring separate MLOps infrastructure.\n\nBoth tracks consume training data from Apache Kafka topics maintained by TechNova's Data Engineering Team.\n\n## Current Status\n\nApexML is maintained by TechNova's ML Team as of 2024. The Apex Analytics corporate entity has been dissolved, and all intellectual property, customer contracts, and engineering talent have been fully absorbed into TechNova Corporation. David Reyes continues to lead ApexML engineering within TechNova's Data Science Department.",
+    "section": "Introduction",
+    "source_file": "corpus/companies/apex_analytics_acquisition.md",
+    "doc_type": "company",
+    "doc_hash": "d949eab7ebdd50ca3894d237d8beb9cbba92c6c92fe25db4ef09d01ee34d0ef8",
+    "token_count": 385,
+    "char_count": 2006,
+    "ingestion_timestamp": "2026-08-25T07:15:26.294986+00:00",
+    "metadata": {
+      "title": "TechNova Acquires Apex Analytics — Acquisition Overview",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "aeb2a227-1398-5b6c-9086-108a07737fc5",
+    "document_id": "4cb66611-f711-551e-962a-ef86c64a3cb3",
+    "chunk_index": 0,
+    "content": "# TechNova and CloudBridge Ltd — Technology Partnership\n\n## Partnership Overview\n\nTechNova Corporation and CloudBridge Ltd entered into a formal technology partnership agreement in March 2021. The partnership centers on joint development and go-to-market activities related to cloud data synchronization for enterprise customers who operate hybrid on-premises and cloud environments.\n\n## About CloudBridge Ltd\n\nCloudBridge Ltd is a cloud infrastructure company headquartered in Dublin, Ireland. Founded in 2014, CloudBridge specializes in secure, low-latency data synchronization between enterprise on-premises systems and major public cloud providers including AWS, Azure, and Google Cloud Platform.\n\nCloudBridge developed **CloudSync**, a data synchronization service that provides:\n\n- Real-time bidirectional data replication between enterprise systems and cloud storage\n- Conflict resolution mechanisms for concurrent data writes\n- End-to-end encryption with customer-managed keys\n- Compliance audit logging for regulated industries\n\nCloudSync is used by TechNova to enable NovaSuite customers to mirror their operational data to cloud-based data lakes and warehouses in near-real time.\n\n## Technical Integration\n\nThe TechNova and CloudBridge technical integration connects CloudSync to TechNova's GraphQL Gateway, allowing NovaSuite customers to configure synchronization rules through the NovaSuite user interface without requiring direct configuration of CloudBridge's API.\n\nTechNova's Platform Team developed and maintains the connector between CloudSync and the GraphQL Gateway. This connector translates NovaSuite's internal data events into the CloudSync API format.\n\n## Commercial Arrangement\n\nUnder the partnership, TechNova resells CloudSync as a bundled offering with NovaSuite Enterprise tier subscriptions. CloudBridge receives a revenue share for each NovaSuite customer that activates CloudSync.\n\nDataForge Inc, a data interoperability company, also participates in a three-way data standards working group with TechNova and CloudBridge, focused on defining common schemas for enterprise data exchange.\n\n## Current Status\n\nThe partnership is active as of 2024. TechNova's CloudSync integration is used by approximately 340 NovaSuite customers. TechNova and CloudBridge are jointly evaluating an expansion of the partnership to include real-time streaming data synchronization powered by Apache Kafka.",
+    "section": "TechNova and CloudBridge Ltd — Technology Partnership",
+    "source_file": "corpus/companies/cloudbridge_partnership.md",
+    "doc_type": "company",
+    "doc_hash": "15ee59c66cc352d4f8d54a54016b641a9d8340268a3b42d81c4b28ad22915c74",
+    "token_count": 423,
+    "char_count": 2419,
+    "ingestion_timestamp": "2026-08-25T07:15:26.609922+00:00",
+    "metadata": {
+      "title": "TechNova and CloudBridge Ltd — Technology Partnership",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "d8b7beef-36c2-5461-92d2-304cde0073c6",
+    "document_id": "b9f03205-c80f-549e-b366-2f7f3db0e08b",
+    "chunk_index": 0,
+    "content": "# TechNova Acquires Stellar Systems — Acquisition Overview\n\n## Transaction Summary\n\nTechNova Corporation completed the acquisition of Stellar Systems Inc. on February 14, 2022. The total transaction value was approximately $340 million, comprising $295 million in cash and $45 million in TechNova restricted stock units. The acquisition was approved by the boards of both companies in December 2021 and received regulatory clearance in January 2022.\n\n## About Stellar Systems\n\nStellar Systems Inc. was a privately held data infrastructure company founded in Seattle, Washington in 2015. The company was founded by a team of former database engineers from Amazon Web Services and Microsoft Research, with a mission to build distributed database systems capable of handling real-time analytical workloads at petabyte scale.\n\nStellar Systems' primary product was **StellarDB**, a distributed, column-oriented database designed for high-throughput analytical queries across horizontally sharded clusters. StellarDB supported multi-region replication using Apache Kafka as its underlying event streaming layer. At the time of acquisition, StellarDB had been deployed by more than 180 enterprise customers.\n\nStellar Systems employed approximately 220 people at the time of the acquisition, primarily engineers and customer success staff based in Seattle.\n\n## Strategic Rationale\n\nTechNova's then-CTO Dr. Elena Vasquez described the acquisition rationale in an internal memo circulated to engineering leadership:\n\n> \"TechNova's legacy PostgreSQL-based infrastructure served us well through our first decade, but we are approaching the architectural limits of what a traditional relational system can support. Stellar Systems has built exactly the kind of distributed, analytically-oriented database that our NovaSuite platform needs to scale to the next generation of customer workloads. Bringing StellarDB in-house gives us full control over our data layer and eliminates a critical external dependency.\"\n\n## Key Personnel Transitions\n\nFollowing the acquisition, several Stellar Systems engineers joined TechNova in senior roles:\n\n**Priya Sharma**, previously Stellar Systems' Principal Architect, joined TechNova as Lead Architect within the Engineering Department. Sharma is credited as the primary designer of StellarDB's query optimizer and replication protocol. At TechNova, she has been responsible for integrating StellarDB into the NovaSuite platform and leading Project Phoenix, the internal initiative to migrate NovaSuite's data layer to StellarDB.\n\nTwo additional senior engineers from Stellar Systems joined TechNova's Platform Team, which assumed ownership of StellarDB operations and ongoing development after the acquisition closed.",
+    "section": "TechNova Acquires Stellar Systems — Acquisition Overview",
+    "source_file": "corpus/companies/stellar_systems_acquisition.md",
+    "doc_type": "company",
+    "doc_hash": "46c8ceebb6a6742fe2f9f34289fc31269c87aedbde229fc370ea4f7b47e1bb56",
+    "token_count": 486,
+    "char_count": 2742,
+    "ingestion_timestamp": "2026-08-25T07:15:26.610576+00:00",
+    "metadata": {
+      "title": "TechNova Acquires Stellar Systems — Acquisition Overview",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "7adb9662-fdb0-53b4-839a-636c233f1cbb",
+    "document_id": "b9f03205-c80f-549e-b366-2f7f3db0e08b",
+    "chunk_index": 1,
+    "content": "Two additional senior engineers from Stellar Systems joined TechNova's Platform Team, which assumed ownership of StellarDB operations and ongoing development after the acquisition closed.\n\n## Post-Acquisition Integration\n\nStellarDB integration into TechNova's infrastructure was managed by the Platform Team under Aisha Patel. The integration involved:\n\n1. Migrating NovaSuite's transactional data storage from the legacy relational system to StellarDB\n2. Establishing Kafka-based replication pipelines to synchronize StellarDB clusters across TechNova's data centers in Austin, London, and Singapore\n3. Developing internal tooling to allow TechNova's product teams to query StellarDB through TechNova's GraphQL Gateway\n\nBy Q3 2022, StellarDB had been deployed across all three of TechNova's primary data centers and was handling production traffic for NovaSuite.\n\n## Current Status\n\nAs of 2024, Stellar Systems operates as a wholly owned subsidiary of TechNova Corporation. The Stellar Systems brand has been retained for external communications regarding StellarDB, though engineering operations are fully integrated into TechNova's Engineering Department. The Platform Team at TechNova maintains StellarDB and is responsible for all ongoing development, bug fixes, and customer support related to the database.\n\nApache Kafka continues to serve as the event streaming backbone for StellarDB's replication and change data capture pipelines.",
+    "section": "Introduction",
+    "source_file": "corpus/companies/stellar_systems_acquisition.md",
+    "doc_type": "company",
+    "doc_hash": "46c8ceebb6a6742fe2f9f34289fc31269c87aedbde229fc370ea4f7b47e1bb56",
+    "token_count": 262,
+    "char_count": 1441,
+    "ingestion_timestamp": "2026-08-25T07:15:26.610576+00:00",
+    "metadata": {
+      "title": "TechNova Acquires Stellar Systems — Acquisition Overview",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "afa75d00-6d23-5d0f-a8de-d5410e177d7b",
+    "document_id": "e0e32df1-7bc3-584d-803d-3ffe32a86cdc",
+    "chunk_index": 0,
+    "content": "# TechNova Corporation — Company Overview\n\n## About TechNova\n\nTechNova Corporation is an enterprise software company founded in 2010 and headquartered in Austin, Texas. The company specializes in integrated business intelligence, data infrastructure, and machine learning platforms for large enterprises across financial services, healthcare, and logistics sectors.\n\nTechNova's flagship product, NovaSuite, is a comprehensive enterprise resource planning and analytics platform used by more than 1,400 organizations worldwide. NovaSuite provides modules for financial reporting, supply chain visibility, customer analytics, and operational dashboards.\n\nAs of 2024, TechNova employs approximately 3,800 people across offices in Austin, London, Singapore, and Toronto.\n\n## Leadership\n\nRobert Klein serves as Chief Executive Officer of TechNova Corporation. Klein joined TechNova in 2014 as Chief Revenue Officer before being appointed CEO in 2018. Under his leadership, TechNova has completed two strategic acquisitions and expanded its annual recurring revenue from $120M to over $480M.\n\nDr. Elena Vasquez serves as Chief Technology Officer. Vasquez joined TechNova in 2016 from a research position at Carnegie Mellon University, where she led distributed systems research. She oversees all engineering, architecture, and platform strategy decisions at TechNova.\n\nMarcus Thompson is Vice President of Engineering and reports directly to Dr. Vasquez. Thompson manages the Engineering Department, which includes the Platform Team, the Data Engineering Team, and the DevOps Team.\n\n## Engineering Department\n\nThe Engineering Department is TechNova's largest division, comprising over 900 engineers. The department is organized into three primary teams:\n\n- **Platform Team** — responsible for core infrastructure, database systems, and developer tooling. The Platform Team maintains StellarDB, TechNova's primary distributed database, as well as the internal GraphQL Gateway used by all product teams. The team is led by Aisha Patel.\n\n- **Data Engineering Team** — responsible for data pipelines, ETL infrastructure, and the DataBridge platform. Led by Sandra Müller.\n\n- **DevOps Team** — responsible for deployment automation, container orchestration using Kubernetes, and infrastructure reliability. Led by Kevin Park.\n\n## Strategic Acquisitions\n\nTechNova has pursued an acquisition strategy to accelerate its technology capabilities:",
+    "section": "TechNova Corporation — Company Overview",
+    "source_file": "corpus/companies/technova_overview.md",
+    "doc_type": "company",
+    "doc_hash": "17380abfb8c889d11e53eda5b12ef9a100f9d70f91594242a43ab1692d5ded0c",
+    "token_count": 446,
+    "char_count": 2430,
+    "ingestion_timestamp": "2026-08-25T07:15:26.611531+00:00",
+    "metadata": {
+      "title": "TechNova Corporation — Company Overview",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "a71a2089-3caf-579a-ba00-b8c2b1bbd611",
+    "document_id": "e0e32df1-7bc3-584d-803d-3ffe32a86cdc",
+    "chunk_index": 1,
+    "content": "- **Data Engineering Team** — responsible for data pipelines, ETL infrastructure, and the DataBridge platform. Led by Sandra Müller.\n\n- **DevOps Team** — responsible for deployment automation, container orchestration using Kubernetes, and infrastructure reliability. Led by Kevin Park.\n\n## Strategic Acquisitions\n\nTechNova has pursued an acquisition strategy to accelerate its technology capabilities:\n\nIn February 2022, TechNova acquired Stellar Systems Inc. for approximately $340 million. Stellar Systems was a data infrastructure company based in Seattle that developed StellarDB, a high-performance distributed database system. Following the acquisition, StellarDB became TechNova's primary database platform, replacing the company's legacy relational database infrastructure.\n\nIn August 2023, TechNova completed the acquisition of Apex Analytics for approximately $220 million. Apex Analytics, based in San Francisco, had developed ApexML, a production-grade machine learning platform used by data science and engineering teams. ApexML is now central to TechNova's AI product roadmap.\n\n## Technology Partnerships\n\nTechNova maintains a formal technology partnership with CloudBridge Ltd, a cloud infrastructure provider. The partnership enables TechNova's CloudSync service to synchronize NovaSuite data across customer environments.\n\nTechNova also maintains a strategic partnership with DataForge Inc, focused on joint development of data interoperability standards.\n\n## Products\n\nTechNova's primary products include:\n\n- **NovaSuite** — the core enterprise platform\n- **NovaSuite Analytics** — a self-service analytics module built on NovaSuite\n- **CloudSync** — a data synchronization service developed in partnership with CloudBridge Ltd\n\n## Data Science Department\n\nThe Data Science Department is led by James Okafor, who holds the title of Director of Data Science. The department includes the ML Team, which is responsible for integrating ApexML into TechNova's products and running machine learning workloads at scale.",
+    "section": "Introduction",
+    "source_file": "corpus/companies/technova_overview.md",
+    "doc_type": "company",
+    "doc_hash": "17380abfb8c889d11e53eda5b12ef9a100f9d70f91594242a43ab1692d5ded0c",
+    "token_count": 369,
+    "char_count": 2030,
+    "ingestion_timestamp": "2026-08-25T07:15:26.611531+00:00",
+    "metadata": {
+      "title": "TechNova Corporation — Company Overview",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "6ea8a98d-cf38-5f41-918c-a425bb4091dc",
+    "document_id": "741a1322-a1ae-549f-b17f-c3ff7e899ee4",
+    "chunk_index": 0,
+    "content": "# TechNova Data Science Department — Team Overview\n\n## Overview\n\nTechNova's Data Science Department is led by James Okafor, who holds the title of Director of Data Science. The department is separate from the Engineering Department and reports directly to Dr. Elena Vasquez, CTO of TechNova Corporation.\n\nThe Data Science Department includes the ML Team, which is responsible for the ApexML platform and all machine learning workloads within TechNova.\n\n## Department Leadership\n\n**James Okafor** — Director of Data Science\n\nJames Okafor joined TechNova in 2021 from a Senior Data Scientist role at a financial services firm. He was hired to build TechNova's data science capability from the ground up. Under his leadership, TechNova's data science team has grown from four people to more than 60 engineers and data scientists.\n\nOkafor manages the ML Team and oversees all ML initiatives at TechNova, including Project Atlas. He works closely with Marcus Thompson, VP of Engineering, to coordinate between the Data Science Department and the Engineering Department on shared infrastructure projects such as Project Nexus.\n\nOkafor reports to Dr. Elena Vasquez, CTO.\n\n## ML Team\n\nThe ML Team is part of TechNova's Data Science Department. The team is responsible for:\n\n- **ApexML** — TechNova's ML platform (acquired from Apex Analytics in 2023; maintained by ML Team)\n- Machine learning model development for NovaSuite Analytics features\n- Feature engineering in ApexML's feature store\n- ML model monitoring and retraining in production\n\nThe ML Team is the owner of Project Atlas, TechNova's initiative to integrate ApexML into NovaSuite's AI features.\n\n**David Reyes** — Senior ML Engineer, Project Atlas Lead\n\nDavid Reyes joined TechNova from Apex Analytics as part of the August 2023 acquisition. At Apex Analytics, Reyes was the Director of Engineering and the lead designer of ApexML's feature store and model serving infrastructure.\n\nAt TechNova, Reyes leads Project Atlas as the technical project lead and is the primary technical owner of the ApexML platform. He reports to James Okafor, Director of Data Science.\n\nReyes collaborates closely with the Platform Team (which provides the GraphQL Gateway that routes inference requests to ApexML) and the Data Engineering Team (which operates the Kafka infrastructure and DataBridge ETL pipelines that feed data into ApexML's feature store).\n\n## Cross-Department Collaboration",
+    "section": "TechNova Data Science Department — Team Overview",
+    "source_file": "corpus/people/data_science_team.md",
+    "doc_type": "people",
+    "doc_hash": "466e2a6d36da4dabfbf0dc7249ef86e7fb936b7460038b42d75d2579e11f733b",
+    "token_count": 490,
+    "char_count": 2428,
+    "ingestion_timestamp": "2026-08-25T07:15:26.612939+00:00",
+    "metadata": {
+      "title": "TechNova Data Science Department — Team Overview",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "fe19dc0d-14fb-5e45-bcda-3ccf1f9b53c2",
+    "document_id": "741a1322-a1ae-549f-b17f-c3ff7e899ee4",
+    "chunk_index": 1,
+    "content": "At TechNova, Reyes leads Project Atlas as the technical project lead and is the primary technical owner of the ApexML platform. He reports to James Okafor, Director of Data Science.\n\nReyes collaborates closely with the Platform Team (which provides the GraphQL Gateway that routes inference requests to ApexML) and the Data Engineering Team (which operates the Kafka infrastructure and DataBridge ETL pipelines that feed data into ApexML's feature store).\n\n## Cross-Department Collaboration\n\nThe Data Science Department depends on the Engineering Department for several critical infrastructure capabilities:\n\n- **Apache Kafka** (provided by Data Engineering Team): ApexML's training and real-time feature pipelines consume from Kafka topics managed by the Data Engineering Team.\n- **Kubernetes** (provided by DevOps Team): ApexML's inference serving layer runs on Kubernetes clusters managed by the DevOps Team.\n- **GraphQL Gateway** (provided by Platform Team): Inference requests from NovaSuite are routed through the GraphQL Gateway before reaching ApexML.\n- **DataBridge ETL** (provided by Data Engineering Team): The DataBridge pipelines transform StellarDB data into ML features for ApexML's feature store.\n\nThis cross-departmental dependency structure is a key reason why Project Nexus — which integrates StellarDB, ApexML, and DataBridge ETL — requires coordination across both the Engineering Department and the Data Science Department.",
+    "section": "Introduction",
+    "source_file": "corpus/people/data_science_team.md",
+    "doc_type": "people",
+    "doc_hash": "466e2a6d36da4dabfbf0dc7249ef86e7fb936b7460038b42d75d2579e11f733b",
+    "token_count": 272,
+    "char_count": 1445,
+    "ingestion_timestamp": "2026-08-25T07:15:26.612939+00:00",
+    "metadata": {
+      "title": "TechNova Data Science Department — Team Overview",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "3939b9c2-3966-5be0-9615-9cf27ca2a709",
+    "document_id": "a5f8c9a7-7ac6-5c52-9fb9-e371d1e1bbc3",
+    "chunk_index": 0,
+    "content": "# TechNova Engineering Department — Organizational Structure\n\n## Overview\n\nThe Engineering Department is TechNova's largest department, comprising approximately 900 engineers as of Q1 2024. The department is part of TechNova Corporation and reports to Marcus Thompson, Vice President of Engineering. Marcus Thompson reports directly to Dr. Elena Vasquez, Chief Technology Officer.\n\nThe Engineering Department is organized into three teams: the Platform Team, the Data Engineering Team, and the DevOps Team.\n\n## Department Leadership\n\n**Marcus Thompson** — Vice President of Engineering\n\nMarcus Thompson joined TechNova in 2017 as Director of Infrastructure. He was promoted to VP of Engineering in 2020. Thompson manages the Engineering Department's three teams and is responsible for engineering hiring, technical roadmap execution, and cross-team coordination.\n\nThompson manages Aisha Patel, Sandra Müller, and Kevin Park, who are the leads of the three Engineering Department teams.\n\n**Priya Sharma** — Lead Architect\n\nPriya Sharma is TechNova's Lead Architect and reports to Dr. Elena Vasquez, CTO. Sharma joined TechNova from Stellar Systems, Inc. as part of TechNova's acquisition of Stellar Systems in February 2022. At Stellar Systems, she held the role of Principal Architect and was the primary designer of StellarDB's query optimizer and replication protocol.\n\nAt TechNova, Sharma's role is cross-functional: she reviews architectural decisions across all three Engineering Department teams and serves as a technical advisor to Project Phoenix and Project Nexus. She is not a team lead but is a senior individual contributor with broad technical authority.\n\n## Platform Team\n\n**Lead:** Aisha Patel — Head of Platform Team\n\nThe Platform Team is part of TechNova's Engineering Department. The team is responsible for TechNova's core infrastructure technologies:\n\n- **StellarDB** — TechNova's primary distributed database (acquired from Stellar Systems in 2022; maintained by Platform Team)\n- **GraphQL Gateway** — TechNova's internal query routing layer (developed by Platform Team; used by all NovaSuite product teams)\n\nThe Platform Team is the owner of Project Phoenix, the NovaSuite-to-StellarDB migration initiative. Lisa Chen, Senior Engineer on the Platform Team, is the technical lead for Project Phoenix.",
+    "section": "TechNova Engineering Department — Organizational Structure",
+    "source_file": "corpus/people/engineering_org.md",
+    "doc_type": "people",
+    "doc_hash": "bb88994421cd02907e310d8785b05e458fd956b63848d497accdad73131c9e83",
+    "token_count": 451,
+    "char_count": 2321,
+    "ingestion_timestamp": "2026-08-25T07:15:26.613839+00:00",
+    "metadata": {
+      "title": "TechNova Engineering Department — Organizational Structure",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "5f185af3-ccc7-5a2a-b133-4d1ecf0d3731",
+    "document_id": "a5f8c9a7-7ac6-5c52-9fb9-e371d1e1bbc3",
+    "chunk_index": 1,
+    "content": "- **StellarDB** — TechNova's primary distributed database (acquired from Stellar Systems in 2022; maintained by Platform Team)\n- **GraphQL Gateway** — TechNova's internal query routing layer (developed by Platform Team; used by all NovaSuite product teams)\n\nThe Platform Team is the owner of Project Phoenix, the NovaSuite-to-StellarDB migration initiative. Lisa Chen, Senior Engineer on the Platform Team, is the technical lead for Project Phoenix.\n\nThe Platform Team is also the technical dependency point for any team that requires StellarDB or GraphQL Gateway changes. Teams building features that require new StellarDB query patterns or new GraphQL Gateway capabilities must submit requests to the Platform Team.\n\nAisha Patel reports to Marcus Thompson, VP of Engineering.\n\n## Data Engineering Team\n\n**Lead:** Sandra Müller — Engineering Manager, Data Engineering\n\nThe Data Engineering Team is part of TechNova's Engineering Department. The team is responsible for:\n\n- **DataBridge ETL** — TechNova's internal ETL platform (developed and maintained by Data Engineering Team)\n- **Apache Kafka** — TechNova's central event streaming cluster (operated by Data Engineering Team)\n- Data pipeline development for internal data science and ML workloads\n- Data quality monitoring and lineage tracking\n\nThe Data Engineering Team manages Project Nexus, the unified data platform initiative. Sandra Müller is the project manager for Project Nexus.\n\nThe team operates the Apache Kafka cluster that is shared by StellarDB's replication pipeline, DataBridge ETL, and ApexML. This makes the Data Engineering Team a critical infrastructure dependency for the Platform Team and the ML Team.\n\nSandra Müller reports to Marcus Thompson, VP of Engineering.\n\n## DevOps Team\n\n**Lead:** Kevin Park — DevOps Lead\n\nThe DevOps Team is part of TechNova's Engineering Department. The team is responsible for:\n\n- **Kubernetes** — TechNova's container orchestration platform for all production services\n- CI/CD pipeline management\n- Infrastructure provisioning and cost management\n- Production deployment support for all TechNova services\n\nThe DevOps Team provides Kubernetes infrastructure to Project Phoenix (NovaSuite application deployment), Project Atlas (ApexML inference services deployment), and Project Nexus (DataBridge ETL deployment).\n\nKevin Park reports to Marcus Thompson, VP of Engineering.\n\n## Cross-Team Dependencies\n\nThe three teams within the Engineering Department have significant interdependencies:",
+    "section": "Introduction",
+    "source_file": "corpus/people/engineering_org.md",
+    "doc_type": "people",
+    "doc_hash": "bb88994421cd02907e310d8785b05e458fd956b63848d497accdad73131c9e83",
+    "token_count": 476,
+    "char_count": 2494,
+    "ingestion_timestamp": "2026-08-25T07:15:26.613839+00:00",
+    "metadata": {
+      "title": "TechNova Engineering Department — Organizational Structure",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "21a27e74-1048-5eeb-b740-fee50fca8e8c",
+    "document_id": "a5f8c9a7-7ac6-5c52-9fb9-e371d1e1bbc3",
+    "chunk_index": 2,
+    "content": "The DevOps Team provides Kubernetes infrastructure to Project Phoenix (NovaSuite application deployment), Project Atlas (ApexML inference services deployment), and Project Nexus (DataBridge ETL deployment).\n\nKevin Park reports to Marcus Thompson, VP of Engineering.\n\n## Cross-Team Dependencies\n\nThe three teams within the Engineering Department have significant interdependencies:\n\n| Consuming Team | Depending On | Providing Team |\n|---|---|---|\n| Platform Team | Apache Kafka (StellarDB replication) | Data Engineering Team |\n| ML Team | Apache Kafka (ApexML feature ingestion) | Data Engineering Team |\n| Platform Team | Kubernetes (StellarDB deployment) | DevOps Team |\n| ML Team | Kubernetes (ApexML inference deployment) | DevOps Team |\n| Data Engineering Team | Kubernetes (DataBridge ETL deployment) | DevOps Team |\n\nThis dependency structure means the Data Engineering Team (Kafka) and DevOps Team (Kubernetes) are foundational infrastructure providers for both the Platform Team and the ML Team.",
+    "section": "DevOps Team",
+    "source_file": "corpus/people/engineering_org.md",
+    "doc_type": "people",
+    "doc_hash": "bb88994421cd02907e310d8785b05e458fd956b63848d497accdad73131c9e83",
+    "token_count": 203,
+    "char_count": 1005,
+    "ingestion_timestamp": "2026-08-25T07:15:26.613839+00:00",
+    "metadata": {
+      "title": "TechNova Engineering Department — Organizational Structure",
+      "start_index": 3986
+    }
+  },
+  {
+    "chunk_id": "f90dbc24-46b6-5a44-a538-cde8858a3673",
+    "document_id": "dea88dc8-4f2f-577d-b944-a894ab96e15f",
+    "chunk_index": 0,
+    "content": "# Project Atlas — ML Platform Integration\n\n## Project Overview\n\nProject Atlas is TechNova's initiative to integrate ApexML into NovaSuite's product suite, delivering AI-powered features directly within the NovaSuite customer experience. The project was launched in Q4 2023 following the completion of the Apex Analytics acquisition.\n\nProject Atlas is managed by the ML Team and is led by David Reyes, who joined TechNova from Apex Analytics as part of the acquisition.\n\n## Objectives\n\n1. Embed ApexML's model serving capabilities into NovaSuite, allowing TechNova's enterprise customers to run ML inference workflows without external MLOps infrastructure.\n2. Deliver three initial AI-powered NovaSuite features: demand forecasting, anomaly detection in financial reports, and predictive supply chain alerts.\n3. Establish a shared feature store on ApexML that both TechNova's internal data science team and NovaSuite customers can use to build ML models against NovaSuite data.\n\n## Technical Architecture\n\n**ML Platform:** Project Atlas uses ApexML as the underlying machine learning platform. ApexML manages feature engineering, model training, model versioning, and real-time inference serving.\n\n**Data ingestion:** ApexML's training pipelines consume NovaSuite operational data via Apache Kafka topics published by TechNova's Data Engineering Team. The Kafka-first architecture inherited from Apex Analytics integrates naturally with TechNova's existing event streaming infrastructure.\n\n**Model serving:** Trained models are served through ApexML's inference layer, which is deployed alongside NovaSuite's application services on Kubernetes. Inference requests from NovaSuite are routed to ApexML via TechNova's GraphQL Gateway, ensuring all model calls go through the same access control and rate limiting layer as database queries.\n\n**Feature store:** The Project Atlas feature store is built on ApexML's feature management system. It maintains pre-computed features — such as rolling averages, seasonality indicators, and customer segment embeddings — that are shared across all ML models trained for NovaSuite use cases.\n\n## Leadership and Team\n\n**David Reyes** leads Project Atlas as the technical project lead. Reyes designed ApexML's feature store and model serving infrastructure at Apex Analytics and is the primary authority on ApexML's architecture within TechNova.\n\nReyes reports to James Okafor, Director of Data Science, who provides strategic direction for Project Atlas and manages the relationship between the ML Team and TechNova's product leadership.",
+    "section": "Project Atlas — ML Platform Integration",
+    "source_file": "corpus/projects/project_atlas.md",
+    "doc_type": "project",
+    "doc_hash": "810cffaaf56783320175873a389d10127acff2bae11f62dd6cafc892526061dc",
+    "token_count": 469,
+    "char_count": 2571,
+    "ingestion_timestamp": "2026-08-25T07:15:26.615145+00:00",
+    "metadata": {
+      "title": "Project Atlas — ML Platform Integration",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "682c4f45-517d-5034-9a75-2ac7cfc1a6f1",
+    "document_id": "dea88dc8-4f2f-577d-b944-a894ab96e15f",
+    "chunk_index": 1,
+    "content": "## Leadership and Team\n\n**David Reyes** leads Project Atlas as the technical project lead. Reyes designed ApexML's feature store and model serving infrastructure at Apex Analytics and is the primary authority on ApexML's architecture within TechNova.\n\nReyes reports to James Okafor, Director of Data Science, who provides strategic direction for Project Atlas and manages the relationship between the ML Team and TechNova's product leadership.\n\nThe ML Team is responsible for Project Atlas and owns ApexML within TechNova. The ML Team is part of the Data Science Department.\n\n## Dependencies\n\n- **ApexML** — the core ML platform (developed by Apex Analytics, acquired by TechNova in 2023; maintained by the ML Team)\n- **Apache Kafka** — event streaming for training data ingestion and real-time feature updates\n- **Kubernetes** — container orchestration for ApexML inference services, managed by the DevOps Team\n- **GraphQL Gateway** — request routing layer, developed and maintained by the Platform Team\n\n## Current Status\n\nAs of Q1 2024, Project Atlas is in active development. The demand forecasting model has been trained and is running in a limited production rollout with five NovaSuite Enterprise customers. The anomaly detection and supply chain alert models are in the training and evaluation phase.\n\nFull rollout of all three AI features is expected in Q3 2024.",
+    "section": "Introduction",
+    "source_file": "corpus/projects/project_atlas.md",
+    "doc_type": "project",
+    "doc_hash": "810cffaaf56783320175873a389d10127acff2bae11f62dd6cafc892526061dc",
+    "token_count": 276,
+    "char_count": 1371,
+    "ingestion_timestamp": "2026-08-25T07:15:26.615145+00:00",
+    "metadata": {
+      "title": "Project Atlas — ML Platform Integration",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "237deab6-196f-5ea9-8b75-9c08ca441517",
+    "document_id": "46c7c33c-5772-5b17-b9af-dc22895461c5",
+    "chunk_index": 0,
+    "content": "# Project Horizon — Customer-Facing Analytics Dashboard\n\n## Project Overview\n\nProject Horizon is TechNova's initiative to build a next-generation customer-facing analytics dashboard within NovaSuite. The goal is to replace NovaSuite's existing static reporting views with an interactive, self-service analytics experience.\n\nProject Horizon is managed by TechNova's Frontend Team and is owned by TechNova Corporation.\n\n## Objectives\n\n1. Deliver an interactive analytics dashboard embedded within NovaSuite that customers can use without training.\n2. Support custom dashboard configurations per customer, persisted in NovaSuite's settings store.\n3. Integrate with NovaSuite Analytics to expose AI-generated insights alongside traditional metrics.\n4. Replace legacy static report generation with real-time query results.\n\n## Technical Architecture\n\n**Frontend:** Project Horizon's dashboard is a React-based single-page application embedded within NovaSuite's web interface.\n\n**Data access:** The Horizon dashboard sends all data queries through TechNova's GraphQL Gateway. The GraphQL Gateway routes queries to StellarDB for operational data and to ApexML for AI-generated insights from Project Atlas.\n\n**NovaSuite Analytics dependency:** Project Horizon depends on NovaSuite Analytics for its AI insights layer. NovaSuite Analytics is the module that exposes the ML model outputs from Project Atlas as customer-visible metrics.\n\n**Authentication and permissions:** Dashboard access and data visibility are controlled by NovaSuite's existing permission model, enforced at the GraphQL Gateway layer.\n\n## Leadership\n\nThe Frontend Team is responsible for Project Horizon. The Frontend Team is part of TechNova's Engineering Department.\n\nProject Horizon is coordinated with Project Atlas (which provides the ML-powered insights that Horizon displays) and with Project Phoenix (which ensures the underlying StellarDB data is available with the performance characteristics that Horizon requires for real-time queries).\n\n## Dependencies\n\n- **GraphQL Gateway** — primary data access layer, routes queries to StellarDB and ApexML\n- **NovaSuite Analytics** — provides AI-powered insights from Project Atlas\n- **StellarDB** — underlying operational data store (via GraphQL Gateway)\n\n## Current Status\n\nProject Horizon is in early development as of Q1 2024. The dashboard framework and GraphQL integration are complete. Data visualization components are in development. Customer pilot rollout is planned for Q4 2024 alongside the full completion of Project Phoenix.",
+    "section": "Project Horizon — Customer-Facing Analytics Dashboard",
+    "source_file": "corpus/projects/project_horizon.md",
+    "doc_type": "project",
+    "doc_hash": "7d58c315f09a52e78db266ba07adeb5cf7d52182399d1e61c95c2ed333e4b01d",
+    "token_count": 454,
+    "char_count": 2551,
+    "ingestion_timestamp": "2026-08-25T07:15:26.615992+00:00",
+    "metadata": {
+      "title": "Project Horizon — Customer-Facing Analytics Dashboard",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "f343ee3a-1f45-58cb-9be2-1aec56c488ed",
+    "document_id": "16bfd1c0-3bd2-599c-a6c2-eb4b662c15b4",
+    "chunk_index": 0,
+    "content": "# Project Nexus — Unified Data Platform\n\n## Project Overview\n\nProject Nexus is TechNova's strategic initiative to build a unified data platform that combines StellarDB and ApexML into a single, cohesive data infrastructure layer for TechNova's internal engineering teams and NovaSuite customers.\n\nThe project is owned by TechNova Corporation and managed by the Data Engineering Team, led by Sandra Müller.\n\n## Strategic Context\n\nPrior to Project Nexus, TechNova's data infrastructure was organized around two distinct stacks that evolved from its two acquisitions:\n\n- The **StellarDB stack**, managed by the Platform Team, which served NovaSuite's transactional and analytical data storage (Project Phoenix).\n- The **ApexML stack**, managed by the ML Team, which served machine learning workloads (Project Atlas).\n\nWhile both stacks were individually capable, operating them as separate systems created friction: data had to be manually synchronized between StellarDB and ApexML's feature store, and teams working on analytics features had to coordinate across two infrastructure domains.\n\nProject Nexus addresses this by building a unified data platform in which StellarDB serves as the system of record and ApexML's feature store is continuously updated from StellarDB through real-time streaming pipelines.\n\n## Technical Architecture\n\n**Primary store:** StellarDB serves as the ground-truth data store for all NovaSuite operational data. All writes flow into StellarDB first.\n\n**ML feature extraction:** DataBridge ETL, TechNova's internal ETL platform developed and maintained by the Data Engineering Team, reads change events from StellarDB via Apache Kafka and transforms them into features written to ApexML's feature store.\n\n**ML Platform:** ApexML consumes features from its feature store to train and serve ML models. The feature store is continuously refreshed by the DataBridge ETL pipelines.\n\n**Unified query interface:** TechNova's GraphQL Gateway exposes a single query interface for both structured data queries (routed to StellarDB) and ML inference requests (routed to ApexML). NovaSuite product teams write GraphQL queries without needing to know which underlying system will respond.\n\n**Event streaming:** Apache Kafka is the central message bus for Project Nexus, used for:\n  - StellarDB change data capture (published by the Platform Team)\n  - DataBridge ETL pipeline triggers (consumed by the Data Engineering Team)\n  - ApexML real-time feature updates (consumed by the ML Team)",
+    "section": "Project Nexus — Unified Data Platform",
+    "source_file": "corpus/projects/project_nexus.md",
+    "doc_type": "project",
+    "doc_hash": "2b707f0b955f45a7a821c14a15f21db400701a976696b305dd3c745d15ae7190",
+    "token_count": 471,
+    "char_count": 2501,
+    "ingestion_timestamp": "2026-08-25T07:15:26.616988+00:00",
+    "metadata": {
+      "title": "Project Nexus — Unified Data Platform",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "e6ea9f38-d560-5101-9447-e7814b3b6dd4",
+    "document_id": "16bfd1c0-3bd2-599c-a6c2-eb4b662c15b4",
+    "chunk_index": 1,
+    "content": "**Event streaming:** Apache Kafka is the central message bus for Project Nexus, used for:\n  - StellarDB change data capture (published by the Platform Team)\n  - DataBridge ETL pipeline triggers (consumed by the Data Engineering Team)\n  - ApexML real-time feature updates (consumed by the ML Team)\n\n**Container orchestration:** All Project Nexus services are deployed on Kubernetes, managed by the DevOps Team.\n\n## Dependencies Summary\n\nProject Nexus has the deepest dependency profile of any active TechNova project:\n\n| Technology | Role | Origin | Current Maintainer |\n|---|---|---|---|\n| StellarDB | Primary data store | Stellar Systems (acq. 2022) | Platform Team |\n| ApexML | ML feature store and serving | Apex Analytics (acq. 2023) | ML Team |\n| DataBridge ETL | Data transformation pipeline | TechNova (internal) | Data Engineering Team |\n| Apache Kafka | Event streaming | Open-source (Apache) | Data Engineering Team |\n| GraphQL Gateway | Unified query interface | TechNova (internal) | Platform Team |\n| Kubernetes | Container orchestration | Open-source (CNCF) | DevOps Team |\n\nBoth of the core technology platforms used by Project Nexus — StellarDB and ApexML — were acquired by TechNova through corporate acquisitions. This makes Project Nexus a concrete example of how TechNova's acquisition strategy has produced tangible engineering value.\n\n## Leadership\n\nSandra Müller, Engineering Manager and lead of the Data Engineering Team, is the project manager for Project Nexus. She coordinates across the Platform Team, ML Team, and DevOps Team to ensure the integration components are built and operated reliably.\n\nArchitectural decisions for Project Nexus are reviewed by Priya Sharma, TechNova's Lead Architect, who is responsible for ensuring consistency between Project Nexus and the architectural decisions made in Project Phoenix and Project Atlas.\n\n## Current Status\n\nProject Nexus is in the design and early implementation phase as of Q1 2024. The DataBridge ETL pipelines for StellarDB-to-ApexML synchronization are being designed and are expected to enter production in Q2 2024. Full Project Nexus delivery is planned for Q1 2025.\n\n## Significance",
+    "section": "Introduction",
+    "source_file": "corpus/projects/project_nexus.md",
+    "doc_type": "project",
+    "doc_hash": "2b707f0b955f45a7a821c14a15f21db400701a976696b305dd3c745d15ae7190",
+    "token_count": 448,
+    "char_count": 2168,
+    "ingestion_timestamp": "2026-08-25T07:15:26.616988+00:00",
+    "metadata": {
+      "title": "Project Nexus — Unified Data Platform",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "5eed5ae2-1676-59df-9481-cc4b1136349e",
+    "document_id": "16bfd1c0-3bd2-599c-a6c2-eb4b662c15b4",
+    "chunk_index": 2,
+    "content": "## Current Status\n\nProject Nexus is in the design and early implementation phase as of Q1 2024. The DataBridge ETL pipelines for StellarDB-to-ApexML synchronization are being designed and are expected to enter production in Q2 2024. Full Project Nexus delivery is planned for Q1 2025.\n\n## Significance\n\nProject Nexus is significant for TechNova's portfolio because it demonstrates that the two companies acquired in 2022 and 2023 — Stellar Systems and Apex Analytics — are being integrated into a coherent platform rather than operated as separate point solutions. The unified platform is expected to become the foundation for TechNova's next-generation NovaSuite product, which will offer embedded AI capabilities powered by the combined StellarDB and ApexML infrastructure.",
+    "section": "Current Status",
+    "source_file": "corpus/projects/project_nexus.md",
+    "doc_type": "project",
+    "doc_hash": "2b707f0b955f45a7a821c14a15f21db400701a976696b305dd3c745d15ae7190",
+    "token_count": 153,
+    "char_count": 775,
+    "ingestion_timestamp": "2026-08-25T07:15:26.616988+00:00",
+    "metadata": {
+      "title": "Project Nexus — Unified Data Platform",
+      "start_index": 4072
+    }
+  },
+  {
+    "chunk_id": "77250c4c-d18c-5bd1-a864-d87f95422d55",
+    "document_id": "893d2d32-4947-53ba-919c-acbb5bfe7f0f",
+    "chunk_index": 0,
+    "content": "# Project Phoenix — NovaSuite Data Layer Migration\n\n## Project Overview\n\nProject Phoenix is TechNova's internal engineering initiative to migrate the NovaSuite platform's primary data storage layer from the legacy relational database system to StellarDB. The project was initiated in Q3 2022, following the completion of StellarDB's deployment across TechNova's data centers.\n\nProject Phoenix is owned by TechNova Corporation and is managed by the Platform Team under the leadership of Aisha Patel.\n\n## Objectives\n\nThe primary objectives of Project Phoenix are:\n\n1. Replace NovaSuite's legacy relational database with StellarDB as the primary transactional and analytical store.\n2. Eliminate the architectural bottleneck that limits NovaSuite query throughput to approximately 12,000 queries per second.\n3. Enable NovaSuite to support customer datasets larger than 10 terabytes, which the legacy system cannot accommodate.\n4. Reduce data infrastructure costs by consolidating multiple specialized databases into a single StellarDB deployment.\n\n## Technical Architecture\n\nProject Phoenix introduces the following changes to NovaSuite's architecture:\n\n**Primary data store:** StellarDB replaces the legacy PostgreSQL cluster as NovaSuite's primary database. All NovaSuite modules — financial reporting, supply chain, customer analytics, and operational dashboards — read from and write to StellarDB after the migration.\n\n**Query layer:** All database access from NovaSuite application code is routed through TechNova's internal GraphQL Gateway. The Gateway translates GraphQL queries into optimized StellarDB query plans. This design ensures that NovaSuite application code is decoupled from the underlying database and can be migrated without changes to business logic.\n\n**Container orchestration:** NovaSuite's application services are deployed on Kubernetes. Project Phoenix includes a migration of the NovaSuite deployment configuration to a new Kubernetes cluster topology that co-locates application services with their corresponding StellarDB shards for lower read latency.\n\n**Replication:** StellarDB's multi-region replication relies on Apache Kafka for change data capture and log shipping between TechNova's three data centers.\n\n## Leadership and Team\n\n**Lisa Chen**, Senior Engineer at TechNova, is the technical lead for Project Phoenix. Chen joined TechNova in 2020 and previously worked on the NovaSuite query optimizer. She was selected to lead Project Phoenix due to her deep familiarity with NovaSuite's data access patterns and her collaborative relationship with the former Stellar Systems engineers who joined TechNova in 2022.",
+    "section": "Project Phoenix — NovaSuite Data Layer Migration",
+    "source_file": "corpus/projects/project_phoenix.md",
+    "doc_type": "project",
+    "doc_hash": "a82f37f9ae42cd73eb5aaf1b10ddff1e966084ebfa9b24dcc5717ba9868f4037",
+    "token_count": 474,
+    "char_count": 2646,
+    "ingestion_timestamp": "2026-08-25T07:15:26.618247+00:00",
+    "metadata": {
+      "title": "Project Phoenix — NovaSuite Data Layer Migration",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "6c1ab3b6-5e16-5e57-b0a8-49744c76e62e",
+    "document_id": "893d2d32-4947-53ba-919c-acbb5bfe7f0f",
+    "chunk_index": 1,
+    "content": "## Leadership and Team\n\n**Lisa Chen**, Senior Engineer at TechNova, is the technical lead for Project Phoenix. Chen joined TechNova in 2020 and previously worked on the NovaSuite query optimizer. She was selected to lead Project Phoenix due to her deep familiarity with NovaSuite's data access patterns and her collaborative relationship with the former Stellar Systems engineers who joined TechNova in 2022.\n\nChen reports to Aisha Patel, Head of the Platform Team. Priya Sharma, TechNova's Lead Architect and former Principal Architect at Stellar Systems, serves as a technical advisor to the project and is responsible for reviewing architectural decisions related to StellarDB usage.\n\nThe Platform Team owns Project Phoenix and is responsible for its ongoing execution, delivery, and maintenance.\n\n## Current Status\n\nAs of Q1 2024, Project Phoenix is in active development. The migration of NovaSuite's financial reporting module to StellarDB has been completed and is running in production. Migration of the supply chain and customer analytics modules is underway.\n\nThe project is on track for full completion in Q4 2024, at which point NovaSuite will be fully powered by StellarDB with no remaining dependencies on the legacy relational database system.\n\n## Dependencies\n\nProject Phoenix depends on the following technologies:\n\n- **StellarDB** — the target database system (originally developed by Stellar Systems, acquired by TechNova in 2022; currently maintained by the Platform Team)\n- **GraphQL Gateway** — TechNova's internal query routing layer, developed and maintained by the Platform Team\n- **Kubernetes** — container orchestration for NovaSuite's application services, managed by the DevOps Team\n- **Apache Kafka** — event streaming for StellarDB replication, managed by the Data Engineering Team\n\n## Risks\n\nThe primary risks identified by the Platform Team are:\n\n1. Data consistency during the transition period when some NovaSuite modules are on the new StellarDB system and others remain on the legacy database.\n2. Query performance for NovaSuite's most complex reporting queries, which were optimized for the legacy relational query planner and may require rewriting for StellarDB.\n3. Operational readiness of the team to support StellarDB in production at scale.",
+    "section": "Introduction",
+    "source_file": "corpus/projects/project_phoenix.md",
+    "doc_type": "project",
+    "doc_hash": "a82f37f9ae42cd73eb5aaf1b10ddff1e966084ebfa9b24dcc5717ba9868f4037",
+    "token_count": 439,
+    "char_count": 2283,
+    "ingestion_timestamp": "2026-08-25T07:15:26.618247+00:00",
+    "metadata": {
+      "title": "Project Phoenix — NovaSuite Data Layer Migration",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "8852c4d2-0682-5b81-bac9-4dbe9cfe6700",
+    "document_id": "5c88ed7e-3140-5afe-a894-c964e1f79045",
+    "chunk_index": 0,
+    "content": "# ApexML Platform — Technical Reference\n\n## Overview\n\nApexML is a production-grade machine learning platform originally developed by Apex Analytics and acquired by TechNova Corporation in August 2023. The platform is designed to manage the full lifecycle of machine learning models — from feature engineering and training through deployment and real-time inference — with a focus on operational reliability and low inference latency.\n\nApexML is currently maintained by TechNova's ML Team, led by James Okafor, Director of Data Science. David Reyes, who joined TechNova from Apex Analytics as part of the acquisition, is the primary technical owner of the ApexML platform within TechNova.\n\n## Core Components\n\n### Feature Store\n\nThe ApexML feature store is a centralized repository for ML features — the engineered representations of raw data that ML models are trained on. The feature store provides:\n\n- **Feature versioning:** Every feature transformation is versioned, so model training is reproducible even as underlying data changes.\n- **Point-in-time correctness:** The feature store retrieves historical feature values as they existed at any given timestamp, preventing data leakage during model training.\n- **Online and offline access:** Features can be retrieved as low-latency key-value lookups (for real-time inference) or as batch exports (for model training).\n\nThe feature store is populated by DataBridge ETL pipelines that read from StellarDB via Apache Kafka change events. This integration was established as part of Project Nexus.\n\n### Model Training Pipeline\n\nApexML's training pipeline automates the process of training ML models from features in the feature store. Training jobs are defined declaratively and include:\n\n- Feature selection and transformation configuration\n- Algorithm selection and hyperparameter search\n- Training data time ranges\n- Validation and holdout set configuration\n\nTraining jobs consume data from Apache Kafka topics to enable incremental training — models can be retrained on new data as it arrives without reprocessing the entire historical dataset.\n\n### Model Registry\n\nThe model registry tracks all trained models, their training metadata, evaluation metrics, and deployment history. Every model deployment requires an entry in the registry, ensuring full auditability of which model version is serving production traffic at any given time.\n\n### Inference Serving Layer\n\nApexML's inference serving layer provides:\n\n- Sub-10ms p99 inference latency for models deployed in the online serving tier\n- Batch inference for asynchronous use cases such as nightly scoring\n- A/B testing support for comparing model versions in production",
+    "section": "ApexML Platform — Technical Reference",
+    "source_file": "corpus/technologies/apex_ml_platform.md",
+    "doc_type": "technology",
+    "doc_hash": "1abd6bba80f6ff0c96cf1b59b3cc4d43f8144b05b58c3a94131d6996246b236f",
+    "token_count": 491,
+    "char_count": 2679,
+    "ingestion_timestamp": "2026-08-25T07:15:26.619264+00:00",
+    "metadata": {
+      "title": "ApexML Platform — Technical Reference",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "a259b13f-db13-57af-a20c-bd8b13421808",
+    "document_id": "5c88ed7e-3140-5afe-a894-c964e1f79045",
+    "chunk_index": 1,
+    "content": "### Inference Serving Layer\n\nApexML's inference serving layer provides:\n\n- Sub-10ms p99 inference latency for models deployed in the online serving tier\n- Batch inference for asynchronous use cases such as nightly scoring\n- A/B testing support for comparing model versions in production\n\nThe inference layer is deployed on Kubernetes at TechNova, co-located with NovaSuite application services. Inference requests from NovaSuite are routed through TechNova's GraphQL Gateway, which enforces access control before forwarding requests to ApexML's serving endpoints.\n\n## Kafka Integration\n\nApexML's architecture is fundamentally Kafka-first. Apache Kafka is used for:\n\n- Training data ingestion: feature store updates are triggered by Kafka messages published by TechNova's Data Engineering Team\n- Real-time feature updates: streaming features (such as rolling window aggregations) are computed by consuming from Kafka topics\n- Inference event logging: all inference requests and model outputs are published to Kafka for audit logging and model monitoring\n\nThis Kafka dependency means ApexML shares infrastructure with StellarDB's replication pipeline and DataBridge ETL, all of which consume from TechNova's central Kafka cluster.\n\n## Projects Using ApexML\n\nThe following TechNova projects actively depend on ApexML:\n\n- **Project Atlas** — the initiative integrating ApexML into NovaSuite's AI features; led by David Reyes\n- **Project Nexus** — uses ApexML's feature store as part of TechNova's unified data platform; ApexML receives feature updates from StellarDB via DataBridge ETL\n\n## Operational Ownership\n\nThe ML Team at TechNova is responsible for ApexML in production. This includes:\n\n- Platform version upgrades\n- Kafka consumer group management\n- Model registry access control\n- Inference serving SLA management\n\nDavid Reyes leads the technical operations of ApexML. James Okafor, Director of Data Science, owns the strategic direction for ApexML usage within TechNova's product and internal data science initiatives.",
+    "section": "Introduction",
+    "source_file": "corpus/technologies/apex_ml_platform.md",
+    "doc_type": "technology",
+    "doc_hash": "1abd6bba80f6ff0c96cf1b59b3cc4d43f8144b05b58c3a94131d6996246b236f",
+    "token_count": 389,
+    "char_count": 2024,
+    "ingestion_timestamp": "2026-08-25T07:15:26.619264+00:00",
+    "metadata": {
+      "title": "ApexML Platform — Technical Reference",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "3d1ac7f9-add7-5efd-9b29-1ea26f16dc03",
+    "document_id": "641986f5-38aa-575d-a38b-d55594b553f2",
+    "chunk_index": 0,
+    "content": "# DataBridge ETL — Internal ETL Platform\n\n## Overview\n\nDataBridge ETL is TechNova's internally developed data extraction, transformation, and loading platform. It is the primary tool used by TechNova's Data Engineering Team to build and operate data pipelines that move and transform data between TechNova's internal systems.\n\nDataBridge ETL was developed entirely by TechNova Corporation and is maintained by the Data Engineering Team under Sandra Müller.\n\n## Purpose and Scope\n\nDataBridge ETL serves as the data movement layer between TechNova's operational systems. Its primary responsibilities are:\n\n- Reading change events from StellarDB via Apache Kafka (change data capture)\n- Transforming raw operational data into ML features for ApexML's feature store\n- Loading transformed data into downstream systems including ApexML, TechNova's data warehouse, and external reporting tools\n- Providing pipeline monitoring, data quality checks, and alerting\n\nWithout DataBridge ETL, StellarDB and ApexML would be isolated systems with no automated data flow between them. DataBridge ETL is the critical bridge that makes Project Nexus possible.\n\n## Technical Design\n\nDataBridge ETL is built on Apache Kafka as its event streaming backbone. The platform operates as a set of Kafka Streams applications and standalone consumers:\n\n**Kafka consumers:** DataBridge ETL workers consume change events published by StellarDB's replication pipeline to Apache Kafka topics. Each event represents an insert, update, or delete in a StellarDB table.\n\n**Transformations:** Consumed events are processed through configurable transformation pipelines. Transformations include:\n- Field filtering and renaming\n- Type casting and normalization\n- Aggregation (rolling windows, cumulative sums)\n- Enrichment by joining with reference data from StellarDB\n\n**Kafka producers:** After transformation, DataBridge ETL publishes the transformed records to output Kafka topics that are consumed by downstream systems. ApexML's feature store consumes from these output topics to update ML features.\n\n## Role in TechNova's Architecture\n\nDataBridge ETL is the connective tissue between TechNova's two core technology platforms:\n\n```\nStellarDB → (Kafka CDC events) → DataBridge ETL → (Kafka feature events) → ApexML\n```\n\nThis pipeline makes it possible for ApexML to have continuously updated ML features derived from NovaSuite's operational data in StellarDB, enabling real-time model serving for NovaSuite's AI features.",
+    "section": "DataBridge ETL — Internal ETL Platform",
+    "source_file": "corpus/technologies/data_bridge_etl.md",
+    "doc_type": "technology",
+    "doc_hash": "421424b31151d00f220c77ad6b55d5cb128d3230c9ab1845dc0568f85dd609f9",
+    "token_count": 479,
+    "char_count": 2486,
+    "ingestion_timestamp": "2026-08-25T07:15:26.620394+00:00",
+    "metadata": {
+      "title": "DataBridge ETL — Internal ETL Platform",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "cb5ed10a-ff8f-5265-ba69-ac390ae65e2f",
+    "document_id": "641986f5-38aa-575d-a38b-d55594b553f2",
+    "chunk_index": 1,
+    "content": "## Role in TechNova's Architecture\n\nDataBridge ETL is the connective tissue between TechNova's two core technology platforms:\n\n```\nStellarDB → (Kafka CDC events) → DataBridge ETL → (Kafka feature events) → ApexML\n```\n\nThis pipeline makes it possible for ApexML to have continuously updated ML features derived from NovaSuite's operational data in StellarDB, enabling real-time model serving for NovaSuite's AI features.\n\nDataBridge ETL is a dependency of Project Nexus, which relies on it for all StellarDB-to-ApexML data synchronization.\n\n## Operational Ownership\n\nThe Data Engineering Team, led by Sandra Müller, owns DataBridge ETL. The team develops new pipeline configurations as requested by product teams and ML engineers. DataBridge ETL is part of TechNova's core infrastructure and is considered a tier-1 system, meaning incidents affecting DataBridge ETL pipelines are escalated to the on-call team immediately.\n\nApache Kafka, which DataBridge ETL depends on, is also managed by the Data Engineering Team. The team operates TechNova's central Kafka cluster, which is shared by StellarDB replication, DataBridge ETL, and ApexML.",
+    "section": "Introduction",
+    "source_file": "corpus/technologies/data_bridge_etl.md",
+    "doc_type": "technology",
+    "doc_hash": "421424b31151d00f220c77ad6b55d5cb128d3230c9ab1845dc0568f85dd609f9",
+    "token_count": 240,
+    "char_count": 1137,
+    "ingestion_timestamp": "2026-08-25T07:15:26.620394+00:00",
+    "metadata": {
+      "title": "DataBridge ETL — Internal ETL Platform",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "dff5f8c6-237a-54a5-9094-905cfbbb7d3c",
+    "document_id": "5631f002-c8f5-51fc-91e1-638e6392a88c",
+    "chunk_index": 0,
+    "content": "# StellarDB — Technical Architecture Reference\n\n## Overview\n\nStellarDB is a distributed, column-oriented database system designed for high-throughput analytical workloads across horizontally sharded clusters. It was originally developed by Stellar Systems Inc., which was acquired by TechNova Corporation in February 2022. Since the acquisition, StellarDB has been maintained and developed by TechNova's Platform Team under the leadership of Aisha Patel.\n\nStellarDB is the primary database system for TechNova's NovaSuite platform. All NovaSuite transactional and analytical data is stored in StellarDB as of Q3 2022, following the completion of Project Phoenix's initial migration phases.\n\n## Core Design Principles\n\nStellarDB was designed around three principles established by its original engineering team at Stellar Systems:\n\n**1. Analytical-first storage:** StellarDB uses a columnar storage format that optimizes for read-heavy analytical queries over wide tables. Columns are stored together on disk, enabling efficient compression and vectorized execution for aggregation queries.\n\n**2. Horizontal sharding:** Data is partitioned across shards based on a configurable sharding key. Each shard is an independent StellarDB node that handles queries against its partition of the data. The query coordinator routes incoming queries to the appropriate shards and merges results.\n\n**3. Streaming replication:** StellarDB uses Apache Kafka for both inter-shard replication and multi-region data synchronization. Write operations are published as Kafka messages and consumed by replica shards in the same cluster and by cross-datacenter standby clusters. This design makes StellarDB's replication pipeline composable with other Kafka-based systems, such as TechNova's DataBridge ETL and ApexML's feature ingestion pipelines.\n\n## Query Interface\n\nStellarDB is not accessed directly by application code at TechNova. All queries are routed through TechNova's GraphQL Gateway, which translates GraphQL queries into StellarDB Query Language (SDQL) statements. The Gateway handles:\n\n- Query parsing and validation\n- Query routing to the appropriate StellarDB shards\n- Access control enforcement\n- Query result caching\n\nThe GraphQL Gateway was developed by TechNova's Platform Team and is also maintained by the Platform Team. It serves as the single query interface for all TechNova products that interact with StellarDB.\n\n## Replication Architecture\n\nStellarDB's replication architecture, as deployed at TechNova, operates as follows:",
+    "section": "StellarDB — Technical Architecture Reference",
+    "source_file": "corpus/technologies/stellar_db_architecture.md",
+    "doc_type": "technology",
+    "doc_hash": "bef5dfa039969f540c43c58bdfc2a14335cf1fc624b3e6b99b58f40319694b00",
+    "token_count": 467,
+    "char_count": 2530,
+    "ingestion_timestamp": "2026-08-25T07:15:26.621346+00:00",
+    "metadata": {
+      "title": "StellarDB — Technical Architecture Reference",
+      "start_index": 0
+    }
+  },
+  {
+    "chunk_id": "6cdb4191-46f1-5ff8-bda1-28effbf7516b",
+    "document_id": "5631f002-c8f5-51fc-91e1-638e6392a88c",
+    "chunk_index": 1,
+    "content": "- Query parsing and validation\n- Query routing to the appropriate StellarDB shards\n- Access control enforcement\n- Query result caching\n\nThe GraphQL Gateway was developed by TechNova's Platform Team and is also maintained by the Platform Team. It serves as the single query interface for all TechNova products that interact with StellarDB.\n\n## Replication Architecture\n\nStellarDB's replication architecture, as deployed at TechNova, operates as follows:\n\n1. Write requests arrive at the StellarDB primary coordinator.\n2. The coordinator writes the operation to a Kafka topic maintained by TechNova's Data Engineering Team.\n3. Replica shards in the same cluster consume from this Kafka topic and apply the write.\n4. Cross-datacenter standby clusters in TechNova's London and Singapore data centers also consume from the same Kafka replication topic, providing geographic redundancy.\n\nThis Kafka-based replication design means StellarDB shares its event streaming infrastructure with ApexML (which also consumes Kafka topics for ML feature updates) and with DataBridge ETL (which reads StellarDB change events for ETL processing). All three systems consume from the same Apache Kafka cluster, managed by TechNova's Data Engineering Team.\n\n## Maintenance and Operations\n\nThe Platform Team at TechNova is the owner of StellarDB in production. The team's responsibilities include:\n\n- StellarDB version upgrades and patch management\n- Cluster scaling and shard rebalancing\n- Query performance tuning\n- On-call support for StellarDB incidents\n- Development of new StellarDB features requested by TechNova's product teams\n\nAisha Patel, Head of the Platform Team, is the primary operational owner of StellarDB at TechNova. Priya Sharma, TechNova's Lead Architect and former Principal Architect at Stellar Systems, is the authority on StellarDB's internal design and reviews all significant architectural changes to StellarDB's deployment at TechNova.\n\n## Projects Using StellarDB\n\nThe following active TechNova projects depend on StellarDB:\n\n- **Project Phoenix** — the initiative responsible for NovaSuite's full migration to StellarDB\n- **Project Nexus** — uses StellarDB as the primary store in TechNova's unified data platform\n- **Project Horizon** — accesses NovaSuite data stored in StellarDB via the GraphQL Gateway\n\n## Known Limitations",
+    "section": "Introduction",
+    "source_file": "corpus/technologies/stellar_db_architecture.md",
+    "doc_type": "technology",
+    "doc_hash": "bef5dfa039969f540c43c58bdfc2a14335cf1fc624b3e6b99b58f40319694b00",
+    "token_count": 446,
+    "char_count": 2334,
+    "ingestion_timestamp": "2026-08-25T07:15:26.621346+00:00",
+    "metadata": {
+      "title": "StellarDB — Technical Architecture Reference",
+      "start_index": -1
+    }
+  },
+  {
+    "chunk_id": "4fc147a8-d025-56b5-aed5-98b0ec8c2218",
+    "document_id": "5631f002-c8f5-51fc-91e1-638e6392a88c",
+    "chunk_index": 2,
+    "content": "## Projects Using StellarDB\n\nThe following active TechNova projects depend on StellarDB:\n\n- **Project Phoenix** — the initiative responsible for NovaSuite's full migration to StellarDB\n- **Project Nexus** — uses StellarDB as the primary store in TechNova's unified data platform\n- **Project Horizon** — accesses NovaSuite data stored in StellarDB via the GraphQL Gateway\n\n## Known Limitations\n\nStellarDB's analytical-first design introduces trade-offs for high-frequency, low-latency transactional write workloads. The Platform Team is evaluating a hybrid storage model that combines StellarDB's columnar analytical store with a separate row-oriented write-ahead log for high-throughput transactional writes. This is a planned enhancement for the StellarDB roadmap and is not yet in production at TechNova.",
+    "section": "Projects Using StellarDB",
+    "source_file": "corpus/technologies/stellar_db_architecture.md",
+    "doc_type": "technology",
+    "doc_hash": "bef5dfa039969f540c43c58bdfc2a14335cf1fc624b3e6b99b58f40319694b00",
+    "token_count": 158,
+    "char_count": 806,
+    "ingestion_timestamp": "2026-08-25T07:15:26.621346+00:00",
+    "metadata": {
+      "title": "StellarDB — Technical Architecture Reference",
+      "start_index": 4020
+    }
+  }
+]
