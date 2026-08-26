@@ -16,7 +16,7 @@ Usage:
     python scripts/extract.py --force
 
     # Use a different model:
-    python scripts/extract.py --model claude-sonnet-4-6
+    python scripts/extract.py --model gemini-1.5-pro
 """
 import logging
 import sys
@@ -50,7 +50,7 @@ def main(
     model: str = typer.Option(
         DEFAULT_MODEL,
         "--model",
-        help="Claude model ID to use for extraction.",
+        help="Gemini model ID to use for extraction.",
         show_default=True,
     ),
     sample: int = typer.Option(
@@ -76,7 +76,7 @@ def main(
         help="Enable DEBUG logging.",
     ),
 ) -> None:
-    """Extract entities and relationships from document chunks using Claude."""
+    """Extract entities and relationships from document chunks using Gemini."""
     logging.basicConfig(
         level=logging.DEBUG if verbose else logging.WARNING,
         format="%(asctime)s  %(name)-35s  %(levelname)-8s  %(message)s",

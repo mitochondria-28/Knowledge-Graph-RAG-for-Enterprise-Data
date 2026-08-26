@@ -50,9 +50,9 @@ def main(
     ),
     top_k: int = typer.Option(5, "--top-k", help="Number of chunks to retrieve."),
     model: str = typer.Option(
-        "claude-haiku-4-5-20251001",
+        "gemini-1.5-flash",
         "--model",
-        help="Claude model for generation (ignored with --mock).",
+        help="Gemini model for generation (ignored with --mock).",
     ),
     chunks_file: Path = typer.Option(
         Path("output/all_chunks.json"),
@@ -114,23 +114,21 @@ def _resolve_generator(mock: bool, model: str):
 
     # Try real API
     try:
-        import anthropic
         from src.config import settings
 
-        if not settings.anthropic_api_key:
+        if not settings.gemini_api_key:
             console.print(
-                "[yellow]Warning:[/yellow] ANTHROPIC_API_KEY not set. "
+                "[yellow]Warning:[/yellow] GEMINI_API_KEY not set. "
                 "Falling back to mock mode. Use --mock to suppress this warning.\n"
             )
             return MockAnswerGenerator()
 
-        from src.answer.generator import AnswerGenerator
-        client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
-        console.print(f"[dim]Mode: real Claude ({model})[/dim]\n")
-        return AnswerGenerator(client, model=model)
+        from src.answer.generator import make_generator
+        console.print(f"[dim]Mode: real Gemini ({model})[/dim]\n")
+        return make_generator(api_key=settings.gemini_api_key, model=model)
 
     except Exception as e:
-        console.print(f"[red]Could not initialise Anthropic client: {e}[/red]")
+        console.print(f"[red]Could not initialise Gemini client: {e}[/red]")
         console.print("[dim]Falling back to mock mode.[/dim]\n")
         return MockAnswerGenerator()
 

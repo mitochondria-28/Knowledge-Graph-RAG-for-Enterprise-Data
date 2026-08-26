@@ -29,7 +29,7 @@ corpus/
 
 **File:** `src/ingestion/`
 
-Token-based sliding-window chunking using `tiktoken` (cl100k_base, same tokenizer Claude uses). Chunks have metadata:
+Token-based sliding-window chunking using `tiktoken` (cl100k_base tokenizer). Chunks have metadata:
 
 ```python
 {
@@ -51,14 +51,14 @@ Token-based sliding-window chunking using `tiktoken` (cl100k_base, same tokenize
 
 **File:** `src/extraction/`
 
-Uses **Claude tool-use** (forced structured output) to extract:
+Uses **Gemini function calling** (forced structured output) to extract:
 
 - **7 entity types:** Company, Person, Team, Technology, Product, Location, Regulation
 - **12 relationship types:** LEADS, MEMBER_OF, ACQUIRED, USES, DEVELOPS, PARTNERS_WITH, COMPETES_WITH, COMPLIES_WITH, LOCATED_IN, REPORTS_TO, FOUNDED_BY, INVESTS_IN
 
 The extraction prompt forces a specific JSON schema via `tool_choice={"type":"tool","name":"extract_entities"}`. This is more reliable than asking the LLM to output JSON in the text — tool-use bypasses the LLM's tendency to add commentary around structured data.
 
-**Why Claude for extraction?** The alternative is a fine-tuned NER model (SpaCy, Flair). Claude zero-shot outperforms them on domain-specific entities like product names and team names without any training data.
+**Why Gemini for extraction?** The alternative is a fine-tuned NER model (SpaCy, Flair). Gemini zero-shot outperforms them on domain-specific entities like product names and team names without any training data, and the free tier makes it cost-effective for development.
 
 ---
 
@@ -192,7 +192,7 @@ R10 Default          → vector
 
 ### Generation
 
-Claude is called with `tool_choice={"type":"tool","name":"provide_answer"}`, which forces it to populate a specific schema:
+Gemini is called with `mode="any"` and `allowed_function_names=["provide_answer"]`, which forces it to populate a specific schema:
 
 ```json
 {
@@ -249,7 +249,7 @@ Resources are loaded **once at startup** and attached to `app.state`. Each reque
 
 ### Why sync route handler?
 
-`pipeline.ask()` is synchronous CPU work + one synchronous HTTP call to Anthropic. FastAPI runs sync handlers in a thread pool automatically. Making the handler `async` would be wrong — it would block the event loop during the Claude HTTP call.
+`pipeline.ask()` is synchronous CPU work + one synchronous HTTP call to Gemini. FastAPI runs sync handlers in a thread pool automatically. Making the handler `async` would be wrong — it would block the event loop during the Gemini HTTP call.
 
 ---
 
@@ -398,7 +398,7 @@ AnswerPipeline.ask(question, top_k)       [src/answer/pipeline.py]
        │      OTel span "retrieve" + histogram stage=retrieve
        │
        ├─→ AnswerGenerator.generate(question, chunks, strategy)
-       │      Claude tool-use, forces provide_answer schema
+       │      Gemini function calling, forces provide_answer schema
        │      returns: RawAnswer(answer_text, citations, model, latency_ms)
        │      OTel span "generate" + histogram stage=generate
        │
@@ -432,4 +432,4 @@ React renders AnswerCard with MetaBadges + CitationList
 | LLM paraphrased quote | `CitationValidator` fuzzy check → INVALID if score < 0.80 |
 | Pipeline not yet loaded at startup | FastAPI returns 503; `/ready` probe confirms |
 | Invalid request body | Pydantic returns 422 automatically |
-| Slow LLM response | Timeouts configured in Anthropic client; retry handled by client SDK |
+| Slow LLM response | Timeouts configured in Gemini client; retry handled by client SDK |

@@ -1,18 +1,18 @@
 """
 Answer generator — Phase 8.
 
-WHY TOOL-USE (FUNCTION CALLING) FOR ANSWER GENERATION:
+WHY FUNCTION CALLING FOR ANSWER GENERATION:
 
-Free-text LLM output is hard to parse reliably. If Claude returns the answer
+Free-text LLM output is hard to parse reliably. If the LLM returns the answer
 and citations as prose, we have to regex-parse chunk IDs and quotes — fragile
-and untestable. Tool-use forces Claude to return a typed JSON object that we
-can validate with a schema. It also makes citation extraction deterministic.
+and untestable. Function calling forces the model to return a typed JSON object
+that we can validate with a schema. It also makes citation extraction deterministic.
 
-WHY tool_choice={"type": "tool", "name": "provide_answer"}:
+WHY mode="ANY" with allowed_function_names=["provide_answer"]:
 
-Setting tool_choice forces Claude to call exactly the named tool. Without
-this, Claude might describe the answer in prose and skip the tool call when
-it feels confident. We always want the structured output.
+Setting mode="ANY" forces Gemini to call exactly the named function. Without
+this, the model might describe the answer in prose and skip the function call
+when it feels confident. We always want the structured output.
 
 CONTEXT FORMATTING:
 
@@ -21,26 +21,30 @@ Each chunk is presented with a clearly labelled header:
   [CHUNK abc123 | corpus/companies/technova_overview.md | section: Overview]
   <content>
 
-Claude is instructed to cite chunk_ids from these headers. The separator
-between chunks is '---' so Claude can visually distinguish boundaries.
+The model is instructed to cite chunk_ids from these headers. The separator
+between chunks is '---' so the model can visually distinguish boundaries.
 
 SECURITY:
 
-  - Claude receives chunk content as read-only context; it cannot modify chunks
-  - We never execute any code from Claude's output
+  - The model receives chunk content as read-only context; it cannot modify chunks
+  - We never execute any code from the model's output
   - citation chunk_ids are validated downstream by CitationValidator
-  - If Claude invents a chunk_id, CitationValidator will flag it as invalid
+  - If the model invents a chunk_id, CitationValidator will flag it as invalid
 """
 
 import logging
 import time
+
+from google import genai
+from google.genai import types
+from google.api_core import exceptions as gexceptions
 
 from src.answer.models import Citation, RawAnswer
 
 logger = logging.getLogger(__name__)
 
 # ── Default model ─────────────────────────────────────────────────────────────
-DEFAULT_MODEL = "claude-haiku-4-5-20251001"
+DEFAULT_MODEL = "gemini-1.5-flash"
 
 # ── System prompt ─────────────────────────────────────────────────────────────
 _SYSTEM_PROMPT = """You are an enterprise knowledge assistant. Your job is to answer questions using ONLY the context chunks provided below.
@@ -50,7 +54,7 @@ Rules you must follow:
 2. Cite EVERY factual claim using the chunk_id from the [CHUNK ...] header
 3. The quote field must be a short, verbatim phrase (10–60 words) copied exactly from that chunk
 4. If the context does not contain enough information to answer fully, say so explicitly
-5. Use the provide_answer tool to return your structured response — no free-text output
+5. Use the provide_answer function to return your structured response — no free-text output
 
 Context chunk format:
   [CHUNK {chunk_id} | {source_file} | section: {section}]
@@ -58,67 +62,88 @@ Context chunk format:
   ---
 """
 
-# ── Tool definition ───────────────────────────────────────────────────────────
-_ANSWER_TOOL: dict = {
-    "name": "provide_answer",
-    "description": (
+# ── Tool definition (Gemini FunctionDeclaration) ──────────────────────────────
+_ANSWER_TOOL_DECL = types.FunctionDeclaration(
+    name="provide_answer",
+    description=(
         "Return a structured answer with citations from the retrieved context chunks. "
         "Every factual claim must have a matching citation."
     ),
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "answer": {
-                "type": "string",
-                "description": (
+    parameters=types.Schema(
+        type="object",
+        properties={
+            "answer": types.Schema(
+                type="string",
+                description=(
                     "Complete answer to the question based only on the provided chunks. "
                     "Use plain prose; do not include chunk IDs inline."
                 ),
-            },
-            "citations": {
-                "type": "array",
-                "description": "One entry per factual claim. May share the same chunk_id across multiple claims.",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "chunk_id": {
-                            "type": "string",
-                            "description": "The chunk_id value from the [CHUNK ...] header that supports this claim.",
-                        },
-                        "quote": {
-                            "type": "string",
-                            "description": (
+            ),
+            "citations": types.Schema(
+                type="array",
+                description="One entry per factual claim. May share the same chunk_id across multiple claims.",
+                items=types.Schema(
+                    type="object",
+                    properties={
+                        "chunk_id": types.Schema(
+                            type="string",
+                            description="The chunk_id value from the [CHUNK ...] header that supports this claim.",
+                        ),
+                        "quote": types.Schema(
+                            type="string",
+                            description=(
                                 "Short verbatim phrase (10–60 words) copied exactly from the chunk. "
                                 "This will be verified against chunk content — paraphrase will fail validation."
                             ),
-                        },
+                        ),
                     },
-                    "required": ["chunk_id", "quote"],
-                },
-            },
-            "answer_confidence": {
-                "type": "number",
-                "description": (
+                    required=["chunk_id", "quote"],
+                ),
+            ),
+            "answer_confidence": types.Schema(
+                type="number",
+                description=(
                     "How fully the provided chunks support the answer (0.0 = not at all, 1.0 = fully). "
                     "Lower this when the context is incomplete or ambiguous."
                 ),
-            },
+            ),
         },
-        "required": ["answer", "citations", "answer_confidence"],
-    },
-}
+        required=["answer", "citations", "answer_confidence"],
+    ),
+)
+
+_ANSWER_TOOL = types.Tool(function_declarations=[_ANSWER_TOOL_DECL])
+
+_ANSWER_TOOL_CONFIG = types.ToolConfig(
+    function_calling_config=types.FunctionCallingConfig(
+        mode="any",
+        allowed_function_names=["provide_answer"],
+    )
+)
+
+
+# ── Factory ───────────────────────────────────────────────────────────────────
+
+def make_generator(api_key: str, model: str = DEFAULT_MODEL) -> "AnswerGenerator":
+    """
+    Create an AnswerGenerator backed by a configured Gemini client.
+
+    The system instruction is baked into the GenerateContentConfig at call time.
+    """
+    client = genai.Client(api_key=api_key)
+    return AnswerGenerator(client, model=model)
 
 
 # ── Context formatter ─────────────────────────────────────────────────────────
 
 def format_context(chunks: list[dict]) -> str:
     """
-    Format retrieved chunks into the labelled context string sent to Claude.
+    Format retrieved chunks into the labelled context string sent to the model.
 
     Each chunk gets a header line:
       [CHUNK {chunk_id} | {source_file} | section: {section}]
 
-    Claude is instructed to cite chunk_ids from these headers.
+    The model is instructed to cite chunk_ids from these headers.
     """
     parts: list[str] = []
     for chunk in chunks:
@@ -135,12 +160,12 @@ def format_context(chunks: list[dict]) -> str:
 
 class AnswerGenerator:
     """
-    Calls Claude with tool-use to produce a structured answer + citations.
+    Calls Gemini with function calling to produce a structured answer + citations.
 
     Args:
-        client:  anthropic.Anthropic instance (must be authenticated).
-        model:   Claude model ID. Haiku is the default (fast + cheap).
-        max_tokens: Max tokens for the tool-use response.
+        client:     google.genai.Client instance (configured with API key).
+        model:      Gemini model ID string.
+        max_tokens: Max output tokens for the generation.
     """
 
     def __init__(
@@ -163,7 +188,7 @@ class AnswerGenerator:
         Generate an answer for `question` given the retrieved `chunks`.
 
         Returns RawAnswer with answer_text and unvalidated citations.
-        Raises ValueError if Claude does not return a provide_answer tool call.
+        Raises ValueError if Gemini does not return a provide_answer function call.
         """
         if not chunks:
             logger.warning("No chunks provided — returning empty answer")
@@ -186,27 +211,30 @@ class AnswerGenerator:
         )
 
         t0 = time.perf_counter()
-        response = self._client.messages.create(
+        response = self._client.models.generate_content(
             model=self._model,
-            max_tokens=self._max_tokens,
-            system=_SYSTEM_PROMPT,
-            tools=[_ANSWER_TOOL],
-            tool_choice={"type": "tool", "name": "provide_answer"},
-            messages=[{"role": "user", "content": user_message}],
+            contents=user_message,
+            config=types.GenerateContentConfig(
+                system_instruction=_SYSTEM_PROMPT,
+                tools=[_ANSWER_TOOL],
+                tool_config=_ANSWER_TOOL_CONFIG,
+                max_output_tokens=self._max_tokens,
+            ),
         )
         latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 
-        tool_block = next(
-            (b for b in response.content if b.type == "tool_use" and b.name == "provide_answer"),
-            None,
-        )
-        if tool_block is None:
+        payload = None
+        for part in response.parts:
+            fc = getattr(part, "function_call", None)
+            if fc and fc.name == "provide_answer":
+                payload = dict(fc.args)
+                break
+
+        if payload is None:
             raise ValueError(
-                "Claude did not return a provide_answer tool call. "
-                f"Response content types: {[b.type for b in response.content]}"
+                "Gemini did not return a provide_answer function call."
             )
 
-        payload = tool_block.input
         chunk_map = {c["chunk_id"]: c for c in chunks}
 
         citations: list[Citation] = []

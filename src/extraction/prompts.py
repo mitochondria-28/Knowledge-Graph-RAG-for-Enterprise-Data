@@ -143,7 +143,7 @@ EXTRACTION_TOOL: dict = {
         "Use only the entity types and relationship types from the controlled ontology. "
         "Every entity referenced in a relationship must also appear in the entities list."
     ),
-    "input_schema": {
+    "parameters": {
         "type": "object",
         "properties": {
             "entities": {

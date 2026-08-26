@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     chunk_overlap: int = 100     # token overlap between consecutive chunks
 
     # ── LLM ──────────────────────────────────────────────────────
-    anthropic_api_key: str = ""
+    gemini_api_key: str = ""
     openai_api_key: str = ""
 
     # ── Neo4j (Phase 4+) ─────────────────────────────────────────

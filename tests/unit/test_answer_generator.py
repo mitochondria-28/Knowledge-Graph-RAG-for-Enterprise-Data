@@ -4,8 +4,8 @@ Unit tests for Phase 8 answer generator.
 Tests verify:
   1. format_context — correct [CHUNK ...] headers in context string
   2. MockAnswerGenerator — returns valid RawAnswer without API calls
-  3. AnswerGenerator — correct Claude API call structure and response parsing
-  4. Edge cases — no chunks, missing tool_use block, empty citations
+  3. AnswerGenerator — correct Gemini API call structure and response parsing
+  4. Edge cases — no chunks, missing function call, empty citations
 
 No API key or running services required.
 """
@@ -17,7 +17,7 @@ from src.answer.generator import (
     AnswerGenerator,
     MockAnswerGenerator,
     format_context,
-    _ANSWER_TOOL,
+    _ANSWER_TOOL_DECL,
     _SYSTEM_PROMPT,
     DEFAULT_MODEL,
 )
@@ -51,21 +51,23 @@ def sample_chunks() -> list[dict]:
 
 
 def _make_mock_client(answer: str, citations: list[dict], confidence: float = 0.9):
-    """Build a mock Anthropic client that returns a provide_answer tool call."""
-    tool_block = MagicMock()
-    tool_block.type = "tool_use"
-    tool_block.name = "provide_answer"
-    tool_block.input = {
+    """Build a mock Gemini Client that returns a provide_answer function call."""
+    function_call = MagicMock()
+    function_call.name = "provide_answer"
+    function_call.args = {
         "answer": answer,
         "citations": citations,
         "answer_confidence": confidence,
     }
 
-    response = MagicMock()
-    response.content = [tool_block]
+    part = MagicMock()
+    part.function_call = function_call
 
-    client = MagicMock()
-    client.messages.create.return_value = response
+    response = MagicMock()
+    response.parts = [part]
+
+    client = MagicMock()  # mocks genai.Client
+    client.models.generate_content.return_value = response
     return client
 
 
@@ -166,57 +168,63 @@ class TestMockAnswerGenerator:
 # ── AnswerGenerator ───────────────────────────────────────────────────────────
 
 class TestAnswerGenerator:
-    def test_calls_messages_create(self, sample_chunks):
+    def test_calls_generate_content(self, sample_chunks):
         client = _make_mock_client("TechNova was founded in 2010.", [
             {"chunk_id": "chunk-aaa", "quote": "TechNova Corporation was founded in 2010"}
         ])
         gen = AnswerGenerator(client)
         gen.generate("When was TechNova founded?", sample_chunks)
-        assert client.messages.create.called
+        assert client.models.generate_content.called
 
-    def test_tool_choice_is_provide_answer(self, sample_chunks):
+    def test_config_contains_tool_config(self, sample_chunks):
         client = _make_mock_client("answer text", [])
         gen = AnswerGenerator(client)
         gen.generate("Q?", sample_chunks)
 
-        call_kwargs = client.messages.create.call_args.kwargs
-        assert call_kwargs["tool_choice"] == {"type": "tool", "name": "provide_answer"}
+        call_kwargs = client.models.generate_content.call_args.kwargs
+        config = call_kwargs["config"]
+        assert config is not None
+        assert config.tool_config is not None
 
-    def test_tools_contains_answer_tool(self, sample_chunks):
+    def test_config_contains_system_instruction(self, sample_chunks):
         client = _make_mock_client("answer text", [])
         gen = AnswerGenerator(client)
         gen.generate("Q?", sample_chunks)
 
-        tools = client.messages.create.call_args.kwargs["tools"]
-        tool_names = [t["name"] for t in tools]
-        assert "provide_answer" in tool_names
+        call_kwargs = client.models.generate_content.call_args.kwargs
+        config = call_kwargs["config"]
+        assert config.system_instruction is not None
+        assert "provide_answer" in config.system_instruction
 
-    def test_system_prompt_sent(self, sample_chunks):
+    def test_config_contains_tools(self, sample_chunks):
         client = _make_mock_client("answer text", [])
         gen = AnswerGenerator(client)
         gen.generate("Q?", sample_chunks)
 
-        call_kwargs = client.messages.create.call_args.kwargs
-        assert "provide_answer" in call_kwargs["system"]
+        call_kwargs = client.models.generate_content.call_args.kwargs
+        config = call_kwargs["config"]
+        assert config.tools is not None
+        assert len(config.tools) > 0
 
     def test_question_in_user_message(self, sample_chunks):
         client = _make_mock_client("answer text", [])
         gen = AnswerGenerator(client)
         gen.generate("Who leads the team?", sample_chunks)
 
-        messages = client.messages.create.call_args.kwargs["messages"]
-        user_content = messages[0]["content"]
-        assert "Who leads the team?" in user_content
+        # contents is passed as a keyword argument
+        call_kwargs = client.models.generate_content.call_args.kwargs
+        user_message = call_kwargs["contents"]
+        assert "Who leads the team?" in user_message
 
     def test_chunk_content_in_user_message(self, sample_chunks):
         client = _make_mock_client("answer text", [])
         gen = AnswerGenerator(client)
         gen.generate("Q?", sample_chunks)
 
-        messages = client.messages.create.call_args.kwargs["messages"]
-        content = messages[0]["content"]
-        assert "chunk-aaa" in content
-        assert "TechNova Corporation was founded" in content
+        call_kwargs = client.models.generate_content.call_args.kwargs
+        user_message = call_kwargs["contents"]
+        assert "chunk-aaa" in user_message
+        assert "TechNova Corporation was founded" in user_message
 
     def test_parses_answer_text(self, sample_chunks):
         client = _make_mock_client("TechNova was founded in 2010.", [])
@@ -257,17 +265,16 @@ class TestAnswerGenerator:
         result = gen.generate("Q?", sample_chunks)
         assert result.llm_confidence == 0.75
 
-    def test_raises_if_no_tool_use_block(self, sample_chunks):
-        """Claude must return provide_answer — ValueError if it doesn't."""
-        text_block = MagicMock()
-        text_block.type = "text"
-        text_block.name = "not_provide_answer"
+    def test_raises_if_no_function_call(self, sample_chunks):
+        """Gemini must return provide_answer — ValueError if it doesn't."""
+        part = MagicMock()
+        part.function_call = None  # no function call returned
 
         response = MagicMock()
-        response.content = [text_block]
+        response.parts = [part]
 
         client = MagicMock()
-        client.messages.create.return_value = response
+        client.models.generate_content.return_value = response
 
         gen = AnswerGenerator(client)
         with pytest.raises(ValueError, match="provide_answer"):
@@ -277,15 +284,12 @@ class TestAnswerGenerator:
         client = MagicMock()
         gen = AnswerGenerator(client)
         result = gen.generate("Q?", [])
-        # Should not call Claude at all
-        assert not client.messages.create.called
+        # Should not call Gemini at all
+        assert not client.models.generate_content.called
         assert result.chunk_count == 0
         assert result.citations == []
 
-    def test_custom_model_passed_to_api(self, sample_chunks):
+    def test_custom_model_stored_on_generator(self, sample_chunks):
         client = _make_mock_client("answer", [])
-        gen = AnswerGenerator(client, model="claude-sonnet-4-6")
-        gen.generate("Q?", sample_chunks)
-
-        call_kwargs = client.messages.create.call_args.kwargs
-        assert call_kwargs["model"] == "claude-sonnet-4-6"
+        gen = AnswerGenerator(client, model="gemini-1.5-pro")
+        assert gen._model == "gemini-1.5-pro"

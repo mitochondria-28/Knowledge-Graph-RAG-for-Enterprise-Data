@@ -110,7 +110,7 @@ def configure_logging(level: str | None = None) -> None:
     root.setLevel(effective_level)
 
     # Silence noisy third-party loggers
-    for noisy in ("anthropic", "httpx", "httpcore", "uvicorn.access"):
+    for noisy in ("google", "httpx", "httpcore", "uvicorn.access"):
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
 

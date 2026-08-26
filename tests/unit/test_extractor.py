@@ -1,5 +1,5 @@
 """
-Unit tests for the extractor — Claude API calls are mocked.
+Unit tests for the extractor — Gemini API calls are mocked.
 
 WHY MOCK THE API:
 
@@ -11,8 +11,8 @@ calls in unit tests creates problems:
   - Tests are slow (LLM inference latency)
   - Test outcomes are non-deterministic (LLM outputs vary)
 
-We use unittest.mock.patch to replace the Anthropic client with a mock that
-returns a controlled, pre-defined response.
+We use unittest.mock.MagicMock to replace the Gemini GenerativeModel with a
+mock that returns a controlled, pre-defined response.
 """
 
 import json
@@ -91,26 +91,28 @@ VALID_TOOL_RESPONSE = {
 # ── Mock builders ─────────────────────────────────────────────────────────────
 
 def _make_mock_response(tool_input: dict, input_tokens: int = 1000, output_tokens: int = 300):
-    """Build a mock anthropic.Message that looks like a tool_use response."""
-    mock_block = MagicMock()
-    mock_block.type = "tool_use"
-    mock_block.name = "extract_entities_and_relationships"
-    mock_block.input = tool_input
+    """Build a mock Gemini response that looks like a function_call response."""
+    function_call = MagicMock()
+    function_call.name = "extract_entities_and_relationships"
+    function_call.args = tool_input
 
-    mock_usage = MagicMock()
-    mock_usage.input_tokens = input_tokens
-    mock_usage.output_tokens = output_tokens
+    part = MagicMock()
+    part.function_call = function_call
+
+    usage_metadata = MagicMock()
+    usage_metadata.prompt_token_count = input_tokens
+    usage_metadata.candidates_token_count = output_tokens
 
     mock_response = MagicMock()
-    mock_response.content = [mock_block]
-    mock_response.usage = mock_usage
+    mock_response.parts = [part]
+    mock_response.usage_metadata = usage_metadata
     return mock_response
 
 
 def _make_mock_client(tool_input: dict, **kwargs):
-    """Return a mock Anthropic client whose messages.create returns the given tool_input."""
+    """Return a mock Gemini GenerativeModel whose generate_content returns the given tool_input."""
     mock_client = MagicMock()
-    mock_client.messages.create.return_value = _make_mock_response(tool_input, **kwargs)
+    mock_client.models.generate_content.return_value = _make_mock_response(tool_input, **kwargs)
     return mock_client
 
 
@@ -124,9 +126,9 @@ def test_parse_tool_response_extracts_input():
 
 def test_parse_tool_response_returns_none_if_no_tool_block():
     mock_response = MagicMock()
-    mock_block = MagicMock()
-    mock_block.type = "text"           # not a tool_use block
-    mock_response.content = [mock_block]
+    part = MagicMock()
+    part.function_call = None  # no function call
+    mock_response.parts = [part]
     assert _parse_tool_response(mock_response) is None
 
 
@@ -180,9 +182,9 @@ def test_extract_chunk_records_model():
         section="Project Overview",
         content=SAMPLE_CHUNK_CONTENT,
         client=client,
-        model="claude-sonnet-4-6",
+        model="gemini-1.5-pro",
     )
-    assert record.model == "claude-sonnet-4-6"
+    assert record.model == "gemini-1.5-pro"
 
 
 # ── Tests: extract_chunk (retry behavior) ─────────────────────────────────────
@@ -218,7 +220,7 @@ def test_extract_chunk_retries_on_validation_failure():
     }
 
     mock_client = MagicMock()
-    mock_client.messages.create.side_effect = [
+    mock_client.models.generate_content.side_effect = [
         _make_mock_response(invalid_response),
         _make_mock_response(valid_retry),
     ]
@@ -233,7 +235,7 @@ def test_extract_chunk_retries_on_validation_failure():
         client=mock_client,
     )
     assert record.attempts == 2
-    assert mock_client.messages.create.call_count == 2
+    assert mock_client.models.generate_content.call_count == 2
 
 
 def test_extract_chunk_raises_after_max_retries():
@@ -253,7 +255,7 @@ def test_extract_chunk_raises_after_max_retries():
         ],
     }
     mock_client = MagicMock()
-    mock_client.messages.create.return_value = _make_mock_response(bad_response)
+    mock_client.models.generate_content.return_value = _make_mock_response(bad_response)
 
     with pytest.raises(ExtractionError):
         extract_chunk(
@@ -266,4 +268,4 @@ def test_extract_chunk_raises_after_max_retries():
             client=mock_client,
         )
     # Should have been called MAX_RETRIES times
-    assert mock_client.messages.create.call_count == 3
+    assert mock_client.models.generate_content.call_count == 3

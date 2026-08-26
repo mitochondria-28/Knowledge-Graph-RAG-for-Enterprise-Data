@@ -1,16 +1,16 @@
 """
-Claude API wrapper for entity & relationship extraction.
+Gemini API wrapper for entity & relationship extraction.
 
 KEY DESIGN DECISIONS:
 
-1. Tool use (not raw JSON prompting).
-   We force Claude to call our extraction tool via tool_choice="tool". This
+1. Function calling (not raw JSON prompting).
+   We force Gemini to call our extraction function via mode="ANY". This
    guarantees structured JSON output matching our schema — no markdown code
    fences, no prose wrapping, no "Here is the extraction:" preamble.
 
 2. Retry with corrective feedback.
-   On validation failure we send the error list back to Claude in the retry
-   message. Telling Claude what went wrong ("relationship references entity
+   On validation failure we send the error list back in the retry message.
+   Telling the model what went wrong ("relationship references entity
    'Stellar Systems' which is not in your entities list") gets significantly
    better correction than a blind retry.
 
@@ -20,15 +20,17 @@ KEY DESIGN DECISIONS:
    independently testable.
 
 4. Token tracking.
-   Every API response includes usage metadata. We capture input_tokens and
-   output_tokens for cost estimation and the benchmark report in Phase 12.
+   Every API response includes usage metadata. We capture prompt_token_count
+   and candidates_token_count for cost estimation and the benchmark report.
 """
 
 import logging
 import time
 from datetime import datetime, timezone
 
-import anthropic
+from google import genai
+from google.genai import types
+from google.api_core import exceptions as gexceptions
 from pydantic import ValidationError
 
 from src.extraction.prompts import EXTRACTION_TOOL, SYSTEM_PROMPT
@@ -40,15 +42,15 @@ from src.extraction.validator import ValidationResult, deduplicate_entities, val
 
 logger = logging.getLogger(__name__)
 
-# Claude model used for extraction.
-# claude-haiku-4-5-20251001: fast and cheap — appropriate for well-defined extraction tasks.
-# Switch to claude-sonnet-4-6 if extraction quality is insufficient.
-DEFAULT_MODEL = "claude-haiku-4-5-20251001"
+# Gemini model used for extraction.
+# gemini-1.5-flash: fast, free tier — appropriate for well-defined extraction tasks.
+# Switch to gemini-1.5-pro if extraction quality is insufficient.
+DEFAULT_MODEL = "gemini-1.5-flash"
 
-# Pricing as of mid-2025 (USD per million tokens)
+# Pricing as of 2025 (USD per million tokens) — gemini-1.5-flash free tier is $0
 _PRICING: dict[str, dict[str, float]] = {
-    "claude-haiku-4-5-20251001": {"input": 0.80,  "output": 4.00},
-    "claude-sonnet-4-6":          {"input": 3.00,  "output": 15.00},
+    "gemini-1.5-flash": {"input": 0.0,  "output": 0.0},
+    "gemini-1.5-pro":   {"input": 3.50, "output": 10.50},
 }
 
 MAX_RETRIES = 3
@@ -59,11 +61,65 @@ class ExtractionError(Exception):
     """Raised when a chunk cannot be extracted after all retries."""
 
 
+def make_extractor_client(api_key: str, model: str = DEFAULT_MODEL):
+    """
+    Factory: create a configured Gemini Client for extraction.
+
+    Returns a genai.Client; the model name is stored separately and passed
+    per-call to allow the same client to be reused across model variants.
+    """
+    return genai.Client(api_key=api_key)
+
+
 def estimate_cost(input_tokens: int, output_tokens: int, model: str) -> float:
     """Return estimated USD cost for a single API call."""
-    pricing = _PRICING.get(model, {"input": 3.00, "output": 15.00})
+    pricing = _PRICING.get(model, {"input": 3.50, "output": 10.50})
     return (input_tokens / 1_000_000 * pricing["input"]
             + output_tokens / 1_000_000 * pricing["output"])
+
+
+def _build_extraction_tool() -> types.Tool:
+    """Convert the EXTRACTION_TOOL dict (Gemini parameters format) into a types.Tool."""
+    params_dict = EXTRACTION_TOOL["parameters"]
+
+    def _dict_to_schema(d: dict) -> types.Schema:
+        kwargs: dict = {}
+        if "type" in d:
+            kwargs["type"] = d["type"]
+        if "description" in d:
+            kwargs["description"] = d["description"]
+        if "properties" in d:
+            kwargs["properties"] = {k: _dict_to_schema(v) for k, v in d["properties"].items()}
+        if "items" in d:
+            kwargs["items"] = _dict_to_schema(d["items"])
+        if "required" in d:
+            kwargs["required"] = d["required"]
+        if "enum" in d:
+            kwargs["enum"] = [str(e) for e in d["enum"]]
+        if "minimum" in d:
+            kwargs["minimum"] = d["minimum"]
+        if "maximum" in d:
+            kwargs["maximum"] = d["maximum"]
+        return types.Schema(**kwargs)
+
+    return types.Tool(function_declarations=[
+        types.FunctionDeclaration(
+            name=EXTRACTION_TOOL["name"],
+            description=EXTRACTION_TOOL["description"],
+            parameters=_dict_to_schema(params_dict),
+        )
+    ])
+
+
+# Build once at import time
+_EXTRACTION_GEMINI_TOOL = _build_extraction_tool()
+
+_EXTRACTION_TOOL_CONFIG = types.ToolConfig(
+    function_calling_config=types.FunctionCallingConfig(
+        mode="any",
+        allowed_function_names=["extract_entities_and_relationships"],
+    )
+)
 
 
 def extract_chunk(
@@ -73,7 +129,7 @@ def extract_chunk(
     doc_hash: str,
     section: str,
     content: str,
-    client: anthropic.Anthropic,
+    client,
     model: str = DEFAULT_MODEL,
 ) -> ExtractionRecord:
     """
@@ -90,34 +146,36 @@ def extract_chunk(
         user_content = _build_user_message(content, last_error, attempt)
 
         try:
-            response = client.messages.create(
+            response = client.models.generate_content(
                 model=model,
-                max_tokens=2048,
-                system=SYSTEM_PROMPT,
-                tools=[EXTRACTION_TOOL],
-                tool_choice={"type": "tool", "name": "extract_entities_and_relationships"},
-                messages=[{"role": "user", "content": user_content}],
+                contents=user_content,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    tools=[_EXTRACTION_GEMINI_TOOL],
+                    tool_config=_EXTRACTION_TOOL_CONFIG,
+                    max_output_tokens=2048,
+                ),
             )
-        except anthropic.AuthenticationError:
+        except gexceptions.Unauthenticated:
             raise  # don't retry — the key is wrong
-        except anthropic.RateLimitError as exc:
+        except gexceptions.ResourceExhausted as exc:
             wait = _RETRY_DELAYS_SECONDS[attempt - 1] * 10
             logger.warning("Rate limit on attempt %d/%d. Waiting %ds.", attempt, MAX_RETRIES, wait)
             time.sleep(wait)
             continue
-        except anthropic.APIError as exc:
+        except gexceptions.GoogleAPIError as exc:
             logger.warning("API error on attempt %d/%d: %s", attempt, MAX_RETRIES, exc)
             time.sleep(_RETRY_DELAYS_SECONDS[attempt - 1])
             continue
 
         # Track token usage across all attempts
-        total_input_tokens += response.usage.input_tokens
-        total_output_tokens += response.usage.output_tokens
+        total_input_tokens += response.usage_metadata.prompt_token_count
+        total_output_tokens += response.usage_metadata.candidates_token_count
 
-        # Extract tool call result from response
+        # Extract function call result from response
         tool_result = _parse_tool_response(response)
         if tool_result is None:
-            last_error = "No tool call found in response."
+            last_error = "No function call found in response."
             logger.warning("[%s] Attempt %d: %s", chunk_id[:8], attempt, last_error)
             time.sleep(_RETRY_DELAYS_SECONDS[attempt - 1])
             continue
@@ -152,8 +210,8 @@ def extract_chunk(
             len(extraction.entities),
             len(extraction.relationships),
             attempt,
-            response.usage.input_tokens,
-            response.usage.output_tokens,
+            response.usage_metadata.prompt_token_count,
+            response.usage_metadata.candidates_token_count,
         )
         return ExtractionRecord(
             chunk_id=chunk_id,
@@ -187,9 +245,10 @@ def _build_user_message(content: str, last_error: str | None, attempt: int) -> s
     )
 
 
-def _parse_tool_response(response: anthropic.types.Message) -> dict | None:
-    """Extract the tool input dict from a Claude response."""
-    for block in response.content:
-        if block.type == "tool_use" and block.name == "extract_entities_and_relationships":
-            return block.input
+def _parse_tool_response(response) -> dict | None:
+    """Extract the function call input dict from a Gemini response."""
+    for part in response.parts:
+        fc = getattr(part, "function_call", None)
+        if fc and fc.name == "extract_entities_and_relationships":
+            return dict(fc.args)
     return None

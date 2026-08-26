@@ -6,8 +6,8 @@ STARTUP (lifespan):
   1. Load corpus chunks from output/all_chunks.json
   2. Load entity index from output/resolved_entities.json
   3. Choose generator:
-       - If ANTHROPIC_API_KEY is set → AnswerGenerator (real Claude)
-       - Otherwise              → MockAnswerGenerator (no API call)
+       - If GEMINI_API_KEY is set → AnswerGenerator (real Gemini)
+       - Otherwise               → MockAnswerGenerator (no API call)
   4. Build AnswerPipeline and attach to app.state
   5. Set corpus-size Prometheus gauges
 
@@ -79,19 +79,18 @@ async def lifespan(app: FastAPI):
 
     # ── Choose generator ──────────────────────────────────────────────────────
     generator: AnswerGenerator | MockAnswerGenerator
-    api_key = getattr(settings, "anthropic_api_key", None)
+    api_key = getattr(settings, "gemini_api_key", None)
 
     if api_key:
         try:
-            import anthropic
-            client = anthropic.Anthropic(api_key=api_key)
-            generator = AnswerGenerator(client)
-            logger.info("Using real AnswerGenerator (claude-haiku-4-5-20251001)")
+            from src.answer.generator import make_generator
+            generator = make_generator(api_key=api_key)
+            logger.info("Using real AnswerGenerator (gemini-1.5-flash)")
         except Exception as exc:
-            logger.warning("Could not initialise Anthropic client (%s) — using mock", exc)
+            logger.warning("Could not initialise Gemini client (%s) — using mock", exc)
             generator = MockAnswerGenerator()
     else:
-        logger.info("ANTHROPIC_API_KEY not set — using MockAnswerGenerator")
+        logger.info("GEMINI_API_KEY not set — using MockAnswerGenerator")
         generator = MockAnswerGenerator()
 
     # ── Build pipeline ────────────────────────────────────────────────────────

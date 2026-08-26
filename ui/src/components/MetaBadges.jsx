@@ -58,7 +58,7 @@ export default function MetaBadges({ strategy, latencyMs, citationConfidence, mo
       </Badge>
 
       <Badge className="bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400 font-mono">
-        {model.replace('claude-', '').replace(/-\d{8}$/, '')}
+        {model.replace('gemini-', 'gemini/').replace('claude-', '').replace(/-\d{8}$/, '')}
       </Badge>
     </div>
   )

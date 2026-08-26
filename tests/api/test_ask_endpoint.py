@@ -8,7 +8,7 @@ manager, it runs the full lifespan (startup + shutdown), so the pipeline
 is initialised exactly as it would be in production.
 
 No running server is needed — everything runs in-process.
-No ANTHROPIC_API_KEY is required — the lifespan falls back to MockAnswerGenerator
+No GEMINI_API_KEY is required — the lifespan falls back to MockAnswerGenerator
 when the key is absent, which is the expected behaviour in CI.
 
 The tests exercise:

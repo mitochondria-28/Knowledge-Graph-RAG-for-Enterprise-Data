@@ -28,13 +28,12 @@ Returns a ranked list of chunk dicts (may be a subset of all_chunks).
 
 SWAPPING THE GENERATOR:
 
-By default, MockAnswerGenerator is used (no API key needed). To use Claude:
+By default, MockAnswerGenerator is used (no API key needed). To use Gemini:
 
-    import anthropic
-    from src.answer.generator import AnswerGenerator
+    from src.answer.generator import make_generator
 
     pipeline = AnswerPipeline(
-        generator=AnswerGenerator(anthropic.Anthropic()),
+        generator=make_generator(api_key="YOUR_GEMINI_API_KEY"),
     )
 
 OBSERVABILITY (Phase 11):
@@ -128,7 +127,7 @@ class AnswerPipeline:
       - MockAnswerGenerator (no API key)
 
     Production upgrade:
-      - Pass AnswerGenerator(anthropic.Anthropic()) for real Claude answers
+      - Pass make_generator(api_key=...) for real Gemini answers
       - Pass a custom retriever_fn for vector or graph retrieval
     """
 

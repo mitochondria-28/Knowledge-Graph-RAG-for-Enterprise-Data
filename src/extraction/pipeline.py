@@ -13,14 +13,13 @@ import json
 import logging
 from pathlib import Path
 
-import anthropic
 from rich.console import Console
 from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
 from rich.table import Table
 
 from src.config import settings
 from src.extraction.cache import ExtractionCache
-from src.extraction.extractor import DEFAULT_MODEL, ExtractionError, estimate_cost, extract_chunk
+from src.extraction.extractor import DEFAULT_MODEL, ExtractionError, estimate_cost, extract_chunk, make_extractor_client
 from src.extraction.schemas import ExtractionRunStats
 
 logger = logging.getLogger(__name__)
@@ -87,7 +86,7 @@ def run_extraction(
     Args:
         chunks_file: Path to all_chunks.json. Defaults to output/all_chunks.json.
         output_dir:  Where to write results. Defaults to settings.output_dir.
-        model:       Claude model ID to use.
+        model:       Gemini model ID to use.
         sample:      If set, only process this many chunks (for testing).
         dry_run:     Estimate cost only — no API calls.
         force:       Re-extract even if chunk is already in cache.
@@ -136,11 +135,11 @@ def run_extraction(
         _print_summary(stats)
         return stats
 
-    if not settings.anthropic_api_key:
-        console.print("[red]ANTHROPIC_API_KEY is not set. Create a .env file from .env.example.[/red]")
+    if not settings.gemini_api_key:
+        console.print("[red]GEMINI_API_KEY is not set. Create a .env file from .env.example.[/red]")
         raise SystemExit(1)
 
-    client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+    client = make_extractor_client(api_key=settings.gemini_api_key, model=model)
 
     stats = ExtractionRunStats(chunks_cached=len(all_chunks) - len(to_extract))
     failed_chunks: list[str] = []

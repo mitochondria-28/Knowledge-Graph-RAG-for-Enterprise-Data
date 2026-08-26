@@ -60,7 +60,7 @@ def main(
         format="%(name)s %(levelname)s %(message)s",
     )
 
-    from src.answer.generator import AnswerGenerator, MockAnswerGenerator
+    from src.answer.generator import MockAnswerGenerator
     from src.answer.pipeline import AnswerPipeline, load_chunks
     from src.benchmark.report import print_report, save_report
     from src.benchmark.runner import BenchmarkRunner
@@ -76,15 +76,15 @@ def main(
         console.print("[dim]Generator: MockAnswerGenerator (no API calls)[/dim]")
     else:
         try:
-            import anthropic
+            from src.answer.generator import make_generator
             from src.config import settings
-            if not settings.anthropic_api_key:
+            if not settings.gemini_api_key:
                 console.print(
-                    "[yellow]ANTHROPIC_API_KEY not set — falling back to mock.[/yellow]"
+                    "[yellow]GEMINI_API_KEY not set — falling back to mock.[/yellow]"
                 )
                 generator = MockAnswerGenerator()
             else:
-                generator = AnswerGenerator(anthropic.Anthropic(api_key=settings.anthropic_api_key))
+                generator = make_generator(api_key=settings.gemini_api_key)
                 console.print(f"[dim]Generator: AnswerGenerator ({generator._model})[/dim]")
         except Exception as e:
             console.print(f"[yellow]Could not init real generator ({e}) — using mock.[/yellow]")

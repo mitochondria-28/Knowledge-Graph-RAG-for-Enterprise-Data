@@ -35,8 +35,8 @@ Question
                │ ranked chunks
                ▼
 ┌─────────────────────────────────────────────────────────┐
-│  Answer Generator  (Claude claude-haiku-4-5-20251001)   │
-│  Forced tool-use → structured JSON output               │
+│  Answer Generator  (Google Gemini gemini-1.5-flash)     │
+│  Forced function calling → structured JSON output       │
 │  { answer_text, citations: [{chunk_id, quote}] }        │
 └──────────────┬──────────────────────────────────────────┘
                │ raw answer + citations
@@ -61,7 +61,7 @@ Question
 
 - Python 3.11+
 - Node 18+ (UI only)
-- An Anthropic API key (optional — falls back to `MockAnswerGenerator` without one)
+- A Google Gemini API key (optional — falls back to `MockAnswerGenerator` without one)
 
 ### 1. Clone and install
 
@@ -80,12 +80,12 @@ pip install fastapi[standard] uvicorn httpx rapidfuzz prometheus-client \
 
 ```bash
 cp .env.example .env
-# Edit .env — only ANTHROPIC_API_KEY is needed for basic use
+# Edit .env — only GEMINI_API_KEY is needed for basic use
 ```
 
 `.env.example`:
 ```
-ANTHROPIC_API_KEY=sk-ant-...   # optional — mock generator used if absent
+GEMINI_API_KEY=AIza...         # optional — mock generator used if absent
 NEO4J_PASSWORD=                # optional — needed for graph retrieval
 POSTGRES_PASSWORD=             # optional — needed for vector retrieval
 LOG_LEVEL=INFO
@@ -104,7 +104,7 @@ python scripts/ingest.py        # chunks 13 TechNova docs → output/all_chunks.
 # No API key needed — uses MockAnswerGenerator
 python scripts/ask.py "What is StellarDB?" --mock
 
-# With real Claude
+# With real Gemini
 python scripts/ask.py "Who leads the Platform Team?" --verbose
 ```
 
@@ -168,7 +168,7 @@ pytest --cov=src --cov-report=term-missing
 # Mock mode (no API key, <5ms per question)
 python scripts/benchmark.py --mock
 
-# Real Claude (requires ANTHROPIC_API_KEY)
+# Real Gemini (requires GEMINI_API_KEY)
 python scripts/benchmark.py --questions 20
 ```
 
@@ -178,7 +178,7 @@ Results on 20 evaluation questions (mock mode, keyword retrieval):
 |--------|-------|
 | Routing accuracy | 85% (17/20) |
 | Citation confidence | 100% (mock verbatim quotes) |
-| Total latency p50 | ~0.9ms (keyword retrieval; real Claude adds ~800ms–1500ms) |
+| Total latency p50 | ~0.9ms (keyword retrieval; real Gemini adds ~800ms–1500ms) |
 
 ---
 
@@ -206,7 +206,7 @@ Results on 20 evaluation questions (mock mode, keyword retrieval):
   ],
   "citation_confidence": 1.0,
   "retrieval_strategy": "graph",
-  "model": "claude-haiku-4-5-20251001",
+  "model": "gemini-1.5-flash",
   "latency_ms": 842.3,
   "chunk_count": 5
 }
@@ -246,7 +246,7 @@ kg_rag_citation_confidence_sum 41.0
 ask (root)
   ├── route    [strategy=graph, hop_depth=1, confidence=0.85]
   ├── retrieve [chunk_count=5]
-  ├── generate [model=claude-haiku-4-5-20251001, citation_count=2]
+  ├── generate [model=gemini-1.5-flash, citation_count=2]
   └── validate [valid_citations=2, invalid_citations=0]
 ```
 
@@ -264,7 +264,7 @@ enterprise-kg-rag/
 │   └── benchmark_report.json # Latest benchmark run
 ├── scripts/                  # CLI entry points for each phase
 │   ├── ingest.py             # Phase 1 — chunking
-│   ├── extract.py            # Phase 2 — entity extraction (Claude)
+│   ├── extract.py            # Phase 2 — entity extraction (Gemini)
 │   ├── resolve.py            # Phase 3 — entity resolution
 │   ├── load_graph.py         # Phase 4 — Neo4j loader
 │   ├── embed_chunks.py       # Phase 5 — pgvector embedder
@@ -303,13 +303,13 @@ enterprise-kg-rag/
 | Phase | What was built | Key technique |
 |-------|---------------|---------------|
 | 1 | Document ingestion + chunking | Token-based sliding window (tiktoken) |
-| 2 | Entity & relationship extraction | Claude tool-use (forced structured output) |
+| 2 | Entity & relationship extraction | Gemini function calling (forced structured output) |
 | 3 | Entity resolution | Union-Find clustering + fuzzy deduplication |
 | 4 | Knowledge graph | Neo4j with MERGE idempotency + query allowlist |
 | 5 | Vector store | pgvector + text-embedding-3-small |
 | 6 | Retrieval evaluation | Precision@k, Recall@k, F1@k, MRR |
 | 7 | Question router | 10 ordered rules, ~1ms, zero LLM calls, 85% accuracy |
-| 8 | Answer generation + validation | Claude tool-use + rapidfuzz citation verifier |
+| 8 | Answer generation + validation | Gemini function calling + rapidfuzz citation verifier |
 | 9 | FastAPI backend | Lifespan startup, Pydantic validation, 503/422/500 |
 | 10 | Benchmarking | Per-stage timing, p50/p95/p99, citation confidence |
 | 11 | Observability | JSON logs, Prometheus metrics, OpenTelemetry spans |
@@ -323,7 +323,7 @@ enterprise-kg-rag/
 
 | Layer | Technology |
 |-------|-----------|
-| LLM | Anthropic Claude (claude-haiku-4-5-20251001) |
+| LLM | Google Gemini (gemini-1.5-flash) |
 | Embeddings | OpenAI text-embedding-3-small |
 | Knowledge graph | Neo4j 5.20 |
 | Vector store | PostgreSQL 16 + pgvector |
