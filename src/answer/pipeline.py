@@ -130,16 +130,19 @@ class AnswerPipeline:
         self._router = QuestionRouter(entity_index or load_entity_index())
         self._top_k = top_k
 
-    def ask(self, question: str) -> ValidatedAnswer:
+    def ask(self, question: str, top_k: int | None = None) -> ValidatedAnswer:
         """
         Full pipeline for a single question.
 
         Args:
             question: Natural-language question string.
+            top_k:    Number of chunks to retrieve; overrides the instance default.
 
         Returns:
             ValidatedAnswer with answer, citations, and validation status.
         """
+        k = top_k if top_k is not None else self._top_k
+
         # 1. Route
         decision = self._router.route(question)
         logger.info(
@@ -148,7 +151,7 @@ class AnswerPipeline:
         )
 
         # 2. Retrieve
-        retrieved = self._retriever_fn(question, self._chunks, self._top_k)
+        retrieved = self._retriever_fn(question, self._chunks, k)
         logger.info("Retrieved %d chunks", len(retrieved))
 
         # 3. Generate (with routing decision as strategy label)
