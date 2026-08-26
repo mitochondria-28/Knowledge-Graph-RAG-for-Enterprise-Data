@@ -35,3 +35,10 @@ htmlcov/
 
 # Large generated output (tracked selectively below)
 output/chunks/
+
+# UI
+ui/node_modules/
+ui/dist/
+ui/.vite/
+# Hypothesis
+.hypothesis/
