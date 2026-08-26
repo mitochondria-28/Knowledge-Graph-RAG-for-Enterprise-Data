@@ -32,7 +32,13 @@ embed = ["openai>=1.40.0"]
 dev = [
     "pytest>=8.2.0",
     "pytest-asyncio>=0.23.0",
+    "pytest-cov>=7.0.0",
+    "hypothesis>=6.100.0",
     "ruff>=0.5.0",
+    # Observability deps (Phase 11)
+    "prometheus-client>=0.20.0",
+    "opentelemetry-sdk>=1.24.0",
+    "opentelemetry-api>=1.24.0",
 ]
 # Everything
 all = [
@@ -43,6 +49,35 @@ all = [
 testpaths = ["tests"]
 asyncio_mode = "auto"
 pythonpath = ["."]
+# Test markers — run subsets with: pytest -m unit / -m integration / -m property
+markers = [
+    "unit: fast, isolated unit tests (no I/O)",
+    "integration: full pipeline wired together (may read output/all_chunks.json)",
+    "property: Hypothesis property-based tests",
+    "api: FastAPI HTTP endpoint tests",
+    "slow: tests that take >1s (excluded from quick-check runs)",
+]
+# Default addopts — show short traceback, verbose on failure, no header noise
+addopts = "-ra --tb=short"
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "src/*/migrations/*",
+    "src/config.py",
+]
+
+[tool.coverage.report]
+# Lines that are pragmatically excluded from coverage
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "\\.\\.\\.",
+]
+show_missing = true
+skip_covered = false
+fail_under = 60
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
