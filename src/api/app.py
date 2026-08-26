@@ -85,7 +85,7 @@ async def lifespan(app: FastAPI):
         try:
             from src.answer.generator import make_generator
             generator = make_generator(api_key=api_key)
-            logger.info("Using real AnswerGenerator (gemini-1.5-flash)")
+            logger.info("Using real AnswerGenerator (gemini-2.5-flash)")
         except Exception as exc:
             logger.warning("Could not initialise Gemini client (%s) — using mock", exc)
             generator = MockAnswerGenerator()

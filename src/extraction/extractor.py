@@ -43,14 +43,15 @@ from src.extraction.validator import ValidationResult, deduplicate_entities, val
 logger = logging.getLogger(__name__)
 
 # Gemini model used for extraction.
-# gemini-1.5-flash: fast, free tier — appropriate for well-defined extraction tasks.
-# Switch to gemini-1.5-pro if extraction quality is insufficient.
-DEFAULT_MODEL = "gemini-1.5-flash"
+# gemini-2.5-flash: fast, free tier — appropriate for well-defined extraction tasks.
+# Switch to gemini-2.5-pro if extraction quality is insufficient.
+DEFAULT_MODEL = "gemini-2.5-flash"
 
-# Pricing as of 2025 (USD per million tokens) — gemini-1.5-flash free tier is $0
+# Pricing as of 2026 (USD per million tokens) — gemini-2.5-flash has a free tier
 _PRICING: dict[str, dict[str, float]] = {
-    "gemini-1.5-flash": {"input": 0.0,  "output": 0.0},
-    "gemini-1.5-pro":   {"input": 3.50, "output": 10.50},
+    "gemini-2.5-flash":      {"input": 0.0,  "output": 0.0},
+    "gemini-2.5-flash-lite": {"input": 0.0,  "output": 0.0},
+    "gemini-2.5-pro":        {"input": 1.25, "output": 10.00},
 }
 
 MAX_RETRIES = 3

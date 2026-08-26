@@ -291,5 +291,5 @@ class TestAnswerGenerator:
 
     def test_custom_model_stored_on_generator(self, sample_chunks):
         client = _make_mock_client("answer", [])
-        gen = AnswerGenerator(client, model="gemini-1.5-pro")
-        assert gen._model == "gemini-1.5-pro"
+        gen = AnswerGenerator(client, model="gemini-2.5-pro")
+        assert gen._model == "gemini-2.5-pro"

@@ -16,7 +16,7 @@ Usage:
     python scripts/extract.py --force
 
     # Use a different model:
-    python scripts/extract.py --model gemini-1.5-pro
+    python scripts/extract.py --model gemini-2.5-pro
 """
 import logging
 import sys

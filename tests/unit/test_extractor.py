@@ -182,9 +182,9 @@ def test_extract_chunk_records_model():
         section="Project Overview",
         content=SAMPLE_CHUNK_CONTENT,
         client=client,
-        model="gemini-1.5-pro",
+        model="gemini-2.5-pro",
     )
-    assert record.model == "gemini-1.5-pro"
+    assert record.model == "gemini-2.5-pro"
 
 
 # ── Tests: extract_chunk (retry behavior) ─────────────────────────────────────

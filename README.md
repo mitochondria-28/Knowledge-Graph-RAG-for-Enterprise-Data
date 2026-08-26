@@ -35,7 +35,7 @@ Question
                │ ranked chunks
                ▼
 ┌─────────────────────────────────────────────────────────┐
-│  Answer Generator  (Google Gemini gemini-1.5-flash)     │
+│  Answer Generator  (Google Gemini gemini-2.5-flash)     │
 │  Forced function calling → structured JSON output       │
 │  { answer_text, citations: [{chunk_id, quote}] }        │
 └──────────────┬──────────────────────────────────────────┘
@@ -206,7 +206,7 @@ Results on 20 evaluation questions (mock mode, keyword retrieval):
   ],
   "citation_confidence": 1.0,
   "retrieval_strategy": "graph",
-  "model": "gemini-1.5-flash",
+  "model": "gemini-2.5-flash",
   "latency_ms": 842.3,
   "chunk_count": 5
 }
@@ -246,7 +246,7 @@ kg_rag_citation_confidence_sum 41.0
 ask (root)
   ├── route    [strategy=graph, hop_depth=1, confidence=0.85]
   ├── retrieve [chunk_count=5]
-  ├── generate [model=gemini-1.5-flash, citation_count=2]
+  ├── generate [model=gemini-2.5-flash, citation_count=2]
   └── validate [valid_citations=2, invalid_citations=0]
 ```
 
@@ -323,7 +323,7 @@ enterprise-kg-rag/
 
 | Layer | Technology |
 |-------|-----------|
-| LLM | Google Gemini (gemini-1.5-flash) |
+| LLM | Google Gemini (gemini-2.5-flash) |
 | Embeddings | OpenAI text-embedding-3-small |
 | Knowledge graph | Neo4j 5.20 |
 | Vector store | PostgreSQL 16 + pgvector |

@@ -44,7 +44,7 @@ from src.answer.models import Citation, RawAnswer
 logger = logging.getLogger(__name__)
 
 # ── Default model ─────────────────────────────────────────────────────────────
-DEFAULT_MODEL = "gemini-1.5-flash"
+DEFAULT_MODEL = "gemini-2.5-flash"
 
 # ── System prompt ─────────────────────────────────────────────────────────────
 _SYSTEM_PROMPT = """You are an enterprise knowledge assistant. Your job is to answer questions using ONLY the context chunks provided below.

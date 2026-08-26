@@ -7,7 +7,7 @@ from src.ingestion.normalizer import normalize_text
 
 logger = logging.getLogger(__name__)
 
-SUPPORTED_EXTENSIONS: frozenset[str] = frozenset({".md", ".txt"})
+SUPPORTED_EXTENSIONS: frozenset[str] = frozenset({".md", ".txt", ".pdf"})
 
 # Maps corpus sub-directory names → semantic doc_type labels
 _DIR_TO_TYPE: dict[str, str] = {
@@ -53,6 +53,13 @@ def _sha256(content: str) -> str:
 
 # ── Public API ────────────────────────────────────────────────────────────────
 
+def _read_pdf(file_path: Path) -> str:
+    from pypdf import PdfReader
+    reader = PdfReader(str(file_path))
+    pages = [page.extract_text() or "" for page in reader.pages]
+    return "\n\n".join(pages)
+
+
 def load_document(file_path: Path) -> RawDocument:
     """Load, normalize, and fingerprint a single document."""
     if file_path.suffix not in SUPPORTED_EXTENSIONS:
@@ -61,7 +68,10 @@ def load_document(file_path: Path) -> RawDocument:
             f"Supported: {SUPPORTED_EXTENSIONS}"
         )
 
-    raw_text = file_path.read_text(encoding="utf-8")
+    if file_path.suffix == ".pdf":
+        raw_text = _read_pdf(file_path)
+    else:
+        raw_text = file_path.read_text(encoding="utf-8")
     content = normalize_text(raw_text)
 
     return RawDocument(

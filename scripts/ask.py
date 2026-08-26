@@ -50,7 +50,7 @@ def main(
     ),
     top_k: int = typer.Option(5, "--top-k", help="Number of chunks to retrieve."),
     model: str = typer.Option(
-        "gemini-1.5-flash",
+        "gemini-2.5-flash",
         "--model",
         help="Gemini model for generation (ignored with --mock).",
     ),
