@@ -36,10 +36,20 @@ By default, MockAnswerGenerator is used (no API key needed). To use Claude:
     pipeline = AnswerPipeline(
         generator=AnswerGenerator(anthropic.Anthropic()),
     )
+
+OBSERVABILITY (Phase 11):
+
+Every ask() call emits:
+  - OpenTelemetry spans: ask / route / retrieve / generate / validate
+  - Prometheus histograms: kg_rag_pipeline_stage_duration_seconds (per stage)
+                           kg_rag_pipeline_total_duration_seconds  (end-to-end)
+  - Prometheus histogram:  kg_rag_citation_confidence
+  - Structured log lines at INFO level for each stage
 """
 
 import json
 import logging
+import time
 from pathlib import Path
 from typing import Callable
 
@@ -47,9 +57,18 @@ from src.config import settings
 from src.answer.generator import MockAnswerGenerator
 from src.answer.models import ValidatedAnswer
 from src.answer.validator import CitationValidator
+from src.observability.metrics import (
+    CITATION_CONFIDENCE,
+    PIPELINE_STAGE_DURATION,
+    PIPELINE_TOTAL_DURATION,
+)
+from src.observability.tracing import get_tracer
 from src.router.pipeline import QuestionRouter, load_entity_index
 
 logger = logging.getLogger(__name__)
+
+def _get_tracer():
+    return get_tracer(__name__)
 
 # ── Type alias ────────────────────────────────────────────────────────────────
 RetrieverFn = Callable[[str, list[dict], int], list[dict]]
@@ -142,32 +161,100 @@ class AnswerPipeline:
             ValidatedAnswer with answer, citations, and validation status.
         """
         k = top_k if top_k is not None else self._top_k
+        pipeline_start = time.perf_counter()
 
-        # 1. Route
-        decision = self._router.route(question)
-        logger.info(
-            "Routed '%s...' → strategy=%s hop_depth=%d confidence=%.2f",
-            question[:60], decision.strategy, decision.hop_depth, decision.confidence,
-        )
+        with _get_tracer().start_as_current_span("ask") as root_span:
+            root_span.set_attribute("question.length", len(question))
+            root_span.set_attribute("top_k", k)
 
-        # 2. Retrieve
-        retrieved = self._retriever_fn(question, self._chunks, k)
-        logger.info("Retrieved %d chunks", len(retrieved))
+            # 1. Route
+            _tracer = _get_tracer()
+            with _tracer.start_as_current_span("route") as span:
+                t0 = time.perf_counter()
+                decision = self._router.route(question)
+                route_s = time.perf_counter() - t0
+                span.set_attribute("strategy", decision.strategy)
+                span.set_attribute("hop_depth", decision.hop_depth)
+                span.set_attribute("confidence", decision.confidence)
 
-        # 3. Generate (with routing decision as strategy label)
-        raw_answer = self._generator.generate(
-            question=question,
-            chunks=retrieved,
-            strategy=decision.strategy,
-        )
+            PIPELINE_STAGE_DURATION.labels(stage="route").observe(route_s)
+            logger.info(
+                "Routed question",
+                extra={
+                    "stage": "route",
+                    "strategy": decision.strategy,
+                    "hop_depth": decision.hop_depth,
+                    "confidence": round(decision.confidence, 3),
+                    "duration_ms": round(route_s * 1000, 2),
+                },
+            )
 
-        # 4. Validate citations
-        validated = self._validator.validate(raw_answer, retrieved)
-        logger.info(
-            "Citation confidence: %.0f%% (%d/%d valid)",
-            100 * validated.citation_confidence,
-            validated.valid_count,
-            len(validated.validation_results),
-        )
+            # 2. Retrieve
+            with _tracer.start_as_current_span("retrieve") as span:
+                t0 = time.perf_counter()
+                retrieved = self._retriever_fn(question, self._chunks, k)
+                retrieve_s = time.perf_counter() - t0
+                span.set_attribute("chunk_count", len(retrieved))
+
+            PIPELINE_STAGE_DURATION.labels(stage="retrieve").observe(retrieve_s)
+            logger.info(
+                "Retrieved chunks",
+                extra={
+                    "stage": "retrieve",
+                    "chunk_count": len(retrieved),
+                    "duration_ms": round(retrieve_s * 1000, 2),
+                },
+            )
+
+            # 3. Generate
+            with _tracer.start_as_current_span("generate") as span:
+                t0 = time.perf_counter()
+                raw_answer = self._generator.generate(
+                    question=question,
+                    chunks=retrieved,
+                    strategy=decision.strategy,
+                )
+                generate_s = time.perf_counter() - t0
+                span.set_attribute("model", raw_answer.model)
+                span.set_attribute("citation_count", len(raw_answer.citations))
+
+            PIPELINE_STAGE_DURATION.labels(stage="generate").observe(generate_s)
+            logger.info(
+                "Generated answer",
+                extra={
+                    "stage": "generate",
+                    "model": raw_answer.model,
+                    "citation_count": len(raw_answer.citations),
+                    "duration_ms": round(generate_s * 1000, 2),
+                },
+            )
+
+            # 4. Validate citations
+            with _tracer.start_as_current_span("validate") as span:
+                t0 = time.perf_counter()
+                validated = self._validator.validate(raw_answer, retrieved)
+                validate_s = time.perf_counter() - t0
+                span.set_attribute("valid_citations", validated.valid_count)
+                span.set_attribute("invalid_citations", validated.invalid_count)
+                span.set_attribute("citation_confidence", validated.citation_confidence)
+
+            PIPELINE_STAGE_DURATION.labels(stage="validate").observe(validate_s)
+            logger.info(
+                "Validated citations",
+                extra={
+                    "stage": "validate",
+                    "valid": validated.valid_count,
+                    "invalid": validated.invalid_count,
+                    "citation_confidence": round(validated.citation_confidence, 3),
+                    "duration_ms": round(validate_s * 1000, 2),
+                },
+            )
+
+            # End-to-end metrics
+            total_s = time.perf_counter() - pipeline_start
+            PIPELINE_TOTAL_DURATION.observe(total_s)
+            CITATION_CONFIDENCE.observe(validated.citation_confidence)
+            root_span.set_attribute("citation_confidence", validated.citation_confidence)
+            root_span.set_attribute("strategy", decision.strategy)
 
         return validated

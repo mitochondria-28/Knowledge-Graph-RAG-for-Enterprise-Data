@@ -27,6 +27,7 @@ import logging
 from fastapi import APIRouter, HTTPException, Request, status
 
 from src.api.schemas import AskRequest, AskResponse, CitationOut
+from src.observability.metrics import REQUEST_ERRORS, REQUEST_TOTAL
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["qa"])
@@ -52,11 +53,16 @@ def ask(body: AskRequest, request: Request) -> AskResponse:
     try:
         validated = pipeline.ask(body.question, top_k=body.top_k)
     except Exception as exc:
+        REQUEST_ERRORS.labels(error_type=type(exc).__name__).inc()
         logger.exception("Pipeline error for question %r", body.question)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An internal error occurred while processing the question.",
         ) from exc
+
+    REQUEST_TOTAL.labels(
+        status_code="200", strategy=validated.retrieval_strategy
+    ).inc()
 
     citations_out = [
         CitationOut(
