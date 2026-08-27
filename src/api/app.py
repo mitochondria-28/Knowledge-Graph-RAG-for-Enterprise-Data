@@ -48,6 +48,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.routes import ask as ask_router
+from src.api.routes import documents as documents_router
 from src.api.routes import health as health_router
 from src.api.routes import metrics as metrics_router
 from src.observability.logging import configure_logging
@@ -141,7 +142,7 @@ def create_app() -> FastAPI:
         allow_origins=["http://localhost:3000", "http://localhost:5173"],
         allow_credentials=False,
         allow_methods=["GET", "POST"],
-        allow_headers=["Content-Type"],
+        allow_headers=["Content-Type", "X-Request-ID"],
     )
 
     # ── Request-ID + security + latency logging middleware ────────────────────
@@ -170,6 +171,7 @@ def create_app() -> FastAPI:
     # ── Routers ───────────────────────────────────────────────────────────────
     application.include_router(health_router.router)
     application.include_router(ask_router.router)
+    application.include_router(documents_router.router)
     application.include_router(metrics_router.router)
 
     return application
