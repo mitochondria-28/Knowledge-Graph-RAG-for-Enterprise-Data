@@ -457,5 +457,22 @@
       "title": "StellarDB — Technical Architecture Reference",
       "start_index": 4020
     }
+  },
+  {
+    "chunk_id": "82520007-0961-5488-a284-ec9500cc3c97",
+    "document_id": "614c4217-2f6e-57ec-acf7-652a1b6f384c",
+    "chunk_index": 0,
+    "content": "# Orion Platform\n\nOrion Platform is TechNova's next-generation data orchestration layer, announced in Q3 2025.\nIt unifies real-time streaming, batch processing, and ML inference into a single runtime.\n\n## Key Features\n\n- Sub-millisecond latency for event processing pipelines\n- Native integration with StellarDB and the Apex ML Platform\n- Built-in lineage tracking for all data transformations\n- Supports 40+ connectors including Kafka, Snowflake, and Databricks\n\n## Team\n\nThe Orion Platform is led by Director of Engineering Priya Nair, with a core team of 12 engineers\ndrawn from the former DataBridge ETL group after the Apex Analytics acquisition.\n\n## Status\n\nCurrently in private beta with three enterprise customers. General availability is targeted for Q1 2026.",
+    "section": "Orion Platform",
+    "source_file": "corpus/uploads/technologies/test_upload_doc.md",
+    "doc_type": "technology",
+    "doc_hash": "a5ee7be0af0e540675d1434d7bc7bb34d5163764a6387512aed410a3d4c1f788",
+    "token_count": 162,
+    "char_count": 768,
+    "ingestion_timestamp": "2026-08-27T03:08:38.776867+00:00",
+    "metadata": {
+      "title": "Orion Platform",
+      "start_index": 0
+    }
   }
 ]

@@ -128,5 +128,15 @@
     "char_count": 4826,
     "chunk_count": 3,
     "ingested_at": "2026-08-25T07:15:26.622452+00:00"
+  },
+  {
+    "document_id": "614c4217-2f6e-57ec-acf7-652a1b6f384c",
+    "title": "Orion Platform",
+    "source_file": "corpus/uploads/technologies/test_upload_doc.md",
+    "doc_type": "technology",
+    "doc_hash": "a5ee7be0af0e540675d1434d7bc7bb34d5163764a6387512aed410a3d4c1f788",
+    "char_count": 768,
+    "chunk_count": 1,
+    "ingested_at": "2026-08-27T03:08:38.796015+00:00"
   }
 ]
