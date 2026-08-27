@@ -219,12 +219,25 @@ class AnswerGenerator:
                 tools=[_ANSWER_TOOL],
                 tool_config=_ANSWER_TOOL_CONFIG,
                 max_output_tokens=self._max_tokens,
+                # Thinking interferes with mode=any function calling in 2.5-flash:
+                # the model can return candidates whose only content is thought parts,
+                # leaving response.parts=None. Disabling thinking fixes this.
+                thinking_config=types.ThinkingConfig(thinking_budget=0),
             ),
         )
         latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 
+        parts = response.parts or []
+        if not parts:
+            candidate = response.candidates[0] if response.candidates else None
+            finish_reason = getattr(candidate, "finish_reason", "unknown") if candidate else "no candidates"
+            raise ValueError(
+                f"Gemini returned no content (finish_reason={finish_reason}). "
+                "The response may have been blocked by safety filters."
+            )
+
         payload = None
-        for part in response.parts:
+        for part in parts:
             fc = getattr(part, "function_call", None)
             if fc and fc.name == "provide_answer":
                 payload = dict(fc.args)
@@ -232,7 +245,8 @@ class AnswerGenerator:
 
         if payload is None:
             raise ValueError(
-                "Gemini did not return a provide_answer function call."
+                "Gemini did not return a provide_answer function call. "
+                f"Parts received: {[type(p).__name__ for p in parts]}"
             )
 
         chunk_map = {c["chunk_id"]: c for c in chunks}
