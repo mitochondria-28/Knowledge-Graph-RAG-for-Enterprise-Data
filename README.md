@@ -92,11 +92,14 @@ LOG_LEVEL=INFO
 LOG_FORMAT=json
 ```
 
-### 3. Ingest the corpus (one-time)
+### 3. Ingest the corpus
 
 ```bash
-python scripts/ingest.py        # chunks 13 TechNova docs → output/all_chunks.json
+python scripts/ingest.py        # chunks 13 sample docs → output/all_chunks.json
 ```
+
+> **Or skip this step** — once the API server and UI are running you can upload
+> documents directly from the browser's **Documents** tab without touching the CLI.
 
 ### 4. Ask a question (CLI)
 
@@ -212,6 +215,52 @@ Results on 20 evaluation questions (mock mode, keyword retrieval):
 }
 ```
 
+### `POST /documents/upload`
+
+Upload a document and ingest it into the corpus without restarting the server.
+The pipeline's chunk list is hot-reloaded in memory, so the new content is
+immediately queryable.
+
+```bash
+curl -X POST http://localhost:8000/documents/upload \
+  -F "file=@my_report.pdf" \
+  -F "doc_type=project"   # general | company | project | technology | people
+```
+
+```json
+// Response
+{
+  "filename": "my_report.pdf",
+  "doc_type": "project",
+  "stats": {
+    "documents_processed": 1,
+    "documents_skipped": 0,
+    "chunks_created": 4,
+    "avg_tokens_per_chunk": 312
+  }
+}
+```
+
+Supported formats: `.md`, `.txt`, `.pdf` · Max size: 10 MB · Re-uploading an
+unchanged file is a no-op (hash-based deduplication).
+
+### `GET /documents`
+
+List every ingested document with its type, chunk count, and ingestion timestamp.
+
+```json
+[
+  {
+    "document_id": "abc123",
+    "title": "Orion Platform",
+    "source_file": "corpus/uploads/technologies/orion_platform.md",
+    "doc_type": "technology",
+    "chunk_count": 3,
+    "ingested_at": "2026-08-27T03:08:38+00:00"
+  }
+]
+```
+
 ### Other endpoints
 
 | Method | Path | Description |
@@ -258,9 +307,14 @@ Set `OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318` to export to Jaeger.
 
 ```
 enterprise-kg-rag/
-├── corpus/                   # 13 synthetic TechNova Markdown documents
+├── corpus/                   # Source documents
+│   ├── companies/            # 13 sample TechNova Markdown documents
+│   ├── projects/
+│   ├── technologies/
+│   ├── people/
+│   └── uploads/              # Files uploaded through the UI (auto-created)
 ├── output/                   # Pipeline artifacts (chunks, embeddings, benchmark)
-│   ├── all_chunks.json       # 27 chunks from Phase 1 ingestion
+│   ├── all_chunks.json       # Chunks from ingestion (sample + uploads)
 │   └── benchmark_report.json # Latest benchmark run
 ├── scripts/                  # CLI entry points for each phase
 │   ├── ingest.py             # Phase 1 — chunking
@@ -281,6 +335,11 @@ enterprise-kg-rag/
 │   ├── router/               # Phase 7 — rule-based question classifier
 │   ├── answer/               # Phase 8 — generation + citation validation
 │   ├── api/                  # Phase 9 — FastAPI app, routes, schemas
+│   │   └── routes/
+│   │       ├── ask.py        # POST /ask
+│   │       ├── documents.py  # POST /documents/upload, GET /documents
+│   │       ├── health.py     # GET /health, /ready
+│   │       └── metrics.py    # GET /metrics
 │   ├── benchmark/            # Phase 10 — latency and quality benchmarking
 │   ├── observability/        # Phase 11 — logging, Prometheus, OpenTelemetry
 │   └── config.py             # Pydantic settings
@@ -291,7 +350,13 @@ enterprise-kg-rag/
 ├── ui/                       # Phase 13 — React + Vite + Tailwind frontend
 │   └── src/
 │       ├── api/client.js
-│       └── components/       # QuestionForm, AnswerCard, CitationList, MetaBadges
+│       └── components/
+│           ├── QuestionForm.jsx
+│           ├── AnswerCard.jsx
+│           ├── CitationList.jsx
+│           ├── MetaBadges.jsx
+│           ├── DocumentUpload.jsx  # Phase 15 — drag-and-drop upload panel
+│           └── DocumentList.jsx    # Phase 15 — ingested document browser
 ├── docker-compose.yml        # Neo4j + PostgreSQL
 └── pyproject.toml            # Dependencies, pytest config, coverage
 ```
@@ -316,6 +381,7 @@ enterprise-kg-rag/
 | 12 | Comprehensive testing | Integration tests, Hypothesis property-based, coverage |
 | 13 | React UI | Vite + Tailwind, dark mode, citation panel, routing badges |
 | 14 | Documentation | README, ARCHITECTURE.md |
+| 15 | Dynamic document upload | REST upload API + drag-and-drop UI, hot-reload without restart |
 
 ---
 
