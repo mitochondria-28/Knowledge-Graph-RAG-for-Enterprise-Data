@@ -13,7 +13,16 @@ def _build_engine():
         # Neon/Heroku/Vercel sometimes emit postgres:// which SQLAlchemy 2 rejects
         url = url.replace("postgres://", "postgresql://", 1)
         return create_engine(url, pool_pre_ping=True)
-    db_path = Path(__file__).resolve().parent.parent.parent / "auth.db"
+
+    # SQLite: prefer project root, fall back to /tmp when filesystem is read-only
+    # (e.g. Vercel serverless without DATABASE_URL set — ephemeral but writable)
+    project_db = Path(__file__).resolve().parent.parent.parent / "auth.db"
+    try:
+        project_db.touch(exist_ok=True)
+        db_path = project_db
+    except (OSError, PermissionError):
+        db_path = Path("/tmp/auth.db")
+
     return create_engine(
         f"sqlite:///{db_path}", connect_args={"check_same_thread": False}
     )
