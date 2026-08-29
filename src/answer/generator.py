@@ -37,7 +37,6 @@ import time
 
 from google import genai
 from google.genai import types
-from google.api_core import exceptions as gexceptions
 
 from src.answer.models import Citation, RawAnswer
 
