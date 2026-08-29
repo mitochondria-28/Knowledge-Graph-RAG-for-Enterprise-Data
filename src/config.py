@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     # ── Paths ────────────────────────────────────────────────────
     corpus_dir: Path = Path("corpus")
     output_dir: Path = Path("output")
+    # On serverless (Vercel), the project root is read-only.
+    # Set TEMP_DIR=/tmp so per-user uploads are written to the writable /tmp.
+    # The DB (user_corpus table) remains the authoritative store regardless.
+    temp_dir: str = ""
 
     # ── Chunking ─────────────────────────────────────────────────
     chunk_size: int = 500        # target chunk size in tokens

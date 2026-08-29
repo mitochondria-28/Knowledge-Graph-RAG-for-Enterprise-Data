@@ -1,18 +1,20 @@
 """
 POST /ask endpoint — user-isolated corpus.
 
-Every authenticated user owns their own pipeline backed exclusively by
-corpus/users/{user_id}/ and output/users/{user_id}/.  There is NO fallback
-to the global corpus — a new user starts with zero documents and will get an
-explicit "no documents" response until they upload something.
+Every authenticated user owns their own pipeline.  On serverless deployments
+chunks are loaded from the user_corpus DB table.  On local dev the same table
+lives in SQLite, with a file-based fallback for backward compatibility.
+There is NO fallback to the global corpus.
 """
 
 import logging
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+from sqlalchemy.orm import Session
 
 from src.api.schemas import AskRequest, AskResponse, CitationOut
+from src.auth.database import get_db
 from src.auth.dependencies import get_current_user
 from src.auth.models import User
 from src.observability.metrics import REQUEST_ERRORS, REQUEST_TOTAL
@@ -21,15 +23,17 @@ logger = logging.getLogger(__name__)
 router = APIRouter(tags=["qa"])
 
 
-def _get_user_pipeline(request: Request, user: User):
+def _get_user_pipeline(request: Request, user: User, db: Session):
     """
-    Return the cached per-user AnswerPipeline, building it lazily on first call.
+    Return the per-user AnswerPipeline, building it lazily.
 
-    Only the user's own chunks are loaded.  If they have not uploaded anything
-    yet the pipeline is built with an empty chunk list — callers must handle
-    the empty-corpus case gracefully.
+    Load order:
+      1. In-memory cache (app.state.user_pipelines) — fastest, warm invocation
+      2. DB (user_corpus table) — serverless-safe, survives cold starts
+      3. Filesystem (output/users/{user_id}/) — local-dev fallback only
     """
     from src.answer.pipeline import AnswerPipeline, load_chunks
+    from src.auth.models import UserCorpus
     from src.config import settings
     from src.router.pipeline import load_entity_index
 
@@ -37,15 +41,22 @@ def _get_user_pipeline(request: Request, user: User):
     if user.id in user_pipelines:
         return user_pipelines[user.id]
 
-    user_output = Path(settings.output_dir) / "users" / user.id
-    chunks_path  = user_output / "all_chunks.json"
-    entities_path = user_output / "resolved_entities.json"
+    chunks: list = []
+    entity_index: dict = {}
 
-    # Strictly user-owned data — no global fallback
-    chunks       = load_chunks(chunks_path) if chunks_path.exists() else []
-    entity_index = (
-        load_entity_index(entities_path) if entities_path.exists() else {}
-    )
+    # DB-first — works on serverless (PostgreSQL) and local (SQLite)
+    corpus_row = db.query(UserCorpus).filter(UserCorpus.user_id == user.id).first()
+    if corpus_row:
+        chunks = corpus_row.chunks or []
+        entity_index = corpus_row.entity_index or {}
+    else:
+        # File fallback — local dev only, pre-DB migration
+        base = Path(settings.temp_dir) if settings.temp_dir else Path(settings.output_dir)
+        user_output = base / "users" / user.id
+        chunks_path = user_output / "all_chunks.json"
+        entities_path = user_output / "resolved_entities.json"
+        chunks = load_chunks(chunks_path) if chunks_path.exists() else []
+        entity_index = load_entity_index(entities_path) if entities_path.exists() else {}
 
     generator = getattr(request.app.state, "_default_generator", None)
     if generator is None:
@@ -59,9 +70,7 @@ def _get_user_pipeline(request: Request, user: User):
     )
     user_pipelines[user.id] = pipeline
     request.app.state.user_pipelines = user_pipelines
-    logger.info(
-        "Built pipeline for user %s with %d chunks", user.id, len(chunks)
-    )
+    logger.info("Built pipeline for user %s with %d chunks", user.id, len(chunks))
     return pipeline
 
 
@@ -78,10 +87,10 @@ def ask(
     body: AskRequest,
     request: Request,
     current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ) -> AskResponse:
-    pipeline = _get_user_pipeline(request, current_user)
+    pipeline = _get_user_pipeline(request, current_user, db)
 
-    # Inform the user clearly if their corpus is empty
     if not pipeline._chunks:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

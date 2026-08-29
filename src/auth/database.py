@@ -1,14 +1,25 @@
-"""SQLite-backed user store for authentication."""
+"""Database engine — SQLite for local dev, PostgreSQL on Vercel/production."""
 
+import os
 from pathlib import Path
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-_DB_PATH = Path(__file__).resolve().parent.parent.parent / "auth.db"
-SQLITE_URL = f"sqlite:///{_DB_PATH}"
 
-engine = create_engine(SQLITE_URL, connect_args={"check_same_thread": False})
+def _build_engine():
+    url = os.environ.get("DATABASE_URL", "")
+    if url:
+        # Neon/Heroku/Vercel sometimes emit postgres:// which SQLAlchemy 2 rejects
+        url = url.replace("postgres://", "postgresql://", 1)
+        return create_engine(url, pool_pre_ping=True)
+    db_path = Path(__file__).resolve().parent.parent.parent / "auth.db"
+    return create_engine(
+        f"sqlite:///{db_path}", connect_args={"check_same_thread": False}
+    )
+
+
+engine = _build_engine()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
