@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+  <!-- Center node (circle as path: cx=54 cy=54 r=10) -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M44,54 A10,10 0 1 0 64,54 A10,10 0 1 0 44,54 Z"/>
+
+  <!-- Spoke: center to top -->
+  <path
+      android:strokeColor="#FFFFFF"
+      android:strokeWidth="4"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M54,44 L54,30"/>
+
+  <!-- Spoke: center to bottom -->
+  <path
+      android:strokeColor="#FFFFFF"
+      android:strokeWidth="4"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M54,64 L54,78"/>
+
+  <!-- Spoke: center to left -->
+  <path
+      android:strokeColor="#FFFFFF"
+      android:strokeWidth="4"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M44,54 L30,54"/>
+
+  <!-- Spoke: center to right -->
+  <path
+      android:strokeColor="#FFFFFF"
+      android:strokeWidth="4"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M64,54 L78,54"/>
+
+  <!-- Top node (cx=54 cy=24 r=6) -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M48,24 A6,6 0 1 0 60,24 A6,6 0 1 0 48,24 Z"/>
+
+  <!-- Bottom node (cx=54 cy=84 r=6) -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M48,84 A6,6 0 1 0 60,84 A6,6 0 1 0 48,84 Z"/>
+
+  <!-- Left node (cx=24 cy=54 r=6) -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M18,54 A6,6 0 1 0 30,54 A6,6 0 1 0 18,54 Z"/>
+
+  <!-- Right node (cx=84 cy=54 r=6) -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M78,54 A6,6 0 1 0 90,54 A6,6 0 1 0 78,54 Z"/>
+
+</vector>
