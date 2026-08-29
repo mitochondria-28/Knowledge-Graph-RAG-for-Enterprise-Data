@@ -42,3 +42,8 @@ ui/dist/
 ui/.vite/
 # Hypothesis
 .hypothesis/
+
+# Auth — user data and credentials database
+auth.db
+corpus/users/
+output/users/

@@ -1,61 +1,100 @@
 const BASE = import.meta.env.VITE_API_URL ?? ''
 
-/**
- * POST /ask — sends a question to the RAG pipeline.
- * @param {string} question
- * @param {number} topK
- * @returns {Promise<import('./types').AskResponse>}
- */
+const TOKEN_KEY = 'kg_rag_token'
+
+export function saveToken(token) {
+  localStorage.setItem(TOKEN_KEY, token)
+}
+
+export function getToken() {
+  return localStorage.getItem(TOKEN_KEY)
+}
+
+export function clearToken() {
+  localStorage.removeItem(TOKEN_KEY)
+}
+
+function authHeaders() {
+  const token = getToken()
+  return token ? { Authorization: `Bearer ${token}` } : {}
+}
+
+async function apiRequest(path, options = {}) {
+  const res = await fetch(`${BASE}${path}`, {
+    ...options,
+    headers: {
+      ...authHeaders(),
+      ...(options.headers ?? {}),
+    },
+  })
+  if (!res.ok) {
+    const text = await res.text().catch(() => 'Unknown error')
+    const err = new Error(`API ${res.status}: ${text}`)
+    err.status = res.status
+    throw err
+  }
+  return res.json()
+}
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+
+export async function register(email, password, name) {
+  return apiRequest('/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, name }),
+  })
+}
+
+export async function login(email, password) {
+  return apiRequest('/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  })
+}
+
+export async function googleAuth(credential) {
+  return apiRequest('/auth/google', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ credential }),
+  })
+}
+
+export async function fetchMe() {
+  return apiRequest('/auth/me')
+}
+
+// ── Pipeline ──────────────────────────────────────────────────────────────────
+
 export async function askQuestion(question, topK = 5) {
-  const res = await fetch(`${BASE}/ask`, {
+  return apiRequest('/ask', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ question, top_k: topK }),
   })
-  if (!res.ok) {
-    const text = await res.text().catch(() => 'Unknown error')
-    throw new Error(`API ${res.status}: ${text}`)
-  }
-  return res.json()
 }
 
-/**
- * GET /ready — checks whether the pipeline has loaded.
- * @returns {Promise<{status: string, chunk_count: number}>}
- */
 export async function checkReady() {
-  const res = await fetch(`${BASE}/ready`)
-  if (!res.ok) return { status: 'not_ready', chunk_count: 0 }
-  return res.json()
+  try {
+    return await apiRequest('/ready')
+  } catch {
+    return { status: 'not_ready', chunk_count: 0 }
+  }
 }
 
-/**
- * POST /documents/upload — upload a file and ingest it into the corpus.
- * @param {File} file
- * @param {string} docType — one of: general, company, project, technology, people
- * @returns {Promise<{filename: string, doc_type: string, stats: object}>}
- */
 export async function uploadDocument(file, docType = 'general') {
   const form = new FormData()
   form.append('file', file)
   form.append('doc_type', docType)
-  const res = await fetch(`${BASE}/documents/upload`, {
-    method: 'POST',
-    body: form,
-  })
-  if (!res.ok) {
-    const text = await res.text().catch(() => 'Unknown error')
-    throw new Error(`Upload failed (${res.status}): ${text}`)
-  }
-  return res.json()
+  return apiRequest('/documents/upload', { method: 'POST', body: form })
 }
 
-/**
- * GET /documents — list all ingested documents.
- * @returns {Promise<Array<{title: string, doc_type: string, chunk_count: number, ingested_at: string}>>}
- */
 export async function listDocuments() {
-  const res = await fetch(`${BASE}/documents`)
-  if (!res.ok) return []
-  return res.json()
+  try {
+    return await apiRequest('/documents')
+  } catch {
+    return []
+  }
 }

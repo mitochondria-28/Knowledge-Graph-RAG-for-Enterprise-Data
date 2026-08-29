@@ -1,30 +1,62 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { askQuestion, checkReady } from './api/client'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { askQuestion, checkReady, listDocuments } from './api/client'
 import AnswerCard from './components/AnswerCard'
 import DocumentList from './components/DocumentList'
 import DocumentUpload from './components/DocumentUpload'
 import QuestionForm from './components/QuestionForm'
+import { useAuth } from './context/AuthContext'
 import './index.css'
-
-const EXAMPLE_QUESTIONS = [
-  'What is StellarDB?',
-  'Who leads the Platform Team?',
-  'When did TechNova acquire Stellar Systems?',
-  'How does TechNova use machine learning in its products?',
-  'What compliance certifications does TechNova hold?',
-]
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 export default function App() {
-  const [ready, setReady]         = useState(null)       // null=checking, true/false
-  const [loading, setLoading]     = useState(false)
-  const [error, setError]         = useState(null)
-  const [history, setHistory]     = useState([])
-  const [activeTab, setActiveTab] = useState('ask')      // 'ask' | 'documents'
-  const [docRefresh, setDocRefresh] = useState(0)        // increment to re-fetch doc list
+  return (
+    <Routes>
+      <Route path="/login"    element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/*"        element={<ProtectedShell />} />
+    </Routes>
+  )
+}
+
+function ProtectedShell() {
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <span className="text-slate-400 text-sm animate-pulse">Loading…</span>
+      </div>
+    )
+  }
+
+  if (!user) return <Navigate to="/login" replace />
+  return <MainApp />
+}
+
+function MainApp() {
+  const { user, signOut }                = useAuth()
+  const [ready, setReady]               = useState(null)
+  const [loading, setLoading]           = useState(false)
+  const [error, setError]               = useState(null)
+  const [history, setHistory]           = useState([])
+  const [activeTab, setActiveTab]       = useState('ask')
+  const [docRefresh, setDocRefresh]     = useState(0)
+  const [showUserMenu, setShowUserMenu] = useState(false)
+  const [hasDocuments, setHasDocuments] = useState(null)  // null=unknown, true/false
   const bottomRef = useRef(null)
 
+  // Check whether user has any documents
   useEffect(() => {
     checkReady().then(r => setReady(r.status === 'ready'))
+    listDocuments().then(docs => setHasDocuments(docs.length > 0))
+  }, [])
+
+  // Re-check after an upload
+  const handleUploaded = useCallback(() => {
+    setDocRefresh(n => n + 1)
+    listDocuments().then(docs => setHasDocuments(docs.length > 0))
   }, [])
 
   useEffect(() => {
@@ -38,18 +70,16 @@ export default function App() {
       const result = await askQuestion(question, topK)
       setHistory(h => [result, ...h])
     } catch (err) {
+      if (err.status === 401) { signOut(); return }
+      // Empty corpus — nudge the user to upload
+      if (err.status === 400 && err.message.includes('empty')) {
+        setActiveTab('documents')
+        return
+      }
       setError(err.message)
     } finally {
       setLoading(false)
     }
-  }
-
-  const handleUploaded = useCallback(() => {
-    setDocRefresh(n => n + 1)
-  }, [])
-
-  function handleExample(q) {
-    handleSubmit(q, 5)
   }
 
   return (
@@ -89,39 +119,65 @@ export default function App() {
             ))}
           </nav>
 
-          <ReadyIndicator ready={ready} />
+          <div className="flex items-center gap-3">
+            <ReadyIndicator ready={ready} />
+
+            {/* User menu */}
+            <div className="relative">
+              <button
+                onClick={() => setShowUserMenu(v => !v)}
+                className="flex items-center gap-2 rounded-lg px-2 py-1 text-xs
+                           text-slate-600 dark:text-slate-400
+                           hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                {user.avatar_url ? (
+                  <img src={user.avatar_url} alt="avatar"
+                    className="w-6 h-6 rounded-full object-cover" />
+                ) : (
+                  <span className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center
+                                   text-white font-semibold text-xs">
+                    {(user.name ?? user.email)[0].toUpperCase()}
+                  </span>
+                )}
+                <span className="hidden sm:inline max-w-24 truncate">
+                  {user.name ?? user.email}
+                </span>
+                <span>▾</span>
+              </button>
+
+              {showUserMenu && (
+                <div className="absolute right-0 mt-1 w-52 rounded-xl border border-slate-200
+                                dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg
+                                py-1 z-50 text-sm">
+                  <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                    <p className="font-medium text-slate-800 dark:text-slate-100 truncate">
+                      {user.name ?? ''}
+                    </p>
+                    <p className="text-xs text-slate-400 truncate">{user.email}</p>
+                  </div>
+                  <button
+                    onClick={() => { setShowUserMenu(false); signOut() }}
+                    className="w-full text-left px-4 py-2 text-slate-600 dark:text-slate-400
+                               hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-        {/* ── Ask tab ── */}
         {activeTab === 'ask' && (
           <div className="flex flex-col gap-8">
             <section>
               <QuestionForm
                 onSubmit={handleSubmit}
                 loading={loading}
-                disabled={ready === false}
+                disabled={ready === false || hasDocuments === false}
               />
-
-              {history.length === 0 && !loading && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {EXAMPLE_QUESTIONS.map(q => (
-                    <button
-                      key={q}
-                      onClick={() => handleExample(q)}
-                      disabled={loading || ready === false}
-                      className="text-xs px-3 py-1.5 rounded-full border border-slate-200
-                                 dark:border-slate-700 text-slate-600 dark:text-slate-400
-                                 hover:border-violet-400 hover:text-violet-700
-                                 dark:hover:border-violet-500 dark:hover:text-violet-300
-                                 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              )}
             </section>
 
             {error && (
@@ -151,11 +207,14 @@ export default function App() {
               <div ref={bottomRef} />
             </section>
 
-            {history.length === 0 && !loading && <EmptyState />}
+            {history.length === 0 && !loading && (
+              hasDocuments === false
+                ? <NoDocumentsState onGoUpload={() => setActiveTab('documents')} />
+                : <EmptyState />
+            )}
           </div>
         )}
 
-        {/* ── Documents tab ── */}
         {activeTab === 'documents' && (
           <div className="flex flex-col gap-8">
             <section className="rounded-2xl border border-slate-200 dark:border-slate-800
@@ -204,12 +263,49 @@ function ReadyIndicator({ ready }) {
   )
 }
 
+function NoDocumentsState({ onGoUpload }) {
+  return (
+    <div className="flex flex-col items-center gap-4 py-16 text-center">
+      <span className="text-6xl">📂</span>
+      <div>
+        <p className="text-base font-semibold text-slate-700 dark:text-slate-300">
+          Your knowledge base is empty
+        </p>
+        <p className="text-sm text-slate-400 dark:text-slate-500 mt-1 max-w-xs mx-auto">
+          Upload your company documents first — then ask questions about them.
+          Your data is private and isolated to your account.
+        </p>
+      </div>
+      <button
+        onClick={onGoUpload}
+        className="mt-2 px-5 py-2 bg-violet-600 hover:bg-violet-700
+                   text-white text-sm font-medium rounded-lg transition-colors"
+      >
+        Upload documents
+      </button>
+      <div className="mt-4 grid grid-cols-3 gap-3 text-xs text-center text-slate-400 dark:text-slate-600">
+        {[
+          ['📄', 'PDF / MD / TXT', 'Any company doc'],
+          ['🔒', 'Private', 'Only you can see it'],
+          ['⚡', 'Instant', 'Query right after upload'],
+        ].map(([icon, label, desc]) => (
+          <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 p-3 flex flex-col gap-1">
+            <span className="text-2xl">{icon}</span>
+            <span className="font-medium text-slate-600 dark:text-slate-400">{label}</span>
+            <span>{desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function EmptyState() {
   return (
     <div className="flex flex-col items-center gap-3 py-16 text-slate-400 dark:text-slate-600">
       <span className="text-5xl">🕸</span>
       <p className="text-sm text-center max-w-xs leading-relaxed">
-        Ask a question about the corpus — the pipeline will route it,
+        Ask a question about your documents — the pipeline will route it,
         retrieve context, generate an answer, and validate every citation.
       </p>
       <div className="mt-4 grid grid-cols-3 gap-3 text-xs text-center">
