@@ -21,8 +21,9 @@ dependencies = [
     "langchain>=0.3.0",
     "langchain-text-splitters>=0.3.0",
     # Configuration & validation
-    "pydantic>=2.7.0",
+    "pydantic[email]>=2.7.0",
     "pydantic-settings>=2.4.0",
+    "email-validator>=2.0.0",
     # Tokenization
     "tiktoken>=0.7.0",
     # PDF parsing
