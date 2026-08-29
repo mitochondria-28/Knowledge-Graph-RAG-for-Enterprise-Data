@@ -2,7 +2,10 @@
 
 A production-quality Retrieval-Augmented Generation system that combines **vector similarity search** with **multi-hop knowledge graph traversal** to answer complex enterprise questions — with every citation verified against its source document.
 
-Built phase-by-phase as a portfolio project demonstrating the full engineering stack: ingestion → knowledge graph → hybrid retrieval → LLM generation → citation validation → FastAPI backend → observability → testing → React UI → **per-user authentication and isolated knowledge bases**.
+Built phase-by-phase as a portfolio project demonstrating the full engineering stack: ingestion → knowledge graph → hybrid retrieval → LLM generation → citation validation → FastAPI backend → observability → testing → React UI → per-user authentication → **Vercel production deployment**.
+
+> **Live demo → [https://enterprise-kg-rag.vercel.app](https://enterprise-kg-rag.vercel.app)**
+> Register a free account, upload any `.pdf`, `.md`, or `.txt` file, and ask questions about it. Your documents are private and isolated from every other user.
 
 ---
 
@@ -60,7 +63,7 @@ Question
 
 ---
 
-## Quick start
+## Quick start (local dev)
 
 ### Prerequisites
 
@@ -77,39 +80,31 @@ cd Knowledge-Graph-RAG-for-Enterprise-Data
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pip install fastapi[standard] uvicorn httpx rapidfuzz prometheus-client \
-            opentelemetry-sdk opentelemetry-api hypothesis pytest-cov \
-            "python-jose[cryptography]" "passlib[bcrypt]" sqlalchemy python-multipart
 ```
 
 ### 2. Configure environment
 
 ```bash
 cp .env.example .env
-# Edit .env with your keys
+# Edit .env — minimum required for local dev:
 ```
 
-`.env.example`:
-```
-GEMINI_API_KEY=AIza...                  # optional — mock generator used if absent
-NEO4J_PASSWORD=                         # optional — needed for graph retrieval
-POSTGRES_PASSWORD=                      # optional — needed for vector retrieval
-LOG_LEVEL=INFO
+```env
+# Auth (required)
+JWT_SECRET_KEY=any-random-string-for-local-dev
 
-# Auth — generate with: python -c "import secrets; print(secrets.token_hex(32))"
-JWT_SECRET_KEY=change-me-in-production
+# LLM (optional — MockAnswerGenerator used if absent)
+GEMINI_API_KEY=AIza...
 
-# Google OAuth (optional — leave blank to disable Google login)
-# Create credentials at https://console.cloud.google.com/apis/credentials
-# Add http://localhost:5173 to Authorized JavaScript origins
-VITE_GOOGLE_CLIENT_ID=
+# Google OAuth (optional — enables Sign in with Google button)
+VITE_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
 ```
 
 ### 3. Start the API server
 
 ```bash
 python scripts/serve.py --reload     # FastAPI on http://localhost:8000
-# Docs: http://localhost:8000/docs
+# Interactive API docs: http://localhost:8000/docs
 ```
 
 ### 4. Start the UI
@@ -119,15 +114,84 @@ cd ui && npm install && npm run dev
 # Open http://localhost:5173
 ```
 
-Register an account (or sign in with Google), upload your documents, and start asking questions — no CLI setup needed.
+Register an account (or sign in with Google), upload your documents, and start asking questions.
 
-### 5. Ingest the corpus (optional CLI)
+### 5. Ingest the demo corpus (optional)
 
 ```bash
 python scripts/ingest.py        # chunks 13 sample docs → output/all_chunks.json
 ```
 
-> Documents uploaded through the browser UI are automatically ingested per-user and are immediately queryable — no CLI step needed.
+> Documents uploaded through the UI are ingested automatically per-user — no CLI step needed.
+
+---
+
+## Deploy to Vercel
+
+The project is pre-configured for Vercel: `vercel.json` routes API paths to a Python serverless function (`api/index.py`) and the React frontend is served as a static build.
+
+### What you need
+
+| Requirement | Free option |
+|-------------|-------------|
+| PostgreSQL database | [Neon](https://neon.tech) free tier |
+| Google Gemini API key | [Google AI Studio](https://aistudio.google.com) |
+| Google OAuth client | [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
+| Vercel account | [vercel.com](https://vercel.com) |
+
+### 1. Fork / clone and install the Vercel CLI
+
+```bash
+npm i -g vercel
+vercel login
+```
+
+### 2. Link the project
+
+```bash
+vercel link
+```
+
+### 3. Set environment variables in the Vercel dashboard
+
+Go to **Project → Settings → Environment Variables** and add:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `DATABASE_URL` | PostgreSQL connection string (Neon) | `postgresql://user:pass@host/db?sslmode=require` |
+| `JWT_SECRET_KEY` | Random secret for JWT signing | `python3 -c "import secrets; print(secrets.token_hex(32))"` |
+| `GEMINI_API_KEY` | Gemini API key for real LLM answers | `AIza...` |
+| `TEMP_DIR` | Writable temp dir for uploads | `/tmp` |
+
+> **Note:** `VITE_GOOGLE_CLIENT_ID` is already embedded in the frontend bundle (`ui/src/main.jsx`). Update that constant if you rotate your OAuth credential.
+
+### 4. Add your Vercel domain to Google OAuth
+
+In **Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client IDs**:
+- Add `https://your-project.vercel.app` to **Authorised JavaScript origins**
+
+### 5. Deploy
+
+```bash
+vercel deploy --prod
+```
+
+Or push any commit to `main` — Vercel auto-deploys from GitHub.
+
+### Architecture on Vercel
+
+```
+Browser
+  │
+  ├─ /auth/* /ask /documents/* /health /ready
+  │   └─► Python serverless function  (api/index.py → FastAPI)
+  │        └─► PostgreSQL (Neon)  — users + per-user chunks
+  │
+  └─ /* (everything else)
+      └─► Static React build  (ui/dist/index.html)
+```
+
+**Persistence on serverless:** after each document upload, chunks and the document list are persisted to the `user_corpus` PostgreSQL table so they survive cold starts. The pipeline is rebuilt from the DB on the first request after a cold start.
 
 ---
 
@@ -137,15 +201,15 @@ Every account gets a completely private, isolated knowledge base. No user can se
 
 ### How it works
 
-| What | Where |
-|------|-------|
-| User accounts | SQLite (`auth.db`) via SQLAlchemy |
-| Passwords | bcrypt-hashed — never stored in plaintext |
-| Sessions | JWT Bearer tokens (7-day expiry, HS256) |
-| Google login | ID token verified against Google's tokeninfo endpoint |
-| User documents | `corpus/users/{user_id}/` |
-| User chunks | `output/users/{user_id}/` |
-| User pipeline | `app.state.user_pipelines[user_id]` — lazy-built, memory-cached |
+| What | Local dev | Production (Vercel) |
+|------|-----------|---------------------|
+| User accounts | SQLite (`auth.db`) | PostgreSQL (`DATABASE_URL`) |
+| Passwords | bcrypt-hashed — never stored in plaintext | same |
+| Sessions | JWT Bearer tokens (7-day expiry, HS256) | same |
+| Google login | ID token verified via Google's tokeninfo endpoint | same |
+| User documents | `corpus/users/{user_id}/` | `/tmp/corpus/users/{user_id}/` |
+| User chunks | `output/users/{user_id}/` (files + DB) | `user_corpus` table (DB only) |
+| User pipeline | `app.state.user_pipelines[user_id]` — lazy-built, memory-cached | rebuilt from DB on cold start |
 
 ### Auth endpoints
 
@@ -156,12 +220,12 @@ Every account gets a completely private, isolated knowledge base. No user can se
 | `POST` | `/auth/google` | Google ID token — returns JWT + user |
 | `GET` | `/auth/me` | Returns the current user's profile |
 
-All other data endpoints (`/ask`, `/documents/upload`, `/documents`) require an `Authorization: Bearer <token>` header and operate exclusively on the authenticated user's data.
+All data endpoints (`/ask`, `/documents/upload`, `/documents`) require `Authorization: Bearer <token>` and operate exclusively on the authenticated user's data.
 
 ### Register (email/password)
 
 ```bash
-curl -X POST http://localhost:8000/auth/register \
+curl -X POST https://enterprise-kg-rag.vercel.app/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"you@company.com","password":"SecurePass1!","name":"Your Name"}'
 ```
@@ -179,22 +243,10 @@ curl -X POST http://localhost:8000/auth/register \
 }
 ```
 
-### Login
-
-```bash
-curl -X POST http://localhost:8000/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"you@company.com","password":"SecurePass1!"}'
-```
-
-### Google login (UI)
-
-Set `VITE_GOOGLE_CLIENT_ID` in `.env` with your OAuth 2.0 Web client ID from [Google Cloud Console](https://console.cloud.google.com/apis/credentials). Add `http://localhost:5173` to **Authorized JavaScript origins**. The login and register pages both show a **Sign in with Google** button automatically when the ID is set.
-
 ### Isolation guarantee
 
 ```
-User A uploads report.pdf  →  corpus/users/uid-A/general/report.pdf
+User A uploads report.pdf  →  stored in user_corpus (DB) under uid-A
 User A asks a question      →  answers only from uid-A's chunks
 User B asks the same        →  400 "Your knowledge base is empty"
                                (until B uploads their own documents)
@@ -204,7 +256,9 @@ User B asks the same        →  400 "Your knowledge base is empty"
 
 ## API reference
 
-All data endpoints require the header: `Authorization: Bearer <your_token>`
+All data endpoints require: `Authorization: Bearer <your_token>`
+
+Base URL (production): `https://enterprise-kg-rag.vercel.app`
 
 ### `POST /ask`
 
@@ -241,7 +295,7 @@ Returns `400` with a clear message if the user has not uploaded any documents ye
 Upload a document into the authenticated user's private corpus. The pipeline is rebuilt immediately — no server restart needed.
 
 ```bash
-curl -X POST http://localhost:8000/documents/upload \
+curl -X POST https://enterprise-kg-rag.vercel.app/documents/upload \
   -H "Authorization: Bearer <token>" \
   -F "file=@my_report.pdf" \
   -F "doc_type=project"   # general | company | project | technology | people
@@ -251,16 +305,11 @@ curl -X POST http://localhost:8000/documents/upload \
 {
   "filename": "my_report.pdf",
   "doc_type": "project",
-  "stats": {
-    "documents_processed": 1,
-    "documents_skipped": 0,
-    "chunks_created": 4,
-    "avg_tokens_per_chunk": 312
-  }
+  "stats": { "documents_processed": 1, "chunks_created": 4 }
 }
 ```
 
-Supported formats: `.md`, `.txt`, `.pdf` · Max size: 10 MB · Re-uploading an unchanged file is a no-op (hash-based deduplication).
+Supported formats: `.md`, `.txt`, `.pdf` · Max size: 10 MB
 
 ### `GET /documents`
 
@@ -269,28 +318,26 @@ List documents uploaded by the current user only.
 ```json
 [
   {
-    "document_id": "abc123",
-    "title": "Q3 Strategy Report",
-    "source_file": "corpus/users/uid/projects/q3_strategy.pdf",
+    "filename": "q3_strategy.pdf",
     "doc_type": "project",
-    "chunk_count": 4,
-    "ingested_at": "2026-08-29T13:53:27+00:00"
+    "uploaded_at": "2026-08-29T13:53:27",
+    "size_bytes": 204800
   }
 ]
 ```
 
 ### Other endpoints
 
-| Method | Path | Auth required | Description |
-|--------|------|:---:|-------------|
-| `GET` | `/health` | No | Liveness probe — always 200 |
-| `GET` | `/ready` | No | 200 if pipeline loaded, 503 otherwise |
+| Method | Path | Auth | Description |
+|--------|------|:----:|-------------|
+| `GET` | `/health` | No | Liveness probe — always `{"status":"ok"}` |
+| `GET` | `/ready` | No | 200 + chunk count when pipeline is loaded |
 | `GET` | `/metrics` | No | Prometheus text exposition |
-| `GET` | `/docs` | No | Swagger UI (auto-generated) |
+| `GET` | `/docs` | No | Swagger UI |
 
 ---
 
-## Running the full stack with databases
+## Running the full stack with databases (local)
 
 Start Neo4j and PostgreSQL with Docker Compose:
 
@@ -387,36 +434,31 @@ Set `OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318` to export to Jaeger.
 
 ```
 enterprise-kg-rag/
+├── api/
+│   └── index.py              # Vercel Python serverless entry point (ASGI)
 ├── corpus/
 │   ├── companies/            # Sample TechNova Markdown documents
 │   ├── projects/
 │   ├── technologies/
 │   ├── people/
 │   └── users/                # Per-user uploads (auto-created, git-ignored)
-│       └── {user_id}/
-│           ├── general/
-│           ├── company/
-│           └── ...
 ├── output/
-│   ├── all_chunks.json       # Global sample corpus chunks
+│   ├── all_chunks.json       # Global sample corpus chunks (committed)
 │   ├── benchmark_report.json
 │   └── users/                # Per-user chunk output (git-ignored)
-│       └── {user_id}/
-│           ├── all_chunks.json
-│           └── documents.json
 ├── scripts/                  # CLI entry points
-│   ├── ingest.py             # Phase 1 — chunking
-│   ├── extract.py            # Phase 2 — entity extraction
-│   ├── resolve.py            # Phase 3 — entity resolution
-│   ├── load_graph.py         # Phase 4 — Neo4j loader
-│   ├── embed_chunks.py       # Phase 5 — pgvector embedder
-│   ├── ask.py                # Phase 8 — CLI Q&A
-│   ├── serve.py              # Phase 9 — FastAPI server
-│   └── benchmark.py          # Phase 10 — benchmarking
+│   ├── ingest.py
+│   ├── extract.py
+│   ├── resolve.py
+│   ├── load_graph.py
+│   ├── embed_chunks.py
+│   ├── ask.py
+│   ├── serve.py
+│   └── benchmark.py
 ├── src/
 │   ├── auth/                 # Phase 16 — authentication & isolation
-│   │   ├── database.py       # SQLite connection (auth.db)
-│   │   ├── models.py         # User ORM model
+│   │   ├── database.py       # SQLite (local) or PostgreSQL (production) engine
+│   │   ├── models.py         # User + UserCorpus ORM models
 │   │   ├── schemas.py        # Pydantic request/response schemas
 │   │   ├── service.py        # User CRUD + bcrypt helpers
 │   │   ├── jwt_utils.py      # JWT create / decode
@@ -433,7 +475,7 @@ enterprise-kg-rag/
 │   ├── api/                  # Phase 9
 │   │   └── routes/
 │   │       ├── ask.py        # POST /ask  (auth-guarded, per-user pipeline)
-│   │       ├── documents.py  # POST /documents/upload, GET /documents (auth-guarded)
+│   │       ├── documents.py  # POST /documents/upload, GET /documents
 │   │       ├── health.py     # GET /health, /ready
 │   │       └── metrics.py    # GET /metrics
 │   ├── benchmark/            # Phase 10
@@ -443,12 +485,12 @@ enterprise-kg-rag/
 │   ├── unit/
 │   │   ├── test_auth_service.py   # bcrypt, JWT, user CRUD
 │   │   └── ...
-│   ├── integration/
 │   └── api/
 │       ├── test_auth.py           # register, login, Google, /me, protected routes
 │       ├── test_ask_endpoint.py   # pipeline tests (auth-aware)
 │       └── ...
 ├── ui/
+│   ├── .env.production        # Vite build-time env (Google Client ID — public)
 │   └── src/
 │       ├── context/
 │       │   └── AuthContext.jsx    # JWT storage, auto-restore on page load
@@ -459,15 +501,11 @@ enterprise-kg-rag/
 │       ├── App.jsx                # Route guard, empty-corpus state
 │       ├── main.jsx               # BrowserRouter + GoogleOAuthProvider + AuthProvider
 │       └── components/
-│           ├── QuestionForm.jsx
-│           ├── AnswerCard.jsx
-│           ├── CitationList.jsx
-│           ├── MetaBadges.jsx
-│           ├── DocumentUpload.jsx
-│           └── DocumentList.jsx
-├── auth.db                   # SQLite user store (git-ignored)
-├── docker-compose.yml        # Neo4j + PostgreSQL
-└── pyproject.toml
+├── vercel.json                # Vercel routing: API → Python fn, UI → static build
+├── requirements.txt           # Python runtime deps (mirrors pyproject.toml)
+├── pyproject.toml
+├── .env.example               # All configurable env vars with descriptions
+└── docker-compose.yml         # Neo4j + PostgreSQL for local full-stack dev
 ```
 
 ---
@@ -492,6 +530,7 @@ enterprise-kg-rag/
 | 14 | Documentation | README, ARCHITECTURE.md |
 | 15 | Dynamic document upload | REST upload API + drag-and-drop UI, hot-reload without restart |
 | 16 | Auth & per-user isolation | JWT + bcrypt + Google OAuth, isolated corpus per account |
+| 17 | Vercel deployment | Python serverless + static React, PostgreSQL persistence |
 
 ---
 
@@ -499,12 +538,14 @@ enterprise-kg-rag/
 
 | Layer | Technology |
 |-------|-----------|
+| Hosting | Vercel (Python serverless + static frontend) |
 | LLM | Google Gemini (gemini-2.5-flash) |
 | Embeddings | OpenAI text-embedding-3-small |
 | Knowledge graph | Neo4j 5.20 |
 | Vector store | PostgreSQL 16 + pgvector |
 | API | FastAPI + Uvicorn |
-| Auth | python-jose (JWT) + passlib/bcrypt + SQLAlchemy + SQLite |
+| Auth | python-jose (JWT) + passlib/bcrypt + SQLAlchemy |
+| Database | SQLite (local dev) / PostgreSQL via `DATABASE_URL` (production) |
 | UI | React 19 + Vite 8 + Tailwind CSS v4 + React Router v7 |
 | Google OAuth | @react-oauth/google (frontend) + Google tokeninfo (backend) |
 | Fuzzy matching | rapidfuzz |
@@ -519,14 +560,12 @@ enterprise-kg-rag/
 
 - All Cypher queries use **parameterized statements** from an **allowlist** — no raw LLM-generated queries are executed
 - Citations are **validated against source text** before being returned — hallucinations are flagged, not silently passed through
-- API keys are loaded from environment variables, never hardcoded
 - Passwords are **bcrypt-hashed** — plaintext is never stored or logged
-- JWTs are signed with a configurable `JWT_SECRET_KEY` — set a strong random value in production
+- JWTs are signed with `JWT_SECRET_KEY` — set a strong random value in production (`secrets.token_hex(32)`)
 - Every data endpoint is **auth-guarded** — unauthenticated requests return 401 before any pipeline code runs
-- User corpora are **filesystem-isolated** by UUID — no path traversal can cross user boundaries
-- The FastAPI layer validates every request with **Pydantic** — invalid inputs return 422 automatically
-- CORS is restricted to `localhost:3000` and `localhost:5173` in development
+- User corpora are **isolated by UUID** — no path traversal can cross user boundaries
 - `auth.db`, `corpus/users/`, and `output/users/` are **git-ignored** — user data is never accidentally committed
+- The Google OAuth client ID is public by design and scoped to **Authorised JavaScript origins** in Google Cloud Console
 
 ---
 
