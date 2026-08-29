@@ -138,5 +138,25 @@
     "char_count": 768,
     "chunk_count": 1,
     "ingested_at": "2026-08-27T03:08:38.796015+00:00"
+  },
+  {
+    "document_id": "736e1c98-961f-58af-86f4-7336b49fdf68",
+    "title": "Internship Completion Certificate",
+    "source_file": "corpus/uploads/general/Internship Completion Certificate.pdf",
+    "doc_type": "general",
+    "doc_hash": "7fd0311ca9c9367fefa8dac037c4a3e407e22955a975c9c4d944c67a8d0c77c9",
+    "char_count": 3696,
+    "chunk_count": 2,
+    "ingested_at": "2026-08-27T04:14:36.061792+00:00"
+  },
+  {
+    "document_id": "bfaa493a-c700-55d1-8d08-c7c4247dbdab",
+    "title": "Intern",
+    "source_file": "corpus/uploads/general/intern.pdf",
+    "doc_type": "general",
+    "doc_hash": "e22838db84833a992323aef2bbf8a8abe8ac5f5bfd8851676515065a20dfcb1d",
+    "char_count": 5271,
+    "chunk_count": 3,
+    "ingested_at": "2026-08-27T04:14:36.063463+00:00"
   }
 ]

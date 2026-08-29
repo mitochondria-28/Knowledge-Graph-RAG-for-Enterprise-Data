@@ -67,27 +67,43 @@ GoRouter buildRouter(AuthProvider auth) => GoRouter(
 );
 
 // ── App root ────────────────────────────────────────────────────────────────
-class KgRagApp extends StatelessWidget {
+class KgRagApp extends StatefulWidget {
   const KgRagApp({super.key});
+
+  @override
+  State<KgRagApp> createState() => _KgRagAppState();
+}
+
+class _KgRagAppState extends State<KgRagApp> {
+  late final AuthProvider _auth;
+  late final GoRouter _router;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = AuthProvider();
+    _router = buildRouter(_auth);
+  }
+
+  @override
+  void dispose() {
+    _auth.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider.value(value: _auth),
         ChangeNotifierProvider(create: (_) => DocumentProvider()),
         ChangeNotifierProvider(create: (_) => AskProvider()),
       ],
-      child: Builder(
-        builder: (context) {
-          final auth = context.watch<AuthProvider>();
-          return MaterialApp.router(
-            title: 'KG-RAG',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.dark,
-            routerConfig: buildRouter(auth),
-          );
-        },
+      child: MaterialApp.router(
+        title: 'KG-RAG',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.dark,
+        routerConfig: _router,
       ),
     );
   }
