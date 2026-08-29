@@ -47,3 +47,7 @@ ui/.vite/
 auth.db
 corpus/users/
 output/users/
+.vercel
+.env*
+# Exception: public build-time Google Client ID — safe to commit, not a secret
+!ui/.env.production
